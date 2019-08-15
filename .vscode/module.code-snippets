@@ -1,0 +1,31 @@
+{
+    "Add an env variable": {
+      "scope": "javascript",
+      "prefix": "module:model",
+      "body": [
+        "/**",
+        " * Module dependencies.",
+        " */",
+        "const mongoose = require('mongoose');",
+        "const { resolve } = require('path');",
+        "",
+        "// eslint-disable-next-line import/no-dynamic-require",
+        "const config = require(resolve('./config'));",
+        "",
+        "const {",
+        "  Schema,",
+        "} = mongoose;",
+        "",
+        "const $1Schema = new Schema({",
+        "  ${2:title}: ${3:String},",
+        "}, {",
+        "  timestamps: config.lib.mongoose.timestamps,",
+        "});",
+        "",
+        "module.exports = mongoose.model('$1', $1Schema);",
+        "",
+      ],
+      "description": "Generate a new model"
+    },
+  }
+  

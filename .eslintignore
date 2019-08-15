@@ -1,0 +1,9 @@
+**/node_modules/*
+!.eslintrc.js
+*.test.tmp.js
+coverage/
+assets/
+.nyc_output/
+public/
+modules/
+plop/

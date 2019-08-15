@@ -1,0 +1,121 @@
+{
+  "PHONE_VALIDATE": {
+    "name": "Phone should be validated?",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "PHONE_CODE_LENGTH": {
+    "name": "Phone code length",
+    "defaultValue": 4,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "PHONE_MAX_TRIES": {
+    "name": "Phone max tries",
+    "defaultValue": 10,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "PHONE_IS_AUTHENTICATE": {
+    "name": "Authticate user when phone validated",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "PHONE_MAX_RESENDS": {
+    "name": "Phone code max resends",
+    "defaultValue": 4,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "EMAIL_VALIDATE": {
+    "name": "Email should be validated?",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "EMAIL_CODE_LENGTH": {
+    "name": "Email code length",
+    "defaultValue": 80,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "EMAIL_MAX_TRIES": {
+    "name": "Email max tries",
+    "defaultValue": 10,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "EMAIL_IS_AUTHENTICATE": {
+    "name": "Authticate user when email validated",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "EMAIL_MAX_RESENDS": {
+    "name": "Email code max resends",
+    "defaultValue": 4,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "TWILIO_FROM": {
+    "name": "Twilio \"From\" field",
+    "defaultValue": "TWILIO_FROM"
+  },
+  "TWILIO_ACCOUNT_SID": {
+    "name": "Twilio Accound SID",
+    "defaultValue": "TWILIO_ACCOUNT_SID"
+  },
+  "TWILIO_AUTH_TOKEN": {
+    "name": "Twilio token",
+    "defaultValue": "TWILIO_AUTH_TOKEN"
+  },
+  "SENDGRID_API_KEY": {
+    "name": "Sendgrid API key",
+    "defaultValue": "SENDGRID_API_KEY"
+  },
+  "MAILER_FROM": {
+    "defaultValue": "MAILER_FROM@example.com"
+  },
+  "MAILER_HOST": {
+    "name": "SMTP hostname/IP address",
+    "defaultValue": "smtp.gmail.com"
+  },
+  "MAILER_PORT": {
+    "name": "Mailer port",
+    "defaultValue": 456,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "MAILER_SECURE": {
+    "name": "Is mailer secured?",
+    "defaultValue": true,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "MAILER_AUTH_USER": {
+    "name": "Mailer username",
+    "defaultValue": "MAILER_AUTH_USER"
+  },
+  "MAILER_AUTH_PASS": {
+    "name": "Mailer password",
+    "defaultValue": "MAILER_AUTH_PASS"
+  },
+  "DEFAULT_GROUPS": {
+    "name": "Default groups",
+    "defaultValue": "user"
+  }
+}

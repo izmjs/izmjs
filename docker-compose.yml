@@ -1,0 +1,11 @@
+web:
+  build: .
+  volumes:
+    - .:/usr/src/app/
+  ports:
+    - "8000:3000"
+  links:
+    - mongo
+
+mongo:
+  image: mongo

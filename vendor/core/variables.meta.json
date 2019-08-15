@@ -1,0 +1,129 @@
+{
+  "PORT": {
+    "name": "Application port",
+    "defaultValue": 3000,
+    "scope": "http-server",
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "HOST": {
+    "name": "Public application address",
+    "scope": "http-server",
+    "defaultValue": "0.0.0.0"
+  },
+  "APP_PREFIX": {
+    "name": "Application prefix",
+    "defaultValue": "/api/v1"
+  },
+  "IS_PUBLIC": {
+    "name": "Guest users can use sockets",
+    "defaultValue": true,
+    "scope": "sockets",
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "ADAPTER": {
+    "name": "Sockets adapter",
+    "defaultValue": "none",
+    "scope": "sockets",
+    "schema": {
+      "type": "string",
+      "enum": ["none", "redis"]
+    }
+  },
+  "REDIS_HOST": {
+    "name": "Redis Hostname",
+    "defaultValue": "localhost",
+    "scope": "sockets"
+  },
+  "REDIS_PORT": {
+    "name": "Redis Port",
+    "defaultValue": "6379",
+    "scope": "sockets"
+  },
+  "APP_PUBLIC_ADDRESS": {
+    "name": "Public application address",
+    "description": "Used to specify the public domain address of the application",
+    "defaultValue": ""
+  },
+  "APP_TITLE": {
+    "name": "Application title",
+    "defaultValue": "Node boilerplate API"
+  },
+  "APP_DESCRIPTION": {
+    "name": "Application description",
+    "defaultValue": "Application generated with the awesome boilerplate \"node-boilerplate\""
+  },
+  "APP_GOOGLE_ID": {
+    "name": "Google Analytics ID",
+    "defaultValue": "UA-XXXXX-Y"
+  },
+  "COLLECTION": {
+    "name": "Sessions collection",
+    "defaultValue": "sessions",
+    "scope": "sessions"
+  },
+  "SECRET": {
+    "name": "Session Secret",
+    "description": "Should be changed for security measures and concerns",
+    "defaultValue": "IZM.js",
+    "scope": "sessions"
+  },
+  "KEY": {
+    "name": "Sessions secret",
+    "defaultValue": "sessionId",
+    "scope": "sessions"
+  },
+  "MAX_AGE": {
+    "name": "Max age",
+    "scope": "sessions",
+    "defaultValue": 86400000,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "HTTP_ONLY": {
+    "name": "HTTP Only",
+    "scope": "sessions",
+    "description": "httpOnly flag makes sure the cookie is only accessed through the HTTP protocol and not JS/browser",
+    "defaultValue": true,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "SECURE": {
+    "name": "Secure cookie",
+    "scope": "sessions",
+    "description": "secure cookie should be turned to true to provide additional layer of security so that the cookie is set only when working in HTTPS mode.",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "HTTP_SECURE": {
+    "name": "Is secure",
+    "scope": "http-server",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "PRIV_KEY": {
+    "name": "SSL private key path",
+    "scope": "http-server",
+    "defaultValue": "./config/sslcerts/key.pem"
+  },
+  "CERTIFICATE": {
+    "name": "SSL public certificate",
+    "scope": "http-server",
+    "defaultValue": "./config/sslcerts/cert.pem"
+  },
+  "CA_BUNDLE": {
+    "name": "CA Bundle path",
+    "description": "Root and intermediate certificates bundle",
+    "scope": "http-server",
+    "defaultValue": "./config/sslcerts/cabundle.pem"
+  }
+}

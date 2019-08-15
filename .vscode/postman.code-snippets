@@ -1,0 +1,81 @@
+{
+  "Add postman body block": {
+    "scope": "javascript",
+    "prefix": "@body",
+    "body": [
+      "@body",
+      "* {",
+      "*   \"$1\": \"$2\"",
+      "* }"
+    ],
+    "description": "Add postman body block"
+  },
+  "Add test block": {
+    "scope": "javascript",
+    "prefix": "@test",
+    "body": [
+      "@test",
+      "* pm.test(\"${1:Status code is 200}\", function () {",
+      "*   ${2:pm.response.to.have.status(200);}",
+      "* });"
+    ],
+    "description": "Add test block"
+  },
+  "Add params block": {
+    "scope": "javascript",
+    "prefix": "@params",
+    "body": [
+      "@params",
+      "* [{",
+      "*   \"key\": \"$1\",",
+      "*   \"value\": \"$2\",",
+      "*   \"description\": \"$3\"",
+      "* }]",
+    ],
+    "description": "Add params block"
+  },
+  "Add header block": {
+    "scope": "javascript",
+    "prefix": "@headers",
+    "body": [
+      "@headers",
+      "* {",
+      "*   \"$1\": \"$2\"",
+      "* }"
+    ],
+    "description": "Add header block"
+  },
+  "Add an example block": {
+    "scope": "javascript",
+    "prefix": "@example",
+    "body": [
+      "@example",
+      "* {",
+      "*   \"name\": \"${1:Example name}\",",
+      "*   \"response\": {",
+      "*     \"status\": ${2:200},",
+      "*     ${3:\"headers\": {",
+      "*       \"$4\": \"$5\"",
+      "*     \\},",
+      "*     }${6:\"body\": {",
+      "*       \"$7\": \"$8\"",
+      "*     \\}",
+      "*   }}${9:,",
+      "*   \"request\": {",
+      "*     \"params\": [{",
+      "*       \"key\": \"$10\",",
+      "*       \"value\": \"$11\",",
+      "*       \"description\": \"$12\"",
+      "*     \\}],",
+      "*     \"headers\": {",
+      "*       \"$13\": \"$14\"",
+      "*     \\},",
+      "*     \"body\": {",
+      "*       \"$15\": \"$16\"",
+      "*     \\}",
+      "*   \\}}",
+      "* }",
+    ],
+    "description": "Add an example block"
+  },
+}

@@ -1,0 +1,17 @@
+{
+  "src": {
+    "tagName": "v%s"
+  },
+  "npm": {
+    "publish": false
+  },
+  "git": {
+    "tagName": "v${version}",
+    "requireCleanWorkingDir": false,
+    "commitMessage": "ci: release v${version}",
+    "push": true
+  },
+  "github": {
+    "release": true
+  }
+}

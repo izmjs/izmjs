@@ -1,0 +1,7 @@
+{
+  "ERROR_500_TITLE": "Erreur Serveur",
+  "ERROR_500": "Oops! Quelque chose a mal tourné...",
+  "ERROR_404": "Chemin non trouvé",
+  "PAGE_NOT_FOUND_TITLE": "Chemin non trouvée",
+  "PAGE_NOT_FOUND_DETAILS": "<span class=\"sr-only\">Erreur:</span> Le chemin <strong>{{url}}</strong> n'est pas valide."
+}
