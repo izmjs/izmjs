@@ -30,7 +30,7 @@ cp .example.env .env/.development.env
 Optional: Add `devtools` functional module:
 
 ```bash
-git clone git@github.com:midrissi/devtools-fm.git modules/devtools
+git clone git@github.com:izmjs/devtools.git modules/devtools
 npm i
 ```
 
