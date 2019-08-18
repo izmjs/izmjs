@@ -20,7 +20,7 @@ npx izm
 ### Manual clone
 
 ```bash
-git clone git@github.com:midrissi/izm.js.git new-project
+git clone git@github.com:izmjs/izmjs.git new-project
 cd new-project
 npm i
 echo "NODE_ENV=development" > .env/.common.env
