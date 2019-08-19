@@ -104,7 +104,7 @@ exports.svg = ({ size = 46, color = '#d35400', fill = '#ffffff' }) => async func
   const { model } = req;
   const { name } = model;
   const { full } = name;
-  const text = full.split(' ').map(n => n.charAt(0)).join('');
+  const text = full.split(' ').map((n) => n.charAt(0)).join('');
 
   res.set('Content-Type', 'image/svg+xml');
   return res.render(resolve(__dirname, '../views/profile-picture.server.view.swig'), {
@@ -131,11 +131,11 @@ exports.list = async function list(req, res, next) {
     const json = await User.find(findObj, {
       score: { $meta: 'textScore' },
     })
-      .select(private_attrs.map(attr => `-${attr}`).join(' '))
+      .select(private_attrs.map((attr) => `-${attr}`).join(' '))
       .sort({ score: { $meta: 'textScore' } })
       .paginate({ top, skip });
 
-    json.value = json.value.map(u => u.toJSON({ virtuals: true }));
+    json.value = json.value.map((u) => u.toJSON({ virtuals: true }));
 
     return res.json(json);
   } catch (e) {
@@ -160,7 +160,7 @@ exports.userByID = async function userByID(req, res, next, id) {
     });
   }
 
-  return User.findById(id, private_attrs.map(attr => `-${attr}`).join(' ')).exec((err, user) => {
+  return User.findById(id, private_attrs.map((attr) => `-${attr}`).join(' ')).exec((err, user) => {
     if (err) {
       return next(err);
     }

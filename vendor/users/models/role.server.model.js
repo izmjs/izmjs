@@ -35,11 +35,11 @@ const RoleSchema = new Schema({
 RoleSchema.statics.getIAMs = async function getIAMs(roles = []) {
   const IAM = model('IAM');
   let list = roles
-    .filter(r => Boolean(r) && typeof r === 'string');
+    .filter((r) => Boolean(r) && typeof r === 'string');
 
   list = await this.find({ name: list });
   list = list.filter(Boolean)
-    .map(r => r.iams)
+    .map((r) => r.iams)
     .filter(Boolean)
     .flat();
 

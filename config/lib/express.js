@@ -261,7 +261,7 @@ module.exports.initI18n = (app) => {
 
   const getDirsNames = () => {
     const modules = [vendor, ...custom];
-    const names = modules.map(source => readdirSync(source)
+    const names = modules.map((source) => readdirSync(source)
       .map((name) => {
         const p = join(source, name);
 

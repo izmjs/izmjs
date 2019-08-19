@@ -105,7 +105,7 @@ ERROR : ${JSON.stringify(e)}`);
     }
 
     Object.keys(values).forEach((key) => {
-      const found = this.variables.find(v => v.realKey() === key);
+      const found = this.variables.find((v) => v.realKey() === key);
       if (found) {
         return;
       }
@@ -146,7 +146,7 @@ ERROR : ${JSON.stringify(e)}`);
     defaultValue,
     description = '',
   }, schema = { type: 'string' }, scope = 'general') {
-    let variable = this.variables.find(v => v.scope === scope && v.key === key);
+    let variable = this.variables.find((v) => v.scope === scope && v.key === key);
 
     if (!variable) {
       variable = Field.create({
@@ -195,7 +195,7 @@ ERROR : ${JSON.stringify(e)}`);
           items,
         };
       })
-      .filter(scope => scope.items.length > 0)
+      .filter((scope) => scope.items.length > 0)
       .forEach((scope, index) => {
         content += `${index > 0 ? '\n' : ''}# ${scope.name}\n`;
 
@@ -212,7 +212,7 @@ ERROR : ${JSON.stringify(e)}`);
    */
   toJSON() {
     const json = this.variables.reduce((prevValue, current) => {
-      const index = prevValue.findIndex(one => one.name === current.scope);
+      const index = prevValue.findIndex((one) => one.name === current.scope);
 
       if (index < 0) {
         const found = {
@@ -246,7 +246,7 @@ ERROR : ${JSON.stringify(e)}`);
    * @param {String} scope The scope
    */
   get(key, scope = 'general') {
-    const found = this.variables.find(field => field.key === key && field.scope === scope);
+    const found = this.variables.find((field) => field.key === key && field.scope === scope);
 
     if (found) {
       return found.getValue();

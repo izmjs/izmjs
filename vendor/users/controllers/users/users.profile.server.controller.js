@@ -124,7 +124,7 @@ exports.me = async function me(req, res) {
   }
 
   if ($expand) {
-    $expand = $expand.split(',').map(attr => attr.trim());
+    $expand = $expand.split(',').map((attr) => attr.trim());
 
     if ($expand.includes('iams')) {
       result.iams = iams.map((iam) => {
@@ -135,7 +135,7 @@ exports.me = async function me(req, res) {
   }
 
   if (!result.iams) {
-    result.iams = iams.map(iam => iam.iam);
+    result.iams = iams.map((iam) => iam.iam);
   }
 
   if ($select) {

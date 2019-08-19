@@ -116,7 +116,7 @@ exports.verifyIams = async function verifyIAMs(req, res, next) {
 
   let iams = [];
 
-  iams = permissions.filter(el => mongoose.Types.ObjectId.isValid(el));
+  iams = permissions.filter((el) => mongoose.Types.ObjectId.isValid(el));
 
   // filter existing ACLs
   try {
@@ -132,7 +132,7 @@ exports.verifyIams = async function verifyIAMs(req, res, next) {
 
   if (iams.length < 0) return next();
 
-  iams = iams.map(el => el.id);
+  iams = iams.map((el) => el.id);
   req.roleIams = iams;
 
   return next();

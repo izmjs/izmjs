@@ -63,7 +63,7 @@ async function seedRoles() {
   const RoleModel = model('Role');
   const cache = {};
   const iams = []
-    .concat(...roles.map(r => r.iams))
+    .concat(...roles.map((r) => r.iams))
     .filter((r, pos, arr) => arr.indexOf(r) === pos);
 
   try {
@@ -82,7 +82,7 @@ async function seedRoles() {
 
   const promises = roles.map(async (role) => {
     let list = Array.isArray(role.iams) ? role.iams : [];
-    list = role.iams.map(iam => cache[iam]).filter(Boolean);
+    list = role.iams.map((iam) => cache[iam]).filter(Boolean);
 
     try {
       let r = await RoleModel.findOne({ name: role.name });
@@ -94,7 +94,7 @@ async function seedRoles() {
         });
       } else {
         list.forEach((iam) => {
-          const found = r.iams.find(item => item.toString() === iam.id);
+          const found = r.iams.find((item) => item.toString() === iam.id);
 
           if (!found) {
             r.iams.push(iam.id);

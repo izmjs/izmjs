@@ -108,7 +108,7 @@ const validateLocalStrategyProperty = () => true;
  * A Validation function for local strategy email
  */
 
-const validateLocalStrategyEmail = email => validator.isEmail(email);
+const validateLocalStrategyEmail = (email) => validator.isEmail(email);
 
 /**
  * A Validation function for local strategy phone
@@ -251,7 +251,7 @@ UserSchema.virtual('name.full').get(function get_fullname() {
   if (this.name.first) {
     result += this.name.first
       .split(' ')
-      .map(s => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase())
+      .map((s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase())
       .join(' ');
   }
 
@@ -343,7 +343,7 @@ UserSchema.methods.sendMail = function send_mail(subject, body) {
  */
 UserSchema.query.sendMail = async function send_mail_col(subject, body) {
   const users = await this;
-  return sendMail(subject, body, users.map(u => u.email));
+  return sendMail(subject, body, users.map((u) => u.email));
 };
 
 /**
@@ -362,7 +362,7 @@ UserSchema.methods.json = function json() {
     virtuals: true,
   });
 
-  private_attrs.forEach(attr => delete obj[attr]);
+  private_attrs.forEach((attr) => delete obj[attr]);
 
   return obj;
 };
@@ -374,7 +374,7 @@ UserSchema.statics.sanitize = function sanitize(obj) {
   const o = { ...obj };
   const protected_attrs = config.app.profile.protected_attrs || [];
 
-  protected_attrs.forEach(attr => delete o[attr]);
+  protected_attrs.forEach((attr) => delete o[attr]);
 
   return o;
 };

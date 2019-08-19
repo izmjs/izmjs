@@ -29,7 +29,7 @@ exports.onSignup = async (user, req) => {
   const vConfig = config.validations;
   const types = vConfig.types || [];
 
-  types.forEach(t => utils.tryNotify(user, t, req));
+  types.forEach((t) => utils.tryNotify(user, t, req));
 
   user.markModified('validations');
   return user;

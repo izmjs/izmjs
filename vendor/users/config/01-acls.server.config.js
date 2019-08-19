@@ -22,7 +22,7 @@ module.exports = (app) => {
 
     try {
       req.iams = await iam.IAMsFromRoles(roles);
-      req.iams = req.iams.map(item => ({ ...item, resource: new RegExp(item.resource, 'i') }));
+      req.iams = req.iams.map((item) => ({ ...item, resource: new RegExp(item.resource, 'i') }));
     } catch (e) {
       return next(e);
     }
@@ -59,7 +59,7 @@ module.exports = (app) => {
         }
       }
 
-      const found = (allIAMs || []).find(one => one.resource
+      const found = (allIAMs || []).find((one) => one.resource
         && new RegExp(one.resource).test(req.baseUrl + req.route.path)
         && one.permission === req.method.toLowerCase()
         && !one.excluded);

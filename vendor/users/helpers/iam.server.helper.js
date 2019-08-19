@@ -49,8 +49,8 @@ class Iam {
 
     if (Array.isArray(groups) && groups.length > 0) {
       obj.groups = groups
-        .filter(g => Boolean(g) && typeof g === 'string')
-        .map(g => g
+        .filter((g) => Boolean(g) && typeof g === 'string')
+        .map((g) => g
           .trim()
           .toLowerCase()
           .replace(/\s+/g, ' ')
@@ -78,7 +78,7 @@ class Iam {
         .filter((g, index) => Boolean(g)
           && typeof g === 'string'
           && parents.indexOf(g) === index)
-        .map(g => this.IamModel.findOneAndUpdate({ iam: g }, {
+        .map((g) => this.IamModel.findOneAndUpdate({ iam: g }, {
           iam: g,
           $addToSet: {
             children: id,
@@ -104,7 +104,7 @@ class Iam {
       let iams = await this.RoleModel.getIAMs(roles);
 
       // Flatten the IAMs
-      iams = iams.map(iam => iam.toJSON({
+      iams = iams.map((iam) => iam.toJSON({
         virtuals: true,
       }));
 

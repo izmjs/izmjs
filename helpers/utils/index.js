@@ -17,7 +17,7 @@ const readFile$ = promisify(readFile);
  * Validates a payload with a given schema
  * @param {Object} schema The schema of the payload
  */
-exports.validate = schema => async function validateSchema(req, res, next) {
+exports.validate = (schema) => async function validateSchema(req, res, next) {
   const ajv = new Ajv();
   const validate = ajv.compile(schema);
 
@@ -35,7 +35,7 @@ exports.validate = schema => async function validateSchema(req, res, next) {
  * Check current user has IAM
  * @param {Object} iam the IAM to check
  */
-exports.hasIAM = iam => async function hasIAM(req, res, next) {
+exports.hasIAM = (iam) => async function hasIAM(req, res, next) {
   const IAM = model('IAM');
   const { iams } = req;
   let count;
@@ -49,7 +49,7 @@ exports.hasIAM = iam => async function hasIAM(req, res, next) {
   if (count <= 0) return res.status(404).json({ message: `Permission(IAM) ${iam} not found` });
 
   // Check if the user has the permission.
-  if (iams.find(el => el.iam === iam) === undefined) {
+  if (iams.find((el) => el.iam === iam) === undefined) {
     return res.status(403).json({ message: `You don't have permission ${iam} to continue` });
   }
 
@@ -136,8 +136,8 @@ exports.isExcluded = async ({ iam, parents = [] }) => {
     }
 
     excludeCache = content.split('\n')
-      .map(one => one.trim())
-      .filter(one => Boolean(one) && !one.startsWith('#'));
+      .map((one) => one.trim())
+      .filter((one) => Boolean(one) && !one.startsWith('#'));
   }
 
   let found = excludeCache.includes(iam);
@@ -150,7 +150,7 @@ exports.isExcluded = async ({ iam, parents = [] }) => {
     };
   }
 
-  found = excludeCache.find(one => parents.includes(one));
+  found = excludeCache.find((one) => parents.includes(one));
 
   if (found) {
     return {

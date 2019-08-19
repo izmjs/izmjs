@@ -96,6 +96,6 @@ module.exports = (plop) => {
 
   // Create the camelize helper
   plop.setHelper('camelize', camelize);
-  plop.setHelper('raw-helper', options => options.fn());
+  plop.setHelper('raw-helper', (options) => options.fn());
   plop.setHelper('get-key', getKey);
 };

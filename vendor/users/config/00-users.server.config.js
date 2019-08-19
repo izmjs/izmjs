@@ -24,7 +24,7 @@ module.exports = (app) => {
     User.findOne({
       _id: id,
     })
-      .select(config.app.profile.private_attrs.map(attr => `-${attr}`).join(' '))
+      .select(config.app.profile.private_attrs.map((attr) => `-${attr}`).join(' '))
       .exec((err, user) => {
         done(err, user);
       });

@@ -58,12 +58,12 @@ const IAMSchema = new Schema({
 IAMSchema.statics.getChildren = async function getChildren(ids = [], cache = []) {
   let list = ids
     // Convert all IDs to strings
-    .map(id => id.toString())
+    .map((id) => id.toString())
     // Remove dupplicated
     .filter((id, index, arr) => index === arr.indexOf(id))
     // Filter uncached IDs
     .filter((id) => {
-      const found = cache.find(one => one.id === id);
+      const found = cache.find((one) => one.id === id);
       return !found;
     });
 
@@ -74,7 +74,7 @@ IAMSchema.statics.getChildren = async function getChildren(ids = [], cache = [])
   list = await this.find({ _id: list });
 
   const children = list
-    .map(iam => iam.children)
+    .map((iam) => iam.children)
     .filter(Boolean)
     .flat();
 

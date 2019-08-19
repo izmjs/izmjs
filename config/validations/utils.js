@@ -25,7 +25,7 @@ exports.isValidated = (user) => {
   const validations = user.validations || [];
 
   for (let index = 0; index < types.length; index += 1) {
-    const t = validations.find(v => v.type === types[index]);
+    const t = validations.find((v) => v.type === types[index]);
 
     if (!t || !t.validated) {
       throw new ValidationError('VALIDATIONS!UNVALIDATED', {
@@ -91,7 +91,7 @@ exports.getValidationObj = (user, type) => {
 
   const validations = user.validations || [];
 
-  let v = validations.find(v_ => v_.type === type);
+  let v = validations.find((v_) => v_.type === type);
 
   if (!v) {
     v = {

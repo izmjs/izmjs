@@ -89,7 +89,7 @@ describe('User CRUD tests', () => {
   });
 
   it('should validate the email', async () => {
-    user.validations = user.validations.toObject().map(v => ({
+    user.validations = user.validations.toObject().map((v) => ({
       ...v,
       validated: false,
     }));

@@ -40,4 +40,4 @@ if (typeof Array.prototype.flat !== 'function') {
 [
   'helpers',
   'vendor',
-].map(m => appModulePath.addPath(m));
+].map((m) => appModulePath.addPath(m));

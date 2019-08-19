@@ -134,7 +134,7 @@ exports.oauthCall = (strategy, scope) => async function oauthCall(req, res, next
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
-exports.oauthCallback = strategy => async function oauthCall(req, res, next) {
+exports.oauthCallback = (strategy) => async function oauthCall(req, res, next) {
   // Pop redirect URL from session
   const sessionRedirectURL = req.session.redirect_to;
   delete req.session.redirect_to;
@@ -207,7 +207,7 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
           });
 
           // And save the user
-          userTmp.save(err_ => done(err_, userTmp));
+          userTmp.save((err_) => done(err_, userTmp));
         });
         // eslint-disable-next-line
       } else {
@@ -238,7 +238,7 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
       userTmp.markModified('additionalProvidersData');
 
       // And save the user
-      userTmp.save(err => done(err, userTmp, '/settings/accounts'));
+      userTmp.save((err) => done(err, userTmp, '/settings/accounts'));
     } else {
       return done(new Error(req.t('USER_PROVIDER_ALREADY_CONNECTED')), req.user);
     }

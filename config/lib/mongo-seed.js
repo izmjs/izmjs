@@ -50,8 +50,8 @@ async function seed(collection, options) {
     }
 
     const workload = docs
-      .filter(doc => doc.data)
-      .map(doc => Model.seed(doc.data, {
+      .filter((doc) => doc.data)
+      .map((doc) => Model.seed(doc.data, {
         overwrite: doc.overwrite,
       }));
 
@@ -80,7 +80,7 @@ function start(seedConfig) {
     }
 
     const seeds = collections
-      .filter(collection => collection.model);
+      .filter((collection) => collection.model);
 
     // Local Promise handlers
 

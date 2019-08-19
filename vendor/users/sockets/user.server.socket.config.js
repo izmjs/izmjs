@@ -9,7 +9,7 @@ module.exports = (io) => {
     const roles = req.user && Array.isArray(req.user.roles) ? req.user.roles : ['guest'];
 
     iam.IAMsFromRoles(roles).then((list) => {
-      req.iams = list.map(item => ({ ...item, resource: new RegExp(item.resource, 'i') }));
+      req.iams = list.map((item) => ({ ...item, resource: new RegExp(item.resource, 'i') }));
       return next();
     }).catch(next);
   });
