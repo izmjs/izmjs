@@ -1,6 +1,6 @@
 ## NodeJS, Express and MongoDB starter
 
-[![Introduction video](https://img.youtube.com/vi/gqrCH25qjP8/0.jpg)](https://www.youtube.com/watch?v=gqrCH25qjP8)
+[![Introduction video](https://img.youtube.com/vi/BlMCotURwAk/0.jpg)](https://www.youtube.com/watch?v=BlMCotURwAk)
 
 ## Table of Content
 
