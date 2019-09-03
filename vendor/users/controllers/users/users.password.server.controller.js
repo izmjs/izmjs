@@ -50,7 +50,7 @@ exports.forgot = async function forgot(req, res, next) {
 
   if (user.provider !== 'local') {
     return res.status(400).send({
-      message: req.t('USER_NOT_LOCAL', user),
+      message: req.t('USER_NOT_LOCAL', user.toJSON()),
     });
   }
 
