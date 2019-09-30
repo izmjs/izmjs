@@ -47,8 +47,4 @@ module.exports = {
       },
     },
   },
-  validations: {
-    types: ['email'],
-    mondatory: ['email'],
-  },
 };

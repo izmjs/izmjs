@@ -33,10 +33,6 @@ module.exports = {
       },
     },
   },
-  validations: {
-    mondatory: ['email'],
-    types: ['email'],
-  },
   mailer: {
     from: process.env.MAILER_FROM || 'MAILER_FROM',
     options: {
