@@ -26,4 +26,3 @@ jobs:
         CI: true
         NODE_ENV: test
         MONGODB_URI: mongodb://mongo:${{ job.services.mongo.ports[27017] }}/app-test
-        DB_1_PORT_27017_TCP_ADDR: mongo

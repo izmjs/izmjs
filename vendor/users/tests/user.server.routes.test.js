@@ -110,7 +110,7 @@ describe('User CRUD tests', () => {
     resp.body.ok.should.equal(true);
   });
 
-  it('Should not be able to authenticate with wrong credentials', async () => {
+  it('should not be able to authenticate with wrong credentials', async () => {
     await agent
       .post('/api/v1/auth/signin')
       .send({
@@ -482,7 +482,7 @@ describe('User CRUD tests', () => {
     should.not.exist(res.body.validations);
   });
 
-  it('Should return null when getting user details if not authenticated', async () => {
+  it('should return null when getting user details if not authenticated', async () => {
     // Get own user details
     const res = await agent.get('/api/v1/me').expect(200);
     should.equal(null, res.body);
