@@ -4,11 +4,9 @@ const { readdirSync, existsSync } = require('fs');
 const { spawn } = require('child_process');
 const { platform } = require('os');
 
-// get library path
-const lib = resolve(__dirname, '../modules/');
-
-readdirSync(lib)
-  .forEach((mod) => {
+['modules', 'vendor'].forEach((base) => {
+  const lib = resolve(__dirname, '..', base);
+  readdirSync(lib).forEach((mod) => {
     const modPath = join(lib, mod);
     // ensure path has package.json
     if (!existsSync(join(modPath, 'package.json'))) {
@@ -23,3 +21,4 @@ readdirSync(lib)
 
     return true;
   });
+});
