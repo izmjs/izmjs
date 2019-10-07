@@ -21,6 +21,15 @@
     ],
     "description": "Add test block"
   },
+  "Add a pretest block": {
+    "scope": "javascript",
+    "prefix": "@prerequest",
+    "body": [
+      "@prerequest",
+      "* pm.environment.set(\"$1\", \"$2\");",
+    ],
+    "description": "Add test block"
+  },
   "Add params block": {
     "scope": "javascript",
     "prefix": "@params",
