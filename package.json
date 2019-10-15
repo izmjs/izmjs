@@ -39,17 +39,17 @@
     "debug": "^4.1.1",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
-    "express-session": "^1.16.2",
+    "express-session": "^1.17.0",
     "file-stream-rotator": "^0.5.5",
     "generate-password": "^1.4.2",
     "glob": "^7.1.4",
     "helmet": "^3.21.1",
-    "i18next": "^17.1.0",
+    "i18next": "^17.2.0",
     "i18next-express-middleware": "^1.8.2",
     "i18next-node-fs-backend": "^2.1.3",
     "lodash": "^4.17.15",
     "method-override": "^3.0.0",
-    "mongoose": "^5.7.4",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "nodemailer": "^6.3.1",
     "nunjucks": "^3.2.0",
@@ -81,13 +81,13 @@
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "husky": "^3.0.8",
+    "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "mocha": "^6.2.1",
     "nodemon": "^1.19.3",
     "ora": "^4.0.2",
     "plop": "^2.4.0",
-    "pm2": "^3.5.1",
+    "pm2": "^4.1.1",
     "prettier": "^1.18.2",
     "release-it": "^12.4.3",
     "should": "^13.2.3",
@@ -95,7 +95,7 @@
     "watch": "^1.0.2"
   },
   "optionalDependencies": {
-    "fsevents": "^2.1.0"
+    "fsevents": "^2.1.1"
   },
   "husky": {
     "hooks": {
