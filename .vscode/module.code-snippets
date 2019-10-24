@@ -1,5 +1,5 @@
 {
-    "Add an env variable": {
+    "Add a model": {
       "scope": "javascript",
       "prefix": "module:model",
       "body": [
