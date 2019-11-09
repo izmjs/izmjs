@@ -5,7 +5,7 @@
   "scripts": {
     "test": "npm run test:prefix ./vendor/*/tests/*.test.js",
     "test:modules": "npm run test:prefix ./modules/*/tests/*.test.js",
-    "test:prefix": "mocha --recursive ./helpers/test-hooks.js",
+    "test:prefix": "mocha --exit --recursive ./helpers/test-hooks.js",
     "pretest": "npm run lint",
     "test:watch": "nodemon --watch modules/**/*.js --exec \"npm test\"",
     "format:write": "prettier --write **/*.{json,md} !package.json",
