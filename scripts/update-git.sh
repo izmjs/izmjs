@@ -13,9 +13,14 @@ update-deps)
     npm i -g npm-check-updates
   fi
 
+  if ! (git diff --exit-code 2>/dev/null); then
+    echo "please commit your work before running this script"
+    exist 0
+  fi
+
   npx ncu -u
   git add .
-  git commit -m "chore: update dependencies"
+  git commit -nm "chore: update dependencies"
   git push
   ;;
 
