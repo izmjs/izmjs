@@ -24,7 +24,7 @@ const glob$ = promisify(glob);
     // eslint-disable-next-line
     await new Promise((fnResolve, fnReject) => {
       const cmd = spawn(resolve(__dirname, './update-git.sh'), [
-        process.argv[3] || 'update-deps',
+        process.argv[2] || 'update-deps',
       ], {
         cwd: dir,
         stdio: 'inherit',
