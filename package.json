@@ -23,7 +23,7 @@
     "generate:certs": "scripts/generate-ssl-certs.sh",
     "postinstall": "node ./scripts/install-dependencies.js",
     "npm:update": "./scripts/update.js update-deps",
-    "git:pull": "./scripts/update.js pull"
+    "pull": "./scripts/update.js pull"
   },
   "engines": {
     "node": ">=10"
