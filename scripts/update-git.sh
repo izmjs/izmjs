@@ -25,7 +25,7 @@ update-deps)
   else
     npx ncu -u
     git add .
-    git commit -nm "chore: update dependencies"
+    git commit -m "chore: update dependencies"
     git push
   fi
   ;;
