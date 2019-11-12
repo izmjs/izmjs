@@ -24,9 +24,12 @@ update-deps)
     echo "${RED}please commit your work before running this script${NC}"
   else
     npx ncu -u
-    git add .
-    git commit -m "chore: update dependencies"
-    git push
+
+    if ! (git diff --exit-code --quiet 2>/dev/null); then
+      git add .
+      git commit -m "chore: update dependencies"
+      git push
+    fi
   fi
   ;;
 
