@@ -61,7 +61,7 @@
     "path-to-regexp": "^5.0.0",
     "socket.io": "^2.3.0",
     "socket.io-redis": "^5.2.0",
-    "twilio": "^3.37.0",
+    "twilio": "^3.37.1",
     "validator": "^12.0.0"
   },
   "commitlint": {
@@ -84,10 +84,10 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "husky": "^3.0.9",
-    "lint-staged": "^9.4.2",
+    "lint-staged": "^9.4.3",
     "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
-    "ora": "^4.0.2",
+    "ora": "^4.0.3",
     "plop": "^2.5.3",
     "pm2": "^4.1.2",
     "prettier": "^1.19.1",
