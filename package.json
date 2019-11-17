@@ -22,8 +22,11 @@
     "generate:module": "plop module",
     "generate:certs": "scripts/generate-ssl-certs.sh",
     "postinstall": "node ./scripts/install-dependencies.js",
-    "npm:update": "./scripts/update.js update-deps",
-    "pull": "./scripts/update.js pull"
+    "npm:update": "./scripts/update.js --cmd=npm-update",
+    "npm:audit": "./scripts/update.js --cmd=npm-audit",
+    "npm:audit:fix": "./scripts/update.js --cmd=npm-audit-fix",
+    "git:pull": "./scripts/update.js --cmd=git-pull --only=git",
+    "git:push": "./scripts/update.js --cmd=git-push --only=git"
   },
   "engines": {
     "node": ">=10"

@@ -3,18 +3,24 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo "*********************************************************************************************"
-echo "* Working directory: `pwd`"
+echo "* Working directory: $(pwd)"
 echo "*********************************************************************************************"
 
 case "$1" in
 
-pull)
+git-pull)
   git stash
   git pull
   git stash pop
   ;;
 
-update-deps)
+git-push)
+  git add .
+  git commit
+  git push
+  ;;
+
+npm-update)
   if ! (hash ncu 2>/dev/null); then
     echo "npm-check-updates does not exist, installing it globally..."
     npm i -g npm-check-updates
@@ -31,6 +37,14 @@ update-deps)
       git push
     fi
   fi
+  ;;
+
+npm-audit)
+  npm audit
+  ;;
+
+npm-audit-fix)
+  npm audit fix
   ;;
 
 *) echo "Option $1 not recognized" ;; # In case you typed a different option other than a,b,c

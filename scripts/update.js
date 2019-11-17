@@ -14,8 +14,23 @@ const {
 const glob$ = promisify(glob);
 
 (async () => {
-  const dirs = (await glob$('./modules/*/.git'))
-    .map((dir) => dir.substr(0, dir.length - 5));
+  const REGEX = /^--(.*)=(.*)$/;
+  const args = {};
+
+  process.argv.forEach((arg) => {
+    const exec = REGEX.exec(arg);
+    if (exec) {
+      const [, name, value] = exec;
+      args[name] = value;
+    }
+  });
+
+  const pattern = args.only === 'git'
+    ? './modules/*/.git'
+    : './modules/*/package.json';
+
+  const dirs = (await glob$(pattern))
+    .map((dir) => dir.substr(0, dir.lastIndexOf('/')));
 
   dirs.unshift('.');
 
@@ -23,8 +38,8 @@ const glob$ = promisify(glob);
     const dir = dirs[i];
     // eslint-disable-next-line
     await new Promise((fnResolve, fnReject) => {
-      const cmd = spawn(resolve(__dirname, './update-git.sh'), [
-        process.argv[2] || 'update-deps',
+      const cmd = spawn(resolve(__dirname, './modules-tools.sh'), [
+        args.cmd || 'npm-update',
       ], {
         cwd: dir,
         stdio: 'inherit',
