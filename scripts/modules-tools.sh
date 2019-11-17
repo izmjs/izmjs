@@ -19,6 +19,8 @@ git-push)
     git add .
     git commit
     git push
+  else
+    echo "Clean repository. Nothing to commit."
   fi
   ;;
 
