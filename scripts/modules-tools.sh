@@ -15,9 +15,11 @@ git-pull)
   ;;
 
 git-push)
-  git add .
-  git commit
-  git push
+  if ! (git diff --exit-code --quiet 2>/dev/null); then
+    git add .
+    git commit
+    git push
+  fi
   ;;
 
 npm-update)
