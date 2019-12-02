@@ -1,5 +1,5 @@
-const debug = require('debug')('modules:{{name}}');
+const debug = require('debug')('modules:{{{lowercase name}}}');
 
 module.exports = async () => {
-  debug('Module "{{name}}" bootstraped');
+  debug('Module "{{{lowercase name}}}" bootstraped');
 };

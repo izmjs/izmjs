@@ -1,9 +1,9 @@
 {
-  "name": "{{name}}",
+  "name": "{{{lowercase name}}}",
   "version": "0.1.0",
   "license": "ISC",
   "scripts": {
-    "test": "node ../../scripts/run-tests {{name}}",
+    "test": "node ../../scripts/run-tests {{{lowercase name}}}",
     "lint": "eslint .",
     "pretest": "npm run lint",
     "format:write": "prettier **/*.{json,md} --write",
@@ -12,15 +12,15 @@
     "release:minor": "release-it minor",
     "release:patch": "release-it patch"{{/if}}
   },
-  "description": "The {{name}} module",
+  "description": "The {{{lowercase name}}} module",
   "keywords": [
-    "{{name}}",
+    "{{{lowercase name}}}",
     "boilerplate-fm",
     "functional-module"
   ],
   "repository": {
     "type": "github",
-    "url": "https://github.com/izmjs/{{name}}.git"
+    "url": "https://github.com/izmjs/{{{lowercase name}}}.git"
   },
   "devDependencies": {
     {{#if git}}"@commitlint/cli": "^8.2.0",
