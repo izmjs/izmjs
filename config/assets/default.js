@@ -18,8 +18,9 @@ module.exports = {
       `${vendor}/core/routes/**/*.js`,
     ],
     config: [
-      `${vendor}/*/config/*.js`,
+      `${vendor}/*/config/!(01-acls).server.config.js`,
       ...custom.map(m => `${m}/*/config/*.js`),
+      `${vendor}/*/config/01-acls.server.config.js`,,
     ],
     iam: [
       `${vendor}/*/iam/*.js`,
