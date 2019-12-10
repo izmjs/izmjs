@@ -1,5 +1,5 @@
 {
-  "watch": ["**/*.js", "**/*.swig", ".env"],
-  "ignore": [".git/*", "node_modules/*"],
-  "ext": "js,swig,.env"
+  "watch": ["**/*.js", "**/*.swig"],
+  "ignore": [".git/*", "node_modules/*", "modules"],
+  "ext": "js,swig"
 }
