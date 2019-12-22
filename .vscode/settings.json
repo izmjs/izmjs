@@ -1,7 +1,9 @@
 {
-  "eslint.autoFixOnSave": true,
   "files.eol": "\n",
   "files.exclude": {
     "db/**": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }

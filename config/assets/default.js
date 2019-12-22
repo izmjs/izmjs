@@ -35,8 +35,8 @@ module.exports = {
       ...custom.map(m => `${m}/*/app.config.js`),
     ],
     env: [
-      `${vendor}/*/variables.meta.json`,
-      ...custom.map(m => `${m}/*/variables.meta.json`),
+      `${vendor}/*/variables.meta.@(json|js)`,
+      ...custom.map(m => `${m}/*/variables.meta.@(json|js)`),
     ],
     sockets: [
       `${vendor}/*/sockets/**/*.server.socket.js`,
