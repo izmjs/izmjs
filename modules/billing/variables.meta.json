@@ -1,0 +1,10 @@
+{
+  "EXAMPLE_KEY": {
+    "name": "An example key for the module \"billing\"",
+    "defaultValue": "",
+    "scope": "billing",
+    "schema": {
+      "type": "string"
+    }
+  }
+}

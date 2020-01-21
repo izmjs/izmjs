@@ -1,0 +1,10 @@
+{
+  "EXAMPLE_KEY": {
+    "name": "An example key for the module \"cabines\"",
+    "defaultValue": "",
+    "scope": "cabines",
+    "schema": {
+      "type": "string"
+    }
+  }
+}
