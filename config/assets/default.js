@@ -18,8 +18,9 @@ module.exports = {
       `${vendor}/core/routes/**/*.js`,
     ],
     config: [
-      `${vendor}/*/config/*.js`,
+      `${vendor}/*/config/!(01-acls).server.config.js`,
       ...custom.map(m => `${m}/*/config/*.js`),
+      `${vendor}/*/config/01-acls.server.config.js`,,
     ],
     iam: [
       `${vendor}/*/iam/*.js`,
@@ -34,8 +35,8 @@ module.exports = {
       ...custom.map(m => `${m}/*/app.config.js`),
     ],
     env: [
-      `${vendor}/*/variables.meta.json`,
-      ...custom.map(m => `${m}/*/variables.meta.json`),
+      `${vendor}/*/variables.meta.@(json|js)`,
+      ...custom.map(m => `${m}/*/variables.meta.@(json|js)`),
     ],
     sockets: [
       `${vendor}/*/sockets/**/*.server.socket.js`,

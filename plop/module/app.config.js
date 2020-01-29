@@ -1,4 +1,4 @@
-const SCOPE = '{{name}}';
+const SCOPE = '{{{lowercase name}}}';
 
 module.exports = (config) => {
   const { env } = config.utils;

@@ -4,5 +4,5 @@
   "reporter": "spec",
   "enableTimeouts": false,
   "package": "./package.json",
-  "opts": "./test/mocha.opts"
+  "timeout": 5000
 }

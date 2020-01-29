@@ -26,6 +26,7 @@ module.exports.connect = (callback) => {
       ...config.db.options,
       autoIndex: false,
       useFindAndModify: false,
+      useUnifiedTopology: true,
     })
     .then(() => {
       // Enabling mongoose debug mode if required

@@ -19,6 +19,13 @@ function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
 }
 
+function lowercase(str) {
+  if (str && typeof str === 'string') {
+    return str.toLocaleLowerCase();
+  }
+  return str;
+}
+
 function getKey(txt) {
   return typeof txt === 'string' && txt.match(/[- ]/)
     ? `'${txt}'`
@@ -50,7 +57,7 @@ module.exports = (plop) => {
       {
         type: 'addMany',
         templateFiles: 'plop/module/**/*!(*.hbs)',
-        destination: 'modules/{{name}}',
+        destination: 'modules/{{{lowercase name}}}',
         skipIfExists: true,
         base: 'plop/module',
         globOptions: {
@@ -98,4 +105,5 @@ module.exports = (plop) => {
   plop.setHelper('camelize', camelize);
   plop.setHelper('raw-helper', (options) => options.fn());
   plop.setHelper('get-key', getKey);
+  plop.setHelper('lowercase', lowercase);
 };

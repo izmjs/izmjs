@@ -1,6 +1,19 @@
 ## NodeJS, Express and MongoDB starter
 
-[![Introduction video](https://img.youtube.com/vi/gqrCH25qjP8/0.jpg)](https://www.youtube.com/watch?v=gqrCH25qjP8)
+![David](https://img.shields.io/david/izmjs/izmjs)
+![David](https://img.shields.io/david/dev/izmjs/izmjs)
+![node](https://img.shields.io/node/v/izm)
+![npm](https://img.shields.io/npm/dm/izm)
+![npm](https://img.shields.io/npm/v/izm)
+![GitHub issues](https://img.shields.io/github/issues/izmjs/izmjs)
+![GitHub top language](https://img.shields.io/github/languages/top/izmjs/izmjs)
+![GitHub contributors](https://img.shields.io/github/contributors/izmjs/izmjs)
+[![npm version][npm-badge]][npm]
+[![vulnerabilities][vulnerabilities-badge]][vulnerabilities]
+[![PRs Welcome][prs-badge]][prs]
+[![MIT License][license-badge]][license]
+
+[![Introduction video](https://img.youtube.com/vi/BlMCotURwAk/0.jpg)](https://www.youtube.com/watch?v=BlMCotURwAk)
 
 ## Table of Content
 
@@ -78,3 +91,16 @@ You need to define these environment variables in your repository:
 - `STAGING_URL`: [The staging URL](https://docs.gitlab.com/ee/ci/environments.html#making-use-of-the-environment-url)
 - `STAGING_DEPLOY_SERVER`: List of staging servers addresses or IP addresses. Should be separated by `,`.
 - `STAGING_SSH_PRIVATE_KEY`: The SSH key to use to connect to staging servers.
+
+## License
+
+MIT © Mohamed IDRISSI
+
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
+[prs]: http://makeapullrequest.com
+[npm-badge]: https://badge.fury.io/js/func-loc.svg
+[npm]: https://www.npmjs.com/package/func-loc
+[vulnerabilities-badge]: https://snyk.io/test/github/midrissi/func-loc/badge.svg?targetFile=package.json
+[vulnerabilities]: https://snyk.io/test/github/midrissi/func-loc?targetFile=package.json
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://github.com/midrissi/func-loc/blob/master/LICENSE

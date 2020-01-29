@@ -1,7 +1,7 @@
 module.exports = (config) => {
   const { env } = config.utils;
   const host = env.get('HOST', 'http-server');
-  const port = process.env.PORT || env.get('PORT', 'http-server');
+  const port = env.get('PORT', 'http-server');
   const secure = {
     ssl: env.get('HTTP_SECURE', 'http-server'),
     privateKey: env.get('PRIV_KEY', 'http-server'),

@@ -1,9 +1,9 @@
 {
-  "name": "{{name}}",
+  "name": "{{{lowercase name}}}",
   "version": "0.1.0",
   "license": "ISC",
   "scripts": {
-    "test": "node ../../scripts/run-tests {{name}}",
+    "test": "node ../../scripts/run-tests {{{lowercase name}}}",
     "lint": "eslint .",
     "pretest": "npm run lint",
     "format:write": "prettier **/*.{json,md} --write",
@@ -12,21 +12,25 @@
     "release:minor": "release-it minor",
     "release:patch": "release-it patch"{{/if}}
   },
-  "description": "The {{name}} module",
+  "description": "The {{{lowercase name}}} module",
   "keywords": [
-    "{{name}}",
+    "{{{lowercase name}}}",
     "boilerplate-fm",
     "functional-module"
   ],
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/izmjs/{{{lowercase name}}}.git"
+  },
   "devDependencies": {
-    {{#if git}}"@commitlint/cli": "^8.1.0",
-    "@commitlint/config-conventional": "^8.1.0",
-    "lint-staged": "^9.2.3",
-    "husky": "^3.0.4",
-    "release-it": "^12.3.5",
-    {{/if}}"eslint": "^6.2.0",
+    {{#if git}}"@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "lint-staged": "^9.5.0",
+    "husky": "^3.1.0",
+    "release-it": "^12.4.3",
+    {{/if}}"eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.19.1"
   }{{#if git}},
   "commitlint": {
     "extends": [

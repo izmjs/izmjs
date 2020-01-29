@@ -1,8 +1,8 @@
 {
   "EXAMPLE_KEY": {
-    "name": "An example key for the module \"{{name}}\"",
+    "name": "An example key for the module \"{{{lowercase name}}}\"",
     "defaultValue": "",
-    "scope": "{{name}}",
+    "scope": "{{{lowercase name}}}",
     "schema": {
       "type": "string"
     }

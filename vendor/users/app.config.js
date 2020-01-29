@@ -30,8 +30,7 @@ module.exports = (config) => {
 
   // Supported validations
   const validations = {
-    mondatory: [],
-    types: [],
+    types: ['email'],
     config: {
       phone: {
         validate: env.get('PHONE_VALIDATE'),
@@ -49,6 +48,10 @@ module.exports = (config) => {
       },
     },
   };
+
+  validations.mondatory = Object
+    .keys(validations.config)
+    .filter((type) => validations.config[type].validate);
 
   // Twilio configuration
   const twilio = {

@@ -45,10 +45,14 @@ exports.signup = async function signup(req, res, next) {
     hooks.onSignup(user, req);
     await user.save();
   } catch (err) {
-    switch (err.code) {
-      case 11000:
+    switch (true) {
+      case err.code === 11000:
         return res.status(400).json({
           message: req.t('USER_ALREADY_EXISTS'),
+        });
+      case err.name === 'ValidationError':
+        return res.status(400).json({
+          message: err.message,
         });
       default:
         return next(err);
