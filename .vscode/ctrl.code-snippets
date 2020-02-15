@@ -6,7 +6,7 @@
       "/**",
       " * $1",
       " * @controller $2",
-      " * @param {IncommingMessage} req The request",
+      " * @param {Express.Request} req The request",
       " * @param {OutcommingMessage} res The response",
       " * @param {Function} next Go to the next middleware",
       " */"
@@ -20,7 +20,7 @@
       "/**",
       " * $1",
       " * @controller $2",
-      " * @param {IncommingMessage} req The request",
+      " * @param {Express.Request} req The request",
       " * @param {OutcommingMessage} res The response",
       " * @param {Function} next Go to the next middleware",
       " */",
@@ -29,5 +29,16 @@
       "};"
     ],
     "description": "Add method to an existing route"
+  },
+  "Response format": {
+    "scope": "javascript",
+    "prefix": "resp",
+    "body": [
+      "{",
+      "\tsuccess: $1,",
+      "\tresult: {$2}",
+      "}"
+    ],
+    "description": "the server response format."
   }
 }

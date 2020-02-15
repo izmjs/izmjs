@@ -6,7 +6,7 @@ const { vendor } = config.files.server.modules;
 
 /**
  * Render the main application page
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -18,7 +18,7 @@ exports.renderIndex = async function renderIndex(req, res) {
 
 /**
  * Render the server error page
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -33,7 +33,7 @@ exports.renderServerError = async function renderServerError(req, res) {
 /**
  * Render the server not found responses
  * Performs content-negotiation on the Accept HTTP header
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */

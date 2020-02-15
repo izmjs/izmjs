@@ -5,5 +5,6 @@ coverage/
 assets/
 .nyc_output/
 public/
-modules/
+modules/data-browser
+modules/devtools
 plop/

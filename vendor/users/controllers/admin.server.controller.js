@@ -15,7 +15,7 @@ const errorHandler = require(resolve(`./${vendor}/core/controllers/errors.server
 
 /**
  * Read a single user infos
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -27,7 +27,7 @@ exports.read = async function read(req, res) {
 
 /**
  * Send the profile picture of a specific user
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -44,7 +44,7 @@ exports.picture = async function picture(req, res, next) {
 
 /**
  * Update a User
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -76,7 +76,7 @@ exports.update = async function update(req, res) {
 
 /**
  * Delete a user
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -96,7 +96,7 @@ exports.delete = async function remove(req, res) {
 
 /**
  * Return an svg image from the user
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -145,7 +145,7 @@ exports.list = async function list(req, res, next) {
 
 /**
  * Get user by ID
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */

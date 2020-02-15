@@ -1,7 +1,7 @@
 
 /**
  * Get unique error field name
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -20,7 +20,7 @@ const getUniqueErrorMessage = (err) => {
 
 /**
  * Get the error message from error object
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */

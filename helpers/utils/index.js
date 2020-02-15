@@ -5,20 +5,21 @@ const debug = require('debug')('boilerplate:helpers:utils');
 const { resolve } = require('path');
 const { readFile } = require('fs');
 const { promisify } = require('util');
-
+const ajvErrors = require('ajv-errors');
 // eslint-disable-next-line import/no-dynamic-require
 const sockets = require(resolve('config/lib/socket.io'));
 
 const roleCache = {};
 let excludeCache;
 const readFile$ = promisify(readFile);
+const ajv = new Ajv({ allErrors: true, jsonPointers: true });
+ajvErrors(ajv);
 
 /**
  * Validates a payload with a given schema
  * @param {Object} schema The schema of the payload
  */
 exports.validate = (schema) => async function validateSchema(req, res, next) {
-  const ajv = new Ajv();
   const validate = ajv.compile(schema);
 
   if (validate(req.body)) {
@@ -127,6 +128,11 @@ exports.createUser = async (
  * @param {Object} iam The IAM object
  */
 exports.isExcluded = async ({ iam, parents = [] }) => {
+  if (process.env.NODE_ENV === 'test') {
+    return {
+      found: false,
+    };
+  }
   if (!excludeCache) {
     let content = '';
     try {

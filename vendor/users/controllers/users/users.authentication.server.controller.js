@@ -5,15 +5,15 @@ eslint-disable import/no-dynamic-require,import/no-unresolved,import/no-extraneo
 /**
  * Module dependencies.
  */
-const path = require('path');
+const { resolve } = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
 const User = mongoose.model('User');
 const errorHandler = require('core/controllers/errors.server.controller');
 
-const config = require(path.resolve('./config'));
-const validationsHelper = require(path.resolve('./config/validations'));
+const validationsHelper = require(resolve('./config/validations'));
+const config = require(resolve('config'));
 
 // URLs for which user can't be redirected on signin
 const noReturnUrls = [
@@ -23,7 +23,7 @@ const noReturnUrls = [
 
 /**
  * Signup
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -59,19 +59,14 @@ exports.signup = async function signup(req, res, next) {
     }
   }
 
-  // Remove sensitive data before login
-  user.password = undefined;
-  user.salt = undefined;
-  user.validations = undefined;
+  req.user = user;
 
-  return res.json(user.toJSON({
-    virtuals: true,
-  }));
+  return next();
 };
 
 /**
  * Signin after passport authentication
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -103,14 +98,14 @@ exports.signin = async function signin(req, res, next) {
 
       await hooks.onLogin(req, user);
 
-      return res.json(user.json());
+      return next(null);
     });
   })(req, res, next);
 };
 
 /**
  * Signout
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -134,7 +129,7 @@ exports.oauthCall = (strategy, scope) => async function oauthCall(req, res, next
 
 /**
  * OAuth callback
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -164,7 +159,7 @@ exports.oauthCallback = (strategy) => async function oauthCall(req, res, next) {
 
 /**
  * Helper function to save or update a OAuth user profile
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -253,7 +248,7 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
 
 /**
  * Remove OAuth provider
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */

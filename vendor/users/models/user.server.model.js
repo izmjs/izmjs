@@ -180,6 +180,9 @@ const UserSchema = new Schema(
     salt: {
       type: String,
     },
+    data: {
+      type: Object,
+    },
     provider: {
       type: String,
       required: 'Provider is required',

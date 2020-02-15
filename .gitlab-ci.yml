@@ -1,10 +1,11 @@
-image: node:10.15.3
+image: node:12.16.0
 
 services:
-  - mongo:4.0.9
+  - mongo:4.2.3
 
 variables:
   NODE_ENV: "test"
+  MONGODB_URI: "mongodb://mongo/app-test"
   STAGING_URL: "$STAGING_URL"
   STAGING_DEPLOY_SERVER: "$STAGING_DEPLOY_SERVER"
   STAGING_SSH_PRIVATE_KEY: "$STAGING_SSH_PRIVATE_KEY"

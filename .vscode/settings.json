@@ -3,7 +3,9 @@
   "files.exclude": {
     "db/**": true
   },
+  "eslint.enable": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "eslint.validate": ["javascript"]
 }

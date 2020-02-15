@@ -1,6 +1,8 @@
 const chalk = require('chalk');
 const { resolve } = require('path');
 const express = require('express');
+const debug = require('debug')('vendor:users:config:acls');
+
 // eslint-disable-next-line import/no-unresolved
 const { isExcluded } = require('utils');
 
@@ -18,13 +20,35 @@ module.exports = (app) => {
   const iam = new Iam();
 
   app.use(async (req, res, next) => {
+    const { iams } = req;
+    let allIAMs;
     const roles = req.user && Array.isArray(req.user.roles) ? req.user.roles : ['guest'];
 
     try {
-      req.iams = await iam.IAMsFromRoles(roles);
-      req.iams = req.iams.map((item) => ({ ...item, resource: new RegExp(item.resource, 'i') }));
+      allIAMs = await iam.IAMsFromRoles(roles);
+      req.iams = allIAMs.map((item) => ({ ...item, resource: new RegExp(item.resource, 'i') }));
     } catch (e) {
       return next(e);
+    }
+
+    if (Array.isArray(iams)) {
+      req.iams = req.iams.filter((one) => iams.includes(one.iam));
+      const children = req.iams.reduce((prev, cur, index, arr) => {
+        const result = [...prev];
+        const { children: ch = [] } = cur;
+        ch.forEach((one) => {
+          const str = one.toString();
+          if (!result.includes(str) && !arr.find(({ id }) => str === id)) {
+            result.push(str);
+          }
+        });
+
+        return result;
+      }, []);
+      req.iams = Array.prototype.concat.apply(
+        req.iams,
+        allIAMs.filter(({ id }) => children.includes(id)),
+      );
     }
 
     return next();
@@ -41,6 +65,11 @@ module.exports = (app) => {
 
         if (resource instanceof RegExp) {
           return resource.test(req.baseUrl + req.route.path)
+            && req.method.toLowerCase() === permission;
+        }
+
+        if (typeof resource === 'string') {
+          return new RegExp(resource).test(req.baseUrl + req.route.path)
             && req.method.toLowerCase() === permission;
         }
 
@@ -146,12 +175,11 @@ module.exports = (app) => {
               if (!found) {
                 routeTmp[k](method.middlewares);
               } else {
-                console.info(chalk.yellow(`
+                debug(chalk.yellow(`
 IAM  excluded:
 IAM     : ${method.iam}
 Reason  : ${reason}
-Data    : ${data}
-`));
+Data    : ${data}`));
               }
             } catch (e) {
               const routes = method.middlewares.map((middleware) => {

@@ -93,7 +93,10 @@ module.exports = {
          */
         post: {
           parents: ['modules:users:auth'],
-          middlewares: [users.signup],
+          middlewares: [
+            users.signup,
+            users.me,
+          ],
           iam: 'users:auth:signup',
           title: 'Signup',
           description: 'Sign up a new user',
@@ -119,7 +122,10 @@ module.exports = {
          */
         post: {
           parents: ['modules:users:auth'],
-          middlewares: [users.signin],
+          middlewares: [
+            users.signin,
+            users.me,
+          ],
           iam: 'users:auth:signin',
           title: 'Signin',
           description: 'Sign in an existing user',

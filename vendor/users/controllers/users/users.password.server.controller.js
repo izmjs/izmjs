@@ -15,7 +15,7 @@ const { vendor } = config.files.server.modules;
 
 /**
  * Forgot for reset password (forgot POST)
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -87,7 +87,7 @@ exports.forgot = async function forgot(req, res, next) {
 
 /**
  * Reset password GET from email token
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -108,7 +108,7 @@ exports.validateResetToken = async function validateResetToken(req, res) {
 
 /**
  * Reset password POST from email token
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -177,7 +177,7 @@ exports.reset = async function reset(req, res, next) {
 
 /**
  * Change Password
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */

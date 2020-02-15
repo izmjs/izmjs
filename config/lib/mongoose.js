@@ -61,6 +61,9 @@ module.exports.disconnect = (cb) => {
     });
 };
 
+/**
+ * @returns {{ value: T[]; top: number; skip: number; count: number }}
+ */
 mongoose.Query.prototype.paginate = async function paginate({
   top = 10,
   skip = 0,

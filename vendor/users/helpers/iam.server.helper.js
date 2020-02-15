@@ -69,7 +69,7 @@ class Iam {
         new: true,
       });
     } catch (e) {
-      debug('Database Error');
+      debug('Database Error', e);
     }
 
     if (Array.isArray(parents)) {

@@ -8,7 +8,7 @@ const User = mongoose.model('User');
 
 /**
  * User middleware
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */

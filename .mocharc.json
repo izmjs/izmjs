@@ -4,5 +4,5 @@
   "reporter": "spec",
   "enableTimeouts": false,
   "package": "./package.json",
-  "timeout": 5000
+  "timeout": 15000
 }

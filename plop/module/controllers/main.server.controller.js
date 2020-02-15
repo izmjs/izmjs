@@ -3,7 +3,7 @@ const { resolve } = require('path');
 /**
  * Check if the module "{{{lowercase name}}}" is up and running
  * @controller Check "{{{lowercase name}}}" module
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  */
 exports.ok = async function ok(req, res) {

@@ -17,7 +17,7 @@ const User = mongoose.model('User');
 
 /**
  * Update user details
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -48,7 +48,7 @@ exports.update = async function update(req, res) {
 
 /**
  * Get profile picture
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -58,7 +58,7 @@ exports.getProfilePicture = async function getProfilePicture(req, res) {
 
 /**
  * Update profile picture
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -92,7 +92,7 @@ exports.uploadProfilePicture = async function uploadProfilePicture(req, res, nex
 
 /**
  * Filter the profile picture mimeTypes
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -106,7 +106,7 @@ exports.profilePictFilter = async function profilePictFilter(req, file, cb) {
 
 /**
  * Send User
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -115,9 +115,7 @@ exports.me = async function me(req, res) {
   const { $select } = req.query;
   const { iams = [] } = req;
 
-  let result = req.user ? req.user.toJSON({
-    virtuals: true,
-  }) : null;
+  let result = req.user ? req.user.json() : null;
 
   if (!result) {
     return res.json(result);
@@ -147,7 +145,7 @@ exports.me = async function me(req, res) {
 
 /**
  * Confirmation
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -218,7 +216,7 @@ exports.confirm = async function confirm(req, res) {
 
 /**
  * Resend the confirmation code
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -263,7 +261,7 @@ exports.resend = async function resend(req, res) {
 
 /**
  * Get the fullname of the current user
- * @param {IncommingMessage} req The request
+ * @param {Express.Request} req The request
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
