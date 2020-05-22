@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2015"
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {}
   },
   "exclude": ["node_modules"],
   "typeAcquisition": {

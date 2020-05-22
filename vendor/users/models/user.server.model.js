@@ -22,23 +22,23 @@ let { twilio: twilioConfig } = config;
 let isSendGrid = false;
 
 if (
-  twilioConfig
-  && twilioConfig.from
-  && twilioConfig.from !== 'TWILIO_FROM'
-  && twilioConfig.accountID
-  && twilioConfig.accountID !== 'TWILIO_ACCOUNT_SID'
-  && twilioConfig.authToken
-  && twilioConfig.authToken !== 'TWILIO_AUTH_TOKEN'
+  twilioConfig &&
+  twilioConfig.from &&
+  twilioConfig.from !== 'TWILIO_FROM' &&
+  twilioConfig.accountID &&
+  twilioConfig.accountID !== 'TWILIO_ACCOUNT_SID' &&
+  twilioConfig.authToken &&
+  twilioConfig.authToken !== 'TWILIO_AUTH_TOKEN'
 ) {
   // eslint-disable-next-line new-cap
   twilioConfig = new twilio(config.twilio.accountID, config.twilio.authToken);
 } else {
   if (
-    (config.validations.mondatory.indexOf('phone') >= 0
-      || config.validations.types.indexOf('phone') >= 0)
-    && (twilioConfig.from === 'TWILIO_FROM'
-      || twilioConfig.accountID === 'TWILIO_ACCOUNT_SID'
-      || twilioConfig.authToken === 'TWILIO_AUTH_TOKEN')
+    (config.validations.mondatory.indexOf('phone') >= 0 ||
+      config.validations.types.indexOf('phone') >= 0) &&
+    (twilioConfig.from === 'TWILIO_FROM' ||
+      twilioConfig.accountID === 'TWILIO_ACCOUNT_SID' ||
+      twilioConfig.authToken === 'TWILIO_AUTH_TOKEN')
   ) {
     console.warn('Please configure TWILIO_FROM, TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN env vars');
   }
@@ -52,11 +52,7 @@ if (config.sendGrid && config.sendGrid.key && config.sendGrid.key !== 'SENDGRID_
 
 let smtpTransport;
 
-if (
-  config.mailer.options
-  && config.mailer.options.auth
-  && config.mailer.options.auth.pass
-) {
+if (config.mailer.options && config.mailer.options.auth && config.mailer.options.auth.pass) {
   smtpTransport = nodemailer.createTransport(config.mailer.options);
 }
 
@@ -243,10 +239,10 @@ const UserSchema = new Schema(
 
 UserSchema.virtual('profilePictureUrl').get(function get_picture_url() {
   if (this.picture) {
-    return `${config.prefix}/files/${this.picture}/view?size=300x300`;
+    return `${config.app.prefix}/files/${this.picture}/view?size=300x300`;
   }
 
-  return `${config.prefix}/users/${this.id}/picture`;
+  return `${config.app.prefix}/users/${this.id}/picture`;
 });
 
 UserSchema.virtual('name.full').get(function get_fullname() {
@@ -346,7 +342,11 @@ UserSchema.methods.sendMail = function send_mail(subject, body) {
  */
 UserSchema.query.sendMail = async function send_mail_col(subject, body) {
   const users = await this;
-  return sendMail(subject, body, users.map((u) => u.email));
+  return sendMail(
+    subject,
+    body,
+    users.map((u) => u.email),
+  );
 };
 
 /**

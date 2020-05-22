@@ -3,7 +3,7 @@ const { resolve } = require('path');
 const { promisify } = require('util');
 const { parse } = require('dotenv');
 const Ajv = require('ajv');
-const debug = require('debug')('boilerplate:helpers:utils:env');
+const debug = require('debug')('app:helpers:utils:env');
 
 const Field = require('./field');
 const envSchema = require('./field.schema');
@@ -138,25 +138,27 @@ ERROR : ${JSON.stringify(e)}`);
    * @param {JSONSchema} schema the json schema of the field
    * @param {String} scope the scope
    */
-  set({
-    key,
-    value,
-    field,
-    name = key,
-    defaultValue,
-    description = '',
-  }, schema = { type: 'string' }, scope = 'general') {
+  set(
+    { key, link, value, field, group, name = key, defaultValue, description = '' },
+    schema = { type: 'string' },
+    scope = 'general',
+  ) {
     let variable = this.variables.find((v) => v.scope === scope && v.key === key);
 
     if (!variable) {
-      variable = Field.create({
-        key,
-        name,
-        scope,
-        field,
-        description,
-        defaultValue,
-      }, schema);
+      variable = Field.create(
+        {
+          key,
+          name,
+          link,
+          group,
+          scope,
+          field,
+          description,
+          defaultValue,
+        },
+        schema,
+      );
 
       this.variables.push(variable);
     }
@@ -212,11 +214,12 @@ ERROR : ${JSON.stringify(e)}`);
    */
   toJSON() {
     const json = this.variables.reduce((prevValue, current) => {
-      const index = prevValue.findIndex((one) => one.name === current.scope);
+      const groupBy = current.group || current.scope;
+      const index = prevValue.findIndex((one) => one.name === groupBy);
 
       if (index < 0) {
         const found = {
-          name: current.scope,
+          name: groupBy,
           items: [current],
         };
 

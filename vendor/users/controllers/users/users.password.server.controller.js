@@ -29,13 +29,19 @@ exports.forgot = async function forgot(req, res, next) {
   let user;
 
   try {
-    user = await User.findOne({
-      $or: [{
-        email: req.body.username.toLowerCase(),
-      }, {
-        username: req.body.username.toLowerCase(),
-      }],
-    }, '-salt -password');
+    user = await User.findOne(
+      {
+        $or: [
+          {
+            email: req.body.username.toLowerCase(),
+          },
+          {
+            username: req.body.username.toLowerCase(),
+          },
+        ],
+      },
+      '-salt -password',
+    );
   } catch (e) {
     return next(e);
   }
@@ -59,7 +65,6 @@ exports.forgot = async function forgot(req, res, next) {
   user.resetPasswordToken = token;
   user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-
   try {
     await user.save();
   } catch (e) {
@@ -73,7 +78,7 @@ exports.forgot = async function forgot(req, res, next) {
     const html = await render.bind(res)(resolve(`${vendor}/users/views/reset-password-email`), {
       name: user.name.full,
       appName: config.app.title,
-      url: `${httpTransport + req.headers.host + config.prefix}/auth/reset/${token}`,
+      url: `${httpTransport + req.headers.host + config.app.prefix}/auth/reset/${token}`,
     });
     user.sendMail('Password Reset', html);
   } catch (e) {
@@ -92,18 +97,21 @@ exports.forgot = async function forgot(req, res, next) {
  * @param {Function} next Go to the next middleware
  */
 exports.validateResetToken = async function validateResetToken(req, res) {
-  User.findOne({
-    resetPasswordToken: req.params.token,
-    resetPasswordExpires: {
-      $gt: Date.now(),
+  User.findOne(
+    {
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: {
+        $gt: Date.now(),
+      },
     },
-  }, (err, user) => {
-    if (err || !user) {
-      return res.redirect('/password/reset/invalid');
-    }
+    (err, user) => {
+      if (err || !user) {
+        return res.redirect('/password/reset/invalid');
+      }
 
-    return res.redirect(`/password/reset/${req.params.token}`);
-  });
+      return res.redirect(`/password/reset/${req.params.token}`);
+    },
+  );
 };
 
 /**
@@ -160,19 +168,25 @@ exports.reset = async function reset(req, res, next) {
     user.salt = undefined;
     user.validations = undefined;
 
-    return res.json(user.toJSON({
-      virtuals: true,
-    }));
+    return res.json(
+      user.toJSON({
+        virtuals: true,
+      }),
+    );
   });
 
-  return res.render(`${vendor}/users/templates/reset-password-confirm-email`, {
-    name: user.name.full,
-    appName: config.app.title,
-  }, (err, emailHTML) => {
-    if (emailHTML) {
-      user.sendMail(req.t('USER_PASSWORD_CHANGED'), emailHTML);
-    }
-  });
+  return res.render(
+    `${vendor}/users/templates/reset-password-confirm-email`,
+    {
+      name: user.name.full,
+      appName: config.app.title,
+    },
+    (err, emailHTML) => {
+      if (emailHTML) {
+        user.sendMail(req.t('USER_PASSWORD_CHANGED'), emailHTML);
+      }
+    },
+  );
 };
 
 /**
@@ -205,7 +219,6 @@ exports.changePassword = async function changePassword(req, res, next) {
   } catch (e) {
     return next(e);
   }
-
 
   if (!user) {
     return res.status(400).send({

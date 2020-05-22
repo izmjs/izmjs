@@ -2,34 +2,13 @@
  * Guest role
  * @type {Array}
  */
-const guest = [
-  'users:profile:get',
-  'users:auth:signup',
-  'users:auth:signin',
-  'users:auth:passwd:forgotten',
-  'users:auth:passwd:validate-token',
-  'users:auth:passwd:reset',
-  'users:auth:code:confirm',
-  'users:auth:code:resend',
-  'users:auth:name',
-];
+const guest = ['vendor:users:public'];
 
 /**
  * User role
  * @type {Array}
  */
-const user = [
-  'users:auth:name',
-  'users:auth:signin',
-
-  // Users IAMs
-  'users:passwd:change',
-  'users:profile:get',
-  'users:profile:picture:get',
-  'users:profile:picture:update',
-  'users:auth:signout',
-  'users:profile:edit',
-];
+const user = ['vendor:users:user', 'vendor:users:auth'];
 
 /**
  * Admin role
@@ -37,12 +16,9 @@ const user = [
  */
 const admin = [
   ...user,
-  // Users IAMs
-  'users:admin:list',
-  'users:admin:read',
-  'users:admin:update',
-  'users:admin:delete',
-  'users:admin:picture',
+  // Admin IAMs
+  'vendor:users:admin',
+  'vendor:users:roles',
 ];
 
 /**

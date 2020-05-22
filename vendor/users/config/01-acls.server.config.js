@@ -8,13 +8,10 @@ const { isExcluded } = require('utils');
 
 const Iam = require('../helpers/iam.server.helper');
 
-// eslint-disable-next-line import/no-dynamic-require
-const config = require(resolve('config'));
-
 /**
  * Configure the modules server routes
  */
-module.exports = (app) => {
+module.exports = (app, db, config) => {
   // eslint-disable-next-line
   const regex = /^([a-zA-Z0-9]*)\/([^\/]*)/;
   const iam = new Iam();
@@ -64,13 +61,16 @@ module.exports = (app) => {
         const { permission, resource } = item;
 
         if (resource instanceof RegExp) {
-          return resource.test(req.baseUrl + req.route.path)
-            && req.method.toLowerCase() === permission;
+          return (
+            resource.test(req.baseUrl + req.route.path) && req.method.toLowerCase() === permission
+          );
         }
 
         if (typeof resource === 'string') {
-          return new RegExp(resource).test(req.baseUrl + req.route.path)
-            && req.method.toLowerCase() === permission;
+          return (
+            new RegExp(resource).test(req.baseUrl + req.route.path) &&
+            req.method.toLowerCase() === permission
+          );
         }
 
         return false;
@@ -88,10 +88,13 @@ module.exports = (app) => {
         }
       }
 
-      const found = (allIAMs || []).find((one) => one.resource
-        && new RegExp(one.resource).test(req.baseUrl + req.route.path)
-        && one.permission === req.method.toLowerCase()
-        && !one.excluded);
+      const found = (allIAMs || []).find(
+        (one) =>
+          one.resource &&
+          new RegExp(one.resource).test(req.baseUrl + req.route.path) &&
+          one.permission === req.method.toLowerCase() &&
+          !one.excluded,
+      );
 
       if (!found) {
         return res.status(404).json({
@@ -131,11 +134,11 @@ module.exports = (app) => {
     if (Array.isArray(m.routes)) {
       m.routes.forEach((route) => {
         if (
-          !route
-          || typeof route !== 'object'
-          || !route.methods
-          || typeof route.methods !== 'object'
-          || !route.path
+          !route ||
+          typeof route !== 'object' ||
+          !route.methods ||
+          typeof route.methods !== 'object' ||
+          !route.path
         ) {
           console.warn('Invalid route', route);
           return;
@@ -161,11 +164,11 @@ module.exports = (app) => {
         // Scan the routes
         Object.keys(route.methods).forEach(async (k) => {
           if (
-            typeof routeTmp[k] === 'function'
-            && Object.prototype.hasOwnProperty.call(route.methods, k)
-            && route.methods[k]
-            && typeof route.methods[k] === 'object'
-            && route.methods[k].middlewares
+            typeof routeTmp[k] === 'function' &&
+            Object.prototype.hasOwnProperty.call(route.methods, k) &&
+            route.methods[k] &&
+            typeof route.methods[k] === 'object' &&
+            route.methods[k].middlewares
           ) {
             const method = route.methods[k];
 
@@ -175,11 +178,13 @@ module.exports = (app) => {
               if (!found) {
                 routeTmp[k](method.middlewares);
               } else {
-                debug(chalk.yellow(`
+                debug(
+                  chalk.yellow(`
 IAM  excluded:
 IAM     : ${method.iam}
 Reason  : ${reason}
-Data    : ${data}`));
+Data    : ${data}`),
+                );
               }
             } catch (e) {
               const routes = method.middlewares.map((middleware) => {
@@ -187,8 +192,8 @@ Data    : ${data}`));
                 return result;
               });
               console.error(`
-Error while adding route:
-
+              Error while adding route:
+              
 ${chalk.red('Route')}   : ${route.path}
 ${chalk.red('Module')}  : ${routePath}
 ${chalk.red('Method')}  : ${k}
@@ -214,7 +219,7 @@ Please check your IAM configuraion
     if (m.is_global === true) {
       app.use(m.prefix, r);
     } else {
-      app.use(config.prefix + m.prefix, r);
+      app.use(config.app.prefix + m.prefix, r);
     }
   });
 };

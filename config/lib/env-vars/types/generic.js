@@ -1,5 +1,5 @@
 const Ajv = require('ajv');
-const debug = require('debug')('boilerplate:helpers:utils:env:field');
+const debug = require('debug')('app:helpers:utils:env:field');
 const { red } = require('chalk');
 
 const ajv = new Ajv();
@@ -10,24 +10,18 @@ const ajv = new Ajv();
  * @access private
  */
 class GenericField {
-  constructor({
-    key,
-    field,
-    name = key,
-    defaultValue,
-    scope = 'general',
-    description = '',
-  }, schema = { type: 'string' }) {
-    this.scope = scope;
-    this.key = key;
-    this.name = name || key;
-    this.description = description || '';
-    this.schema = schema;
-    this.validator = ajv.compile(schema);
-    this.field = field;
+  constructor(opts = {}, schema = { type: 'string' }) {
+    Object.keys(opts).forEach((attr) => {
+      this[attr] = opts[attr];
+    });
 
-    if (typeof defaultValue !== 'undefined') {
-      this.defaultValue = defaultValue;
+    this.name = this.name || this.key;
+    this.description = this.description || '';
+    this.schema = schema;
+
+    this.validator = ajv.compile(schema);
+
+    if (typeof opts.defaultValue !== 'undefined') {
       this.setValue(this.defaultValue);
     }
   }

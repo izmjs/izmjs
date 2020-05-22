@@ -17,9 +17,9 @@ module.exports = {
          * }
          */
         post: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.forgot],
-          iam: 'users:auth:passwd:forgotten',
+          iam: 'vendor:users:auth:passwd:forgotten',
           title: 'Reset the user password',
           description: 'Generate a reset password token and send it to the user',
         },
@@ -29,9 +29,9 @@ module.exports = {
       path: '/name',
       methods: {
         get: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.name],
-          iam: 'users:auth:name',
+          iam: 'vendor:users:auth:name',
           title: 'Get the user fullname',
           description: 'API to get the current user fullname',
         },
@@ -41,16 +41,16 @@ module.exports = {
       path: '/reset/:token',
       methods: {
         get: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.validateResetToken],
-          iam: 'users:auth:passwd:validate-token',
+          iam: 'vendor:users:auth:passwd:validate-token',
           title: 'Change password',
           description: 'Redirect the user to the right page to change his password',
         },
         post: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.reset],
-          iam: 'users:auth:passwd:reset',
+          iam: 'vendor:users:auth:passwd:reset',
           title: 'Change the password',
           description: 'Change a user password using a valid reset password token',
         },
@@ -60,9 +60,9 @@ module.exports = {
       path: '/password',
       methods: {
         post: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth'],
           middlewares: [users.changePassword],
-          iam: 'users:passwd:change',
+          iam: 'vendor:users:passwd:change',
           title: 'Change current user password',
           description: 'API to change the current user password',
         },
@@ -92,12 +92,9 @@ module.exports = {
          * });
          */
         post: {
-          parents: ['modules:users:auth'],
-          middlewares: [
-            users.signup,
-            users.me,
-          ],
-          iam: 'users:auth:signup',
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
+          middlewares: [users.signup, users.me],
+          iam: 'vendor:users:auth:signup',
           title: 'Signup',
           description: 'Sign up a new user',
         },
@@ -121,12 +118,9 @@ module.exports = {
          * });
          */
         post: {
-          parents: ['modules:users:auth'],
-          middlewares: [
-            users.signin,
-            users.me,
-          ],
-          iam: 'users:auth:signin',
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
+          middlewares: [users.signin, users.me],
+          iam: 'vendor:users:auth:signin',
           title: 'Signin',
           description: 'Sign in an existing user',
         },
@@ -136,9 +130,9 @@ module.exports = {
       path: '/signout',
       methods: {
         get: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth'],
           middlewares: [users.signout],
-          iam: 'users:auth:signout',
+          iam: 'vendor:users:auth:signout',
           title: 'Signout',
           description: 'Signout the current user',
         },
@@ -164,9 +158,9 @@ module.exports = {
          * }]
          */
         get: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.confirm],
-          iam: 'users:auth:code:confirm',
+          iam: 'vendor:users:auth:code:confirm',
           title: 'Confirm code',
           description: 'Confirm an automatically generated code',
         },
@@ -176,9 +170,9 @@ module.exports = {
       path: '/resend',
       methods: {
         get: {
-          parents: ['modules:users:auth'],
+          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.resend],
-          iam: 'users:auth:code:resend',
+          iam: 'vendor:users:auth:code:resend',
           title: 'Resend code',
           description: 'Resend an automatically generated code',
         },

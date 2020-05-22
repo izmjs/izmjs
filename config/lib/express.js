@@ -5,9 +5,9 @@ const i18nextMiddleware = require('i18next-express-middleware');
 const { lstatSync, readdirSync, readFileSync } = require('fs');
 const { createServer: createHTTPsServer } = require('https');
 const { createServer: createHTTPServer } = require('http');
+const debug = require('debug')('app:config:express');
 const Backend = require('i18next-node-fs-backend');
 const methodOverride = require('method-override');
-const debug = require('debug')('config:express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const { connection } = require('mongoose');
@@ -19,6 +19,7 @@ const i18next = require('i18next');
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const cors = require('cors');
 const { resolve, join } = require('path');
 
 const MongoStore = require('connect-mongo')(session);
@@ -34,10 +35,11 @@ const { vendor, custom } = config.files.server.modules;
  */
 module.exports.initLocalVariables = (app) => {
   const { locals } = app;
+  const { secure } = config.app;
 
   // Setting application local variables
-  if (config.secure && config.secure.ssl === true) {
-    locals.secure = config.secure.ssl;
+  if (secure.ssl === true) {
+    locals.secure = secure.ssl;
   }
 
   // Passing the request url to environment locals
@@ -86,12 +88,14 @@ module.exports.initMiddleware = (app) => {
   app.enable('jsonp callback');
 
   // Should be placed before express.static
-  app.use(compress({
-    filter(req, res) {
-      return /json|text|javascript|css|font|svg/.test(res.getHeader('Content-Type'));
-    },
-    level: 9,
-  }));
+  app.use(
+    compress({
+      filter(req, res) {
+        return /json|text|javascript|css|font|svg/.test(res.getHeader('Content-Type'));
+      },
+      level: 9,
+    }),
+  );
 
   // Enable logger (morgan)
   app.use(morgan(logger.getFormat(), logger.getOptions()));
@@ -112,7 +116,11 @@ module.exports.initMiddleware = (app) => {
   app.use(cookieParser());
   app.use(flash());
   app.use('/assets', express.static('assets'));
-  app.use(express.static('public'));
+  app.use(express.static(config.app.webFolder));
+
+  if (config.app.cors.enabled) {
+    app.use(cors());
+  }
 };
 
 /**
@@ -132,22 +140,22 @@ module.exports.initViewEngine = (app) => {
  * Configure Express session
  */
 module.exports.initSession = (app) => {
+  const { cookie, name, secret, collection } = config.session;
+
   // Express MongoDB session storage
-  app.use(session({
-    saveUninitialized: true,
-    resave: true,
-    secret: config.sessionSecret,
-    cookie: {
-      maxAge: config.sessionCookie.maxAge,
-      httpOnly: config.sessionCookie.httpOnly,
-      secure: config.sessionCookie.secure && config.secure.ssl,
-    },
-    name: config.sessionKey,
-    store: new MongoStore({
-      collection: config.sessionCollection,
-      mongooseConnection: connection,
+  app.use(
+    session({
+      saveUninitialized: true,
+      resave: true,
+      secret,
+      cookie,
+      name,
+      store: new MongoStore({
+        collection,
+        mongooseConnection: connection,
+      }),
     }),
-  }));
+  );
 
   // Add Lusca CSRF Middleware
   // app.use(lusca(config.csrf));
@@ -169,11 +177,13 @@ module.exports.initModulesConfiguration = (app, db) => {
 module.exports.initHelmetHeaders = (app) => {
   // Use helmet to secure Express headers
   const SIX_MONTHS = 15778476000;
-  app.use(helmet({
-    maxAge: SIX_MONTHS,
-    includeSubdomains: true,
-    force: true,
-  }));
+  app.use(
+    helmet({
+      maxAge: SIX_MONTHS,
+      includeSubdomains: true,
+      force: true,
+    }),
+  );
   app.disable('x-powered-by');
 };
 
@@ -188,23 +198,24 @@ module.exports.initModulesServerRoutes = (app) => {
     if (typeof m === 'function') {
       m(app);
     } else {
-      app.use(config.prefix + m.prefix, m.router(app));
+      app.use(config.app.prefix + m.prefix, m.router(app));
     }
   });
 };
 
 module.exports.createServer = (app) => {
   let server;
-  if (config.secure && config.secure.ssl === true) {
+  const { secure } = config.app;
+  if (secure.ssl === true) {
     // Load SSL key and certificate
-    const privateKey = readFileSync(resolve(config.secure.privateKey), 'utf8');
-    const certificate = readFileSync(resolve(config.secure.certificate), 'utf8');
+    const privateKey = readFileSync(resolve(secure.privateKey), 'utf8');
+    const certificate = readFileSync(resolve(secure.certificate), 'utf8');
     let caBundle;
 
     try {
-      caBundle = readFileSync(resolve(config.secure.caBundle), 'utf8');
+      caBundle = readFileSync(resolve(secure.caBundle), 'utf8');
     } catch (err) {
-      console.warn('Warning: couldn\'t find or read caBundle file');
+      console.warn('Warning: could not find or read caBundle file');
     }
 
     const options = {
@@ -254,24 +265,23 @@ module.exports.createServer = (app) => {
  * Configure i18n
  */
 module.exports.initI18n = (app) => {
-  const lngDetector = new i18nextMiddleware.LanguageDetector(
-    null,
-    config.i18next.detector,
-  );
+  const lngDetector = new i18nextMiddleware.LanguageDetector(null, config.i18next.detector);
 
   const getDirsNames = () => {
     const modules = [vendor, ...custom];
-    const names = modules.map((source) => readdirSync(source)
-      .map((name) => {
-        const p = join(source, name);
+    const names = modules.map((source) =>
+      readdirSync(source)
+        .map((name) => {
+          const p = join(source, name);
 
-        if (!lstatSync(p).isDirectory()) {
-          return false;
-        }
+          if (!lstatSync(p).isDirectory()) {
+            return false;
+          }
 
-        return `${source}:${name}`;
-      })
-      .filter(Boolean));
+          return `${source}:${name}`;
+        })
+        .filter(Boolean),
+    );
 
     return Array.prototype.concat.apply([], names);
   };
@@ -317,7 +327,6 @@ module.exports.initErrorRoutes = (app) => {
   });
 };
 
-
 /**
  * Initialize the Express application
  */
@@ -344,7 +353,7 @@ module.exports.init = async (db) => {
   this.initI18n(app);
 
   // Initialize Modules configuration
-  this.initModulesConfiguration(app);
+  this.initModulesConfiguration(app, db);
 
   // Initialize Helmet security headers
   this.initHelmetHeaders(app);

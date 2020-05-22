@@ -20,9 +20,11 @@ const errorHandler = require(resolve(`./${vendor}/core/controllers/errors.server
  * @param {Function} next Go to the next middleware
  */
 exports.read = async function read(req, res) {
-  res.json(req.model.toJSON({
-    virtuals: true,
-  }));
+  res.json(
+    req.model.toJSON({
+      virtuals: true,
+    }),
+  );
 };
 
 /**
@@ -39,7 +41,7 @@ exports.picture = async function picture(req, res, next) {
     return next();
   }
 
-  return res.redirect(`${config.prefix}/files/${pic}/view?size=300x300`);
+  return res.redirect(`${config.app.prefix}/files/${pic}/view?size=300x300`);
 };
 
 /**
@@ -69,9 +71,11 @@ exports.update = async function update(req, res) {
     });
   }
 
-  return res.json(user.toJSON({
-    virtuals: true,
-  }));
+  return res.json(
+    user.toJSON({
+      virtuals: true,
+    }),
+  );
 };
 
 /**
@@ -100,20 +104,24 @@ exports.delete = async function remove(req, res) {
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
-exports.svg = ({ size = 46, color = '#d35400', fill = '#ffffff' }) => async function svg(req, res) {
-  const { model } = req;
-  const { name } = model;
-  const { full } = name;
-  const text = full.split(' ').map((n) => n.charAt(0)).join('');
+exports.svg = ({ size = 46, color = '#d35400', fill = '#ffffff' }) =>
+  async function svg(req, res) {
+    const { model } = req;
+    const { name } = model;
+    const { full } = name;
+    const text = full
+      .split(' ')
+      .map((n) => n.charAt(0))
+      .join('');
 
-  res.set('Content-Type', 'image/svg+xml');
-  return res.render(resolve(__dirname, '../views/profile-picture.server.view.swig'), {
-    text,
-    size,
-    color,
-    fill,
-  });
-};
+    res.set('Content-Type', 'image/svg+xml');
+    return res.render(resolve(__dirname, '../views/profile-picture.server.view.swig'), {
+      text,
+      size,
+      color,
+      fill,
+    });
+  };
 
 /**
  * List of Users

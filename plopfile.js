@@ -9,11 +9,12 @@ const ora = require('ora');
 const npmCmd = platform().startsWith('win') ? 'npm.cmd' : 'npm';
 const spinner = ora('Installing NPM dependencies');
 
-const spawn$ = (...args) => new Promise((fnResolve, fnReject) => {
-  const cmd = spawn(...args);
-  cmd.on('close', fnResolve);
-  cmd.on('error', fnReject);
-});
+const spawn$ = (...args) =>
+  new Promise((fnResolve, fnReject) => {
+    const cmd = spawn(...args);
+    cmd.on('close', fnResolve);
+    cmd.on('error', fnReject);
+  });
 
 function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
@@ -27,9 +28,7 @@ function lowercase(str) {
 }
 
 function getKey(txt) {
-  return typeof txt === 'string' && txt.match(/[- ]/)
-    ? `'${txt}'`
-    : txt;
+  return typeof txt === 'string' && txt.match(/[- ]/) ? `'${txt}'` : txt;
 }
 
 module.exports = (plop) => {
@@ -45,10 +44,12 @@ module.exports = (plop) => {
       {
         type: 'confirm',
         name: 'git',
+        default: false,
         message: 'Init git repository',
       },
       {
         type: 'confirm',
+        default: false,
         name: 'install',
         message: 'Install dependencies',
       },
@@ -86,15 +87,11 @@ module.exports = (plop) => {
         }
 
         spinner.start();
-        await spawn$(
-          npmCmd,
-          ['install'],
-          {
-            cwd: resolve('modules', answers.name),
-            detached: true,
-            stdio: 'ignore',
-          },
-        );
+        await spawn$(npmCmd, ['install'], {
+          cwd: resolve('modules', answers.name),
+          detached: true,
+          stdio: 'ignore',
+        });
         spinner.stop();
         return 'Dependencies installed successfully';
       },

@@ -6,7 +6,7 @@ const path = require('path');
 const generatePassword = require('generate-password');
 
 // eslint-disable-next-line
-const config = require(path.resolve("./config"));
+const config = require(path.resolve('./config'));
 // eslint-disable-next-line
 const utils = require('utils');
 
@@ -41,20 +41,22 @@ exports.notify = (user, validation, req) => {
   const baseURL = utils.getBaseURLFromRequest(req);
   const { _id: userId } = user;
 
-  let url = baseURL + config.prefix;
+  let url = baseURL + config.app.prefix;
   url += '/auth/confirm?type=email';
   url += `&uid=${userId}`;
   url += `&code=${validation.code}`;
 
-
-  user.sendMail('Email validation', nunjucks.render(tpl, {
-    name: user.name.full,
-    url,
-    app: {
-      name: config.app.title,
-      url: baseURL,
-    },
-  }));
+  user.sendMail(
+    'Email validation',
+    nunjucks.render(tpl, {
+      name: user.name.full,
+      url,
+      app: {
+        name: config.app.title,
+        url: baseURL,
+      },
+    }),
+  );
 
   return v;
 };

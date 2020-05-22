@@ -32,7 +32,7 @@ async function seedIAMs() {
 
           // Add the policies
           await iam.allow(
-            (m.is_global === true ? '' : config.prefix) + m.prefix + route.path,
+            (m.is_global === true ? '' : config.app.prefix) + m.prefix + route.path,
             k,
             method.iam,
             {

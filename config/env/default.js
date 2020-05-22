@@ -2,7 +2,8 @@ const { resolve } = require('path');
 
 module.exports = {
   log: {
-    format: ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
+    format:
+      ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
   },
   db: {
     promise: global.Promise,
@@ -29,7 +30,7 @@ module.exports = {
       caches: false,
     },
     init: {
-      fallbackLng: 'fr',
+      fallbackLng: 'en',
       preload: ['fr', 'en'],
       saveMissing: true,
       fallbackNS: 'vendor:core',

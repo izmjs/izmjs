@@ -1,10 +1,9 @@
-/* eslint-disable no-console */
-
 /**
  * Module dependencies.
  */
-const chalk = require('chalk');
-const debug = require('debug')('config:lib:app');
+const { green, red } = require('chalk');
+const cluster = require('cluster');
+const debug = require('debug')('app:config:lib:app');
 
 const config = require('..');
 const mongoose = require('./mongoose');
@@ -24,25 +23,42 @@ module.exports.init = function init(callback) {
   });
 };
 
-module.exports.start = function start(callback) {
+module.exports.start = async function start(callback) {
   this.init((app, db) => {
-    // Start the app by listening on <port>
-    const server = app.listen(config.port, config.host, () => {
-      const { port, address } = server.address();
-      // Logging initialization
-      debug('--');
-      const addr = `http${config.secure && config.secure.ssl ? 's' : ''}://${address}:${port}`;
-      debug(chalk.green(`Address:\t\t\t${addr}`));
-      if (config.secure.ssl) {
-        debug(chalk.green('HTTPs:\t\t\t\ton'));
-      }
-      debug(chalk.green(`Database:\t\t\t${config.db.uri}`));
-      debug(chalk.green(`Environment:\t\t\t${process.env.NODE_ENV}`));
-      debug(chalk.green(`App version:\t\t\t${config.pkg.version}`));
-      debug(chalk.green(`Public address:\t\t${config.app.publicAddress}`));
-      debug('--');
+    const { port, host, prefix, cluster: clusterConfig } = config.app;
+    const { enabled, maxWorkers } = clusterConfig;
 
-      if (callback) callback(app, db, config);
-    });
+    if (enabled && cluster.isMaster) {
+      // Fork workers.
+      for (let i = 0; i < maxWorkers; i += 1) {
+        cluster.fork();
+      }
+
+      cluster.on('exit', (worker) => {
+        debug(`worker ${worker.process.pid} died`);
+      });
+    } else {
+      // Start the app by listening on <port>
+      const server = app.listen(port, host, () => {
+        const { port: p, address } = server.address();
+        const { secure, publicAddress, cors } = config.app;
+        // Logging initialization
+        const addr = `http${secure.ssl ? 's' : ''}://${address}:${p}`;
+
+        debug(`--
+${green('HTTPs          : ')}${secure.ssl ? green('✓') : red('𐄂')}
+${green(`Address        : ${addr}`)}
+${green('Cluster        : ')}${enabled ? green('✓') : red('𐄂')}
+${green(`Database       : ${config.db.uri}`)}
+${green(`API Prefix     : ${prefix}`)}
+${green(`Environment    : ${process.env.NODE_ENV}`)}
+${green(`App version    : ${config.pkg.version}`)}
+${green('CORS disabled  : ')}${cors.enabled ? red('𐄂') : green('✓')}
+${green(`Public address : ${publicAddress}`)}
+--`);
+
+        if (callback) callback(app, db, config);
+      });
+    }
   });
 };

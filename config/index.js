@@ -62,9 +62,15 @@ function validateEnvironmentVariable() {
 
   if (!environmentFiles.length) {
     if (process.env.NODE_ENV) {
-      console.error(chalk.red(`+ Error: No configuration file found for "${process.env.NODE_ENV}" environment using development instead`));
+      console.error(
+        chalk.red(
+          `+ Error: No configuration file found for "${process.env.NODE_ENV}" environment using development instead`,
+        ),
+      );
     } else {
-      console.error(chalk.red('+ Error: NODE_ENV is not defined! Using default development environment'));
+      console.error(
+        chalk.red('+ Error: NODE_ENV is not defined! Using default development environment'),
+      );
     }
     process.env.NODE_ENV = 'development';
   }
@@ -85,8 +91,14 @@ function validateSecureMode(config) {
   const certificate = existsSync(resolve(config.secure.certificate));
 
   if (!privateKey || !certificate) {
-    debug(chalk.red('+ Error: Certificate file or key file is missing, falling back to non-SSL mode'));
-    debug(chalk.red('  To create them, simply run the following from your shell: sh ./scripts/generate-ssl-certs.sh'));
+    debug(
+      chalk.red('+ Error: Certificate file or key file is missing, falling back to non-SSL mode'),
+    );
+    debug(
+      chalk.red(
+        '  To create them, simply run the following from your shell: sh ./scripts/generate-ssl-certs.sh',
+      ),
+    );
     debug();
 
     _.merge(config.secure, {
@@ -105,12 +117,15 @@ function validateSessionSecret(config, testing) {
     return true;
   }
 
-  if (config.sessionSecret === 'MEA2N') {
+  if (config.session.secret === 'DEFAULT_SESSION_SECRET') {
     if (!testing) {
-      debug(chalk.red('+ WARNING: It is strongly recommended that you change sessionSecret config while running in production!'));
-      debug(chalk.red('  Please add `sessionSecret: process.env.SESSION_SECRET || \'super amazing secret\'` to '));
-      debug(chalk.red('  `config/env/production.js` or `config/env/local.js`'));
-      debug();
+      debug(
+        chalk.red(
+          '+ WARNING: It is strongly recommended that you change session secret while running in production!',
+        ),
+      );
+      debug(chalk.red('  Please add `SESSIONS_MODULE_SECRET=super amazing secret` to '));
+      debug(chalk.red('  `.env/.production.env`'));
     }
     return false;
   }
@@ -168,10 +183,14 @@ function loadEnv(assets) {
     const m = require(resolve(f));
     Object.keys(m).forEach((key) => {
       const { scope, schema, ...item } = m[key];
-      env.set({
-        ...item,
-        key,
-      }, schema, scope);
+      env.set(
+        {
+          ...item,
+          key,
+        },
+        schema,
+        scope,
+      );
     });
   });
 
@@ -217,7 +236,8 @@ function initGlobalConfig() {
   const defaultAssets = require(join(process.cwd(), 'config/assets/default'));
 
   // Get the current assets
-  const environmentAssets = require(join(process.cwd(), 'config/assets/', process.env.NODE_ENV)) || {};
+  const environmentAssets =
+    require(join(process.cwd(), 'config/assets/', process.env.NODE_ENV)) || {};
 
   // Merge assets
   const assets = _.merge(defaultAssets, environmentAssets);
@@ -250,7 +270,12 @@ function initGlobalConfig() {
   // local.js to avoid running test suites on a prod/dev environment (which delete records and make
   // modifications)
   if (process.env.NODE_ENV !== 'test') {
-    config = _.merge(config, (existsSync(join(process.cwd(), 'config/env/local.js')) && require(join(process.cwd(), 'config/env/local.js'))) || {});
+    config = _.merge(
+      config,
+      (existsSync(join(process.cwd(), 'config/env/local.js')) &&
+        require(join(process.cwd(), 'config/env/local.js'))) ||
+        {},
+    );
   }
 
   // Initialize global globbed files

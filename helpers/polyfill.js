@@ -4,43 +4,18 @@
 const appModulePath = require('app-module-path');
 const dotenv = require('dotenv');
 
-const env = process.env.NODE_ENV || 'development';
-
 dotenv.config({
   path: './.env/.common.env',
 });
+
+const env = process.env.NODE_ENV || 'development';
 
 dotenv.config({
   path: `./.env/.${env}.env`,
 });
 
-if (typeof Array.prototype.flat !== 'function') {
-  // eslint-disable-next-line no-extend-native
-  Object.defineProperty(Array.prototype, 'flat', {
-    enumerable: false,
-    value: function flat() {
-      const stack = [...this];
-      const res = [];
-      while (stack.length) {
-        // pop value from stack
-        const next = stack.pop();
-        if (Array.isArray(next)) {
-          // push back array items, won't modify the original input
-          stack.push(...next);
-        } else {
-          res.push(next);
-        }
-      }
-      // reverse to restore input order
-      return res.reverse();
-    },
-  });
-}
-
 /**
  * Add app modules
  */
-[
-  'helpers',
-  'vendor',
-].map((m) => appModulePath.addPath(m));
+['helpers', 'vendor'].map((m) => appModulePath.addPath(m));
+require('module-alias/register');

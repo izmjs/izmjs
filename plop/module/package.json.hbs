@@ -2,52 +2,15 @@
   "name": "{{{lowercase name}}}",
   "version": "0.1.0",
   "license": "ISC",
-  "scripts": {
-    "test": "node ../../scripts/run-tests {{{lowercase name}}}",
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "format:write": "prettier **/*.{json,md} --write",
-    "format:test": "prettier **/*.{json,md} --list-different"{{#if git}},
-    "release:major": "release-it major",
-    "release:minor": "release-it minor",
-    "release:patch": "release-it patch"{{/if}}
-  },
   "description": "The {{{lowercase name}}} module",
   "keywords": [
+    "izmjs",
     "{{{lowercase name}}}",
-    "boilerplate-fm",
+    "{{lowercase name}}-fm",
     "functional-module"
   ],
   "repository": {
     "type": "github",
     "url": "https://github.com/izmjs/{{{lowercase name}}}.git"
-  },
-  "devDependencies": {
-    {{#if git}}"@commitlint/cli": "^8.2.0",
-    "@commitlint/config-conventional": "^8.2.0",
-    "lint-staged": "^9.5.0",
-    "husky": "^3.1.0",
-    "release-it": "^12.4.3",
-    {{/if}}"eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.19.1"
-  }{{#if git}},
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "lint-staged": {
-    "**/*.{json,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "post-merge": "npm i",
-      "pre-commit": "lint-staged && npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  }{{/if}}
+  }
 }

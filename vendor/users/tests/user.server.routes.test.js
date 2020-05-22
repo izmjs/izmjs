@@ -5,9 +5,7 @@ const should = require('should');
 const request = require('supertest');
 const path = require('path');
 const mongoose = require('mongoose');
-const {
-  it, before, describe, afterEach, beforeEach,
-} = require('mocha');
+const { it, before, describe, afterEach, beforeEach } = require('mocha');
 
 const User = mongoose.model('User');
 const express = require(path.resolve('./config/lib/express'));
@@ -74,10 +72,7 @@ describe('User CRUD tests', () => {
     userTmp.username = 'register_new_user';
     userTmp.email = 'register_new_user_@test.com';
 
-    const result = await agent
-      .post('/api/v1/auth/signup')
-      .send(userTmp)
-      .expect(200);
+    const result = await agent.post('/api/v1/auth/signup').send(userTmp).expect(200);
 
     result.body.username.should.equal(userTmp.username);
     result.body.email.should.equal(userTmp.email);
@@ -121,10 +116,7 @@ describe('User CRUD tests', () => {
   });
 
   it('should be able to login with username successfully and logout successfully', async () => {
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
     const signoutRes = await agent.get('/api/v1/auth/signout').expect(302);
 
     signoutRes.redirect.should.equal(true);
@@ -132,10 +124,7 @@ describe('User CRUD tests', () => {
   });
 
   it('should be able to login with email successfully and logout successfully', async () => {
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentialsEmail)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentialsEmail).expect(200);
     const signoutRes = await agent.get('/api/v1/auth/signout').expect(302);
     signoutRes.redirect.should.equal(true);
     signoutRes.text.should.equal('Found. Redirecting to /#/auth');
@@ -145,10 +134,7 @@ describe('User CRUD tests', () => {
     user.roles = ['user', 'admin'];
 
     await user.save();
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
     const usersGetRes = await agent.get('/api/v1/users').expect(200);
 
     usersGetRes.body.value.should.be.instanceof(Array).and.have.lengthOf(1);
@@ -159,10 +145,7 @@ describe('User CRUD tests', () => {
     user.roles = ['user', 'admin'];
 
     await user.save();
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
     const { body } = await agent.get(`/api/v1/users/${id}`).expect(200);
 
     body.should.be.instanceof(Object);
@@ -175,10 +158,7 @@ describe('User CRUD tests', () => {
     user.roles = ['user', 'admin'];
 
     await user.save();
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
 
     const userUpdate = {
       name: {
@@ -188,10 +168,7 @@ describe('User CRUD tests', () => {
       roles: ['admin'],
     };
 
-    const { body } = await agent
-      .put(`/api/v1/users/${user.id}`)
-      .send(userUpdate)
-      .expect(200);
+    const { body } = await agent.put(`/api/v1/users/${user.id}`).send(userUpdate).expect(200);
 
     body.should.be.instanceof(Object);
 
@@ -208,10 +185,7 @@ describe('User CRUD tests', () => {
     user.roles = ['user', 'admin'];
 
     await user.save();
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
     await agent.delete(`/api/v1/users/${user.id}`).expect(204);
   });
 
@@ -228,7 +202,7 @@ describe('User CRUD tests', () => {
       .expect(400);
 
     res.body.message.should.equal(
-      'Aucun compte avec l\'utilisateur "some_username_that_doesnt_exist" n\'est trouvé',
+      'No account with the username "some_username_that_doesnt_exist" has been found',
     );
   });
 
@@ -244,7 +218,7 @@ describe('User CRUD tests', () => {
         username: '',
       })
       .expect(422);
-    res.body.message.should.equal('Le champ Nom d\'utilisateur ne doit pas être vide');
+    res.body.message.should.equal('Username field must not be blank');
   });
 
   it('forgot password should return 422 for no username or email provided', async () => {
@@ -253,11 +227,8 @@ describe('User CRUD tests', () => {
     user.roles = ['user'];
 
     await user.save();
-    const res = await agent
-      .post('/api/v1/auth/forgot')
-      .send({})
-      .expect(422);
-    res.body.message.should.equal('Le champ Nom d\'utilisateur ne doit pas être vide');
+    const res = await agent.post('/api/v1/auth/forgot').send({}).expect(422);
+    res.body.message.should.equal('Username field must not be blank');
   });
 
   it('forgot password should return 400 for non-local provider set for the user object', async () => {
@@ -273,9 +244,7 @@ describe('User CRUD tests', () => {
       })
       .expect(400);
     res.body.message.should.equal(
-      `Il semble que vous vous êtes inscrit en utilisant votre compte "${
-        user.provider
-      }", connectez-vous en utilisant ce fournisseur.`,
+      `It seems like you signed up using your "${user.provider}" account, please sign in using that provider.`,
     );
   });
 
@@ -334,13 +303,10 @@ describe('User CRUD tests', () => {
     u.resetPasswordToken.should.not.be.empty();
     should.exist(u.resetPasswordExpires);
 
-    await agent
-      .post(`/api/v1/auth/reset/${u.resetPasswordToken}`)
-      .expect(200)
-      .send({
-        newPassword: credentials.password,
-        verifyPassword: credentials.password,
-      });
+    await agent.post(`/api/v1/auth/reset/${u.resetPasswordToken}`).expect(200).send({
+      newPassword: credentials.password,
+      verifyPassword: credentials.password,
+    });
   });
 
   it('forgot password should return error when using invalid reset token', async () => {
@@ -357,22 +323,16 @@ describe('User CRUD tests', () => {
 
     const invalidToken = 'someTOKEN1234567890';
 
-    const res = await agent
-      .post(`/api/v1/auth/reset/${invalidToken}`)
-      .expect(400)
-      .send({
-        newPassword: credentials.password,
-        verifyPassword: credentials.password,
-      });
+    const res = await agent.post(`/api/v1/auth/reset/${invalidToken}`).expect(400).send({
+      newPassword: credentials.password,
+      verifyPassword: credentials.password,
+    });
 
-    res.body.message.should.equal('Utilisateur non trouvé!');
+    res.body.message.should.equal('User not found!');
   });
 
   it('should be able to change user own password successfully', async () => {
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
 
     const res = await agent
       .post('/api/v1/auth/password')
@@ -383,14 +343,11 @@ describe('User CRUD tests', () => {
       })
       .expect(200);
 
-    res.body.message.should.equal('Le mot de passe a été changé avec succès');
+    res.body.message.should.equal('Password changed successfully');
   });
 
   it('should not be able to change user own password if wrong verifyPassword is given', async () => {
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
 
     const res = await agent.post('/api/v1/auth/password').send({
       newPassword: '1234567890Aa$',
@@ -398,14 +355,11 @@ describe('User CRUD tests', () => {
       currentPassword: credentials.password,
     });
 
-    res.body.message.should.equal('Les mots de passe ne correspondent pas');
+    res.body.message.should.equal('Passwords do not match');
   });
 
   it('should not be able to change user own password if wrong currentPassword is given', async () => {
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
 
     const res = await agent.post('/api/v1/auth/password').send({
       newPassword: '1234567890Aa$',
@@ -413,14 +367,11 @@ describe('User CRUD tests', () => {
       currentPassword: 'some_wrong_passwordAa$',
     });
 
-    res.body.message.should.equal('Le mot de passe est incorrect');
+    res.body.message.should.equal('Current password is incorrect');
   });
 
   it('should not be able to change user own password if no new password is at all given', async () => {
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
 
     const res = await agent
       .post('/api/v1/auth/password')
@@ -431,7 +382,7 @@ describe('User CRUD tests', () => {
       })
       .expect(422);
 
-    res.body.message.should.equal('Veuillez fournir un nouveau mot de passe');
+    res.body.message.should.equal('Please provide a new password');
   });
 
   it('should return null of an unauthenticated user', async () => {
@@ -444,10 +395,7 @@ describe('User CRUD tests', () => {
 
     await user.save();
 
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
 
     const res = await agent.get('/api/v1/auth/name').expect(200);
 
@@ -468,10 +416,7 @@ describe('User CRUD tests', () => {
   });
 
   it('should be able to get own user details successfully', async () => {
-    await agent
-      .post('/api/v1/auth/signin')
-      .send(credentials)
-      .expect(200);
+    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
 
     const res = await agent.get('/api/v1/me').expect(200);
     res.body.should.be.instanceof(Object);
@@ -489,6 +434,6 @@ describe('User CRUD tests', () => {
   });
 
   afterEach(async () => {
-    await User.remove();
+    await User.deleteMany();
   });
 });

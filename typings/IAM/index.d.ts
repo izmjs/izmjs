@@ -11,7 +11,7 @@ declare namespace IAM {
     /**
      * The callback
      */
-    next: {(err: Error): void},
+    next: { (err: Error): void },
   ) => Promise;
 
   interface Main {
@@ -19,6 +19,10 @@ declare namespace IAM {
      * Set the prefix of the request
      */
     prefix: string;
+    /**
+     * Set the current route as a global one (Usefull when we don not want to include the prefix)
+     */
+    is_global: boolean;
     /**
      * Set the parameters of the request
      */
@@ -65,7 +69,7 @@ declare namespace IAM {
        * Will be execute on receiving a request of type "DELETE"
        */
       delete?: Method;
-    }
+    };
   }
 
   interface Method {
