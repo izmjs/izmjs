@@ -12,7 +12,9 @@
     You have requested to have your password reset for your account at {{appName}}
   </p>
   <p>Please visit this url to reset your password:</p>
-  <p>{{url}}</p>
+  <a href="{{url}}">{{url}}</a>
+  <br />
+  <br />
   <strong>If you didn't make this request, you can ignore this email.</strong>
   <br />
   <br />

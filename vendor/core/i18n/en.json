@@ -3,5 +3,6 @@
   "ERROR_500": "Oops! Something went wrong...",
   "ERROR_404": "Path not found",
   "PAGE_NOT_FOUND_TITLE": "Page Not Found",
-  "PAGE_NOT_FOUND_DETAILS": "<span class=\"sr-only\">Error: </span><strong>{{url}}</strong> is not a valid path."
+  "PAGE_NOT_FOUND_DETAILS": "<span class=\"sr-only\">Error: </span><strong>{{url}}</strong> is not a valid path.",
+  "INVALID_URL_REQUEST": "Request from invalid url"
 }

@@ -1,7 +1,5 @@
-const { resolve } = require('path');
+const config = require('@config/index');
 
-// eslint-disable-next-line import/no-dynamic-require
-const config = require(resolve('config'));
 const { vendor } = config.files.server.modules;
 
 /**

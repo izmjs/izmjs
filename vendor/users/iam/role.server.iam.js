@@ -1,8 +1,7 @@
+const utils = require('@helpers/utils');
+
 // Controllers
 const ctrl = require('../controllers/role.server.controller');
-
-// eslint-disable-next-line
-const utils = require('utils');
 
 // validation schemas
 const createSchema = require('../schemas/create_role.server.schema.json');

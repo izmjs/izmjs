@@ -3,7 +3,11 @@
     "target": "es2017",
     "allowSyntheticDefaultImports": false,
     "baseUrl": "./",
-    "paths": {}
+    "paths": {
+      "@packages/*": ["packages/*"],
+      "@helpers/*": ["helpers/*"],
+      "@config/*": ["config/*"]
+    }
   },
   "exclude": ["node_modules"],
   "typeAcquisition": {

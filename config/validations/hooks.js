@@ -2,12 +2,10 @@
 eslint-disable import/no-dynamic-require,global-require
 */
 
-const path = require('path');
-
 /**
  * Local dependencies.
  */
-const config = require(path.resolve('./config'));
+const config = require('@config/index');
 const utils = require('./utils');
 
 exports.onInit = async (user) => {
@@ -35,6 +33,4 @@ exports.onSignup = async (user, req) => {
   return user;
 };
 
-exports.onLogin = async () => {
-
-};
+exports.onLogin = async () => {};

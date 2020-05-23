@@ -2,9 +2,7 @@ const chalk = require('chalk');
 const { resolve } = require('path');
 const express = require('express');
 const debug = require('debug')('vendor:users:config:acls');
-
-// eslint-disable-next-line import/no-unresolved
-const { isExcluded } = require('utils');
+const { isExcluded } = require('@helpers/utils');
 
 const Iam = require('../helpers/iam.server.helper');
 
@@ -12,8 +10,7 @@ const Iam = require('../helpers/iam.server.helper');
  * Configure the modules server routes
  */
 module.exports = (app, db, config) => {
-  // eslint-disable-next-line
-  const regex = /^([a-zA-Z0-9]*)\/([^\/]*)/;
+  const regex = /^([a-zA-Z0-9]*)\/([^/]*)/;
   const iam = new Iam();
 
   app.use(async (req, res, next) => {
@@ -116,7 +113,7 @@ module.exports = (app, db, config) => {
 
   // Globbing routing files
   config.files.server.iam.forEach((routePath) => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line global-require,import/no-dynamic-require
     const m = require(resolve(routePath));
     const r = express.Router();
     const exec = regex.exec(routePath);

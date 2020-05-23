@@ -55,7 +55,7 @@ module.exports.initLocalVariables = (app) => {
  */
 module.exports.runBootstrap = (app, db) => {
   const promises = config.files.server.bootstraps.map(async (f) => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line import/no-dynamic-require,global-require
     const m = require(resolve(f));
 
     if (typeof m === 'function') {
@@ -166,7 +166,7 @@ module.exports.initSession = (app) => {
  */
 module.exports.initModulesConfiguration = (app, db) => {
   config.files.server.configs.forEach((configPath) => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line import/no-dynamic-require,global-require
     require(resolve(configPath))(app, db, config);
   });
 };
@@ -193,7 +193,7 @@ module.exports.initHelmetHeaders = (app) => {
 module.exports.initModulesServerRoutes = (app) => {
   // Globbing routing files
   config.files.server.routes.forEach((routePath) => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line import/no-dynamic-require,global-require
     const m = require(resolve(routePath));
     if (typeof m === 'function') {
       m(app);

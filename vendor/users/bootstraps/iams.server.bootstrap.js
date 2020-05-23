@@ -2,24 +2,19 @@ const { resolve } = require('path');
 const { model } = require('mongoose');
 const { promisify } = require('util');
 const debug = require('debug')('modules:users:bootstraps');
-// eslint-disable-next-line import/no-unresolved
-const { isExcluded } = require('utils');
+const { isExcluded } = require('@helpers/utils');
+const roles = require('@config/lib/acl');
 
+const config = require('@config/index');
 const Iam = require('../helpers/iam.server.helper');
-
-// eslint-disable-next-line import/no-dynamic-require
-const roles = require(resolve('config/lib/acl'));
-// eslint-disable-next-line import/no-dynamic-require
-const config = require(resolve('config'));
 
 async function seedIAMs() {
   debug('seeding IAMs');
   const iam = new Iam();
-  // eslint-disable-next-line no-useless-escape
-  const regex = /^[a-zA-Z0-9]*\/([^\/]*)/;
+  const regex = /^[a-zA-Z0-9]*\/([^/]*)/;
 
   const all$ = config.files.server.iam.map(async (iamFilePath) => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line global-require,import/no-dynamic-require
     const m = require(resolve(iamFilePath));
     const exec = regex.exec(iamFilePath);
 

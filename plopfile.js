@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const { spawn } = require('child_process');
 const { resolve } = require('path');
 const { platform } = require('os');
@@ -69,7 +67,7 @@ module.exports = (plop) => {
         if (answers.git !== true) {
           return 'Git has been ignored';
         }
-        console.log('Initializing git repository');
+        console.info('Initializing git repository');
         try {
           await spawn$('git', ['init'], {
             cwd: resolve('modules', answers.name),

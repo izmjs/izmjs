@@ -4,8 +4,7 @@ eslint-disable import/no-extraneous-dependencies
 const path = require('path');
 const nunjucks = require('nunjucks');
 
-// eslint-disable-next-line
-const config = require(path.resolve("./config"));
+const config = require('@config/index');
 
 /**
  * Generate a random number of a specific length
@@ -13,8 +12,7 @@ const config = require(path.resolve("./config"));
  */
 function randomNumber(length) {
   let res = '';
-  // eslint-disable-next-line
-  const l = isNaN(length) ? 4 : parseInt(length, 10);
+  const l = Math.isNaN(length) ? 4 : parseInt(length, 10);
 
   while (res.length < l) {
     res += Math.floor(Math.random() * 10);
@@ -46,10 +44,12 @@ exports.notify = (user, validation) => {
   const v = validation;
   const tpl = path.resolve(__dirname, '..', 'templates/confirmation-phone.swig');
 
-  user.sendSMS(nunjucks.render(tpl, {
-    app: config.app,
-    code: validation.code,
-  }));
+  user.sendSMS(
+    nunjucks.render(tpl, {
+      app: config.app,
+      code: validation.code,
+    }),
+  );
 
   return v;
 };

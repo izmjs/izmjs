@@ -8,7 +8,13 @@ const guest = ['vendor:users:public'];
  * User role
  * @type {Array}
  */
-const user = ['vendor:users:user', 'vendor:users:auth'];
+const user = [
+  /**
+   * Users IAMs
+   */
+  'vendor:users:user',
+  'vendor:users:auth',
+];
 
 /**
  * Admin role
@@ -16,7 +22,10 @@ const user = ['vendor:users:user', 'vendor:users:auth'];
  */
 const admin = [
   ...user,
-  // Admin IAMs
+
+  /**
+   * Admin IAMs
+   */
   'vendor:users:admin',
   'vendor:users:roles',
 ];

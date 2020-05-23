@@ -9,23 +9,10 @@ module.exports = (config) => {
         female: '/assets/img/female.png',
       },
       thumbnail: '100x100',
-      accept: [
-        'image/png',
-        'image/jpeg',
-      ],
+      accept: ['image/png', 'image/jpeg'],
     },
-    protected_attrs: [
-      'validations',
-      'salt',
-      'updated_at',
-      'created_at',
-      'provider',
-    ],
-    private_attrs: [
-      'validations',
-      'salt',
-      'password',
-    ],
+    protected_attrs: ['validations', 'salt', 'updated_at', 'created_at', 'provider'],
+    private_attrs: ['validations', 'salt', 'password'],
   };
 
   // Supported validations
@@ -49,9 +36,9 @@ module.exports = (config) => {
     },
   };
 
-  validations.mondatory = Object
-    .keys(validations.config)
-    .filter((type) => validations.config[type].validate);
+  validations.mondatory = Object.keys(validations.config).filter(
+    (type) => validations.config[type].validate,
+  );
 
   // Twilio configuration
   const twilio = {
@@ -73,14 +60,20 @@ module.exports = (config) => {
         key: 'MAILER_HOST',
         defaultValue: 'smtp.gmail.com',
       }),
-      port: env.get({
-        key: 'MAILER_PORT',
-        defaultValue: 456,
-      }, { type: 'number' }),
-      secure: env.get({
-        key: 'MAILER_SECURE',
-        defaultValue: true,
-      }, { type: 'boolean' }),
+      port: env.get(
+        {
+          key: 'MAILER_PORT',
+          defaultValue: 456,
+        },
+        { type: 'number' },
+      ),
+      secure: env.get(
+        {
+          key: 'MAILER_SECURE',
+          defaultValue: true,
+        },
+        { type: 'boolean' },
+      ),
       auth: {
         user: env.get('MAILER_AUTH_USER'),
         pass: env.get('MAILER_AUTH_PASS'),

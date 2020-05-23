@@ -13,13 +13,10 @@ const User = mongoose.model('User');
 const errorHandler = require('core/controllers/errors.server.controller');
 
 const validationsHelper = require(resolve('./config/validations'));
-const config = require(resolve('config'));
+const config = require('@config/index');
 
 // URLs for which user can't be redirected on signin
-const noReturnUrls = [
-  '/authentication/signin',
-  '/authentication/signup',
-];
+const noReturnUrls = ['/authentication/signin', '/authentication/signup'];
 
 /**
  * Signup
@@ -35,7 +32,7 @@ exports.signup = async function signup(req, res, next) {
   const user = new User(b);
   const { hooks } = validationsHelper;
 
-  await (hooks.onInit(user));
+  await hooks.onInit(user);
 
   // Add missing user fields
   user.provider = 'local';
@@ -71,8 +68,7 @@ exports.signup = async function signup(req, res, next) {
  * @param {Function} next Go to the next middleware
  */
 exports.signin = async function signin(req, res, next) {
-  // eslint-disable-next-line
-  passport.authenticate("local", (err, user, info) => {
+  passport.authenticate('local', (err, user /* , info */) => {
     if (err || !user) {
       return res.status(401).json({
         ok: false,
@@ -91,7 +87,7 @@ exports.signin = async function signin(req, res, next) {
       });
     }
 
-    req.login(user, async (err_) => {
+    return req.login(user, async (err_) => {
       if (err_) {
         return res.status(400).send(err_);
       }
@@ -117,15 +113,16 @@ exports.signout = async function signout(req, res) {
 /**
  * OAuth provider call
  */
-exports.oauthCall = (strategy, scope) => async function oauthCall(req, res, next) {
-  // Set redirection path on session.
-  // Do not redirect to a signin or signup page
-  if (noReturnUrls.indexOf(req.query.redirect_to) === -1) {
-    req.session.redirect_to = req.query.redirect_to;
-  }
-  // Authenticate
-  passport.authenticate(strategy, scope)(req, res, next);
-};
+exports.oauthCall = (strategy, scope) =>
+  async function oauthCall(req, res, next) {
+    // Set redirection path on session.
+    // Do not redirect to a signin or signup page
+    if (noReturnUrls.indexOf(req.query.redirect_to) === -1) {
+      req.session.redirect_to = req.query.redirect_to;
+    }
+    // Authenticate
+    passport.authenticate(strategy, scope)(req, res, next);
+  };
 
 /**
  * OAuth callback
@@ -133,29 +130,32 @@ exports.oauthCall = (strategy, scope) => async function oauthCall(req, res, next
  * @param {OutcommingMessage} res The response
  * @param {Function} next Go to the next middleware
  */
-exports.oauthCallback = (strategy) => async function oauthCall(req, res, next) {
-  // Pop redirect URL from session
-  const sessionRedirectURL = req.session.redirect_to;
-  delete req.session.redirect_to;
+exports.oauthCallback = (strategy) =>
+  async function oauthCall(req, res, next) {
+    // Pop redirect URL from session
+    const sessionRedirectURL = req.session.redirect_to;
+    delete req.session.redirect_to;
 
-  passport.authenticate(strategy, (err, user, redirectURL) => {
-    if (err) {
-      return res.redirect(`/authentication/signin?err=${encodeURIComponent(errorHandler.getErrorMessage(err))}`);
-    }
+    passport.authenticate(strategy, (err, user, redirectURL) => {
+      if (err) {
+        return res.redirect(
+          `/authentication/signin?err=${encodeURIComponent(errorHandler.getErrorMessage(err))}`,
+        );
+      }
 
-    if (!user) {
-      return res.redirect('/authentication/signin');
-    }
-
-    return req.login(user, (err_) => {
-      if (err_) {
+      if (!user) {
         return res.redirect('/authentication/signin');
       }
 
-      return res.redirect(redirectURL || sessionRedirectURL || '/');
-    });
-  })(req, res, next);
-};
+      return req.login(user, (err_) => {
+        if (err_) {
+          return res.redirect('/authentication/signin');
+        }
+
+        return res.redirect(redirectURL || sessionRedirectURL || '/');
+      });
+    })(req, res, next);
+  };
 
 /**
  * Helper function to save or update a OAuth user profile
@@ -172,9 +172,7 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
     // Define main provider search query
     const msq = {};
     msq.provider = providerUserProfile.provider;
-    msq[smpif] = providerUserProfile.providerData[
-      providerUserProfile.providerIdentifierField
-    ];
+    msq[smpif] = providerUserProfile.providerData[providerUserProfile.providerIdentifierField];
 
     // Define additional provider search query
     const apsq = {};
@@ -191,7 +189,9 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
       }
 
       if (!user) {
-        const possibleUsername = providerUserProfile.username || ((providerUserProfile.email) ? providerUserProfile.email.split('@')[0] : '');
+        const possibleUsername =
+          providerUserProfile.username ||
+          (providerUserProfile.email ? providerUserProfile.email.split('@')[0] : '');
 
         return User.findUniqueUsername(possibleUsername, null, () => {
           const userTmp = new User({
@@ -208,10 +208,9 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
           // And save the user
           userTmp.save((err_) => done(err_, userTmp));
         });
-        // eslint-disable-next-line
-      } else {
-        return done(err, user);
       }
+
+      return done(err, user);
     });
   } else {
     // User is already logged in, join the provider data to the existing user
@@ -220,18 +219,17 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
     // Check if user exists, is not signed in using this provider, and doesn't
     // have that provider data already configured
     if (
-      userTmp.provider !== providerUserProfile.provider
-      && (!userTmp.additionalProvidersData
-        || !userTmp.additionalProvidersData[providerUserProfile.provider])
+      userTmp.provider !== providerUserProfile.provider &&
+      (!userTmp.additionalProvidersData ||
+        !userTmp.additionalProvidersData[providerUserProfile.provider])
     ) {
       // Add the provider data to the additional provider data field
       if (!userTmp.additionalProvidersData) {
         userTmp.additionalProvidersData = {};
       }
 
-      userTmp.additionalProvidersData[
-        providerUserProfile.provider
-      ] = providerUserProfile.providerData;
+      userTmp.additionalProvidersData[providerUserProfile.provider] =
+        providerUserProfile.providerData;
 
       // Then tell mongoose that we've updated the additionalProvidersData field
       userTmp.markModified('additionalProvidersData');
@@ -253,18 +251,15 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
  * @param {Function} next Go to the next middleware
  */
 exports.removeOAuthProvider = async function removeOAuthProvider(req, res) {
-  const {
-    user,
-  } = req;
-  const {
-    provider,
-  } = req.query;
+  const { user } = req;
+  const { provider } = req.query;
 
   if (!user) {
     return res.status(401).json({
       message: req.t('USER_NOT_LOGGEDIN'),
     });
-  } if (!provider) {
+  }
+  if (!provider) {
     return res.status(400).send();
   }
 
@@ -287,9 +282,11 @@ exports.removeOAuthProvider = async function removeOAuthProvider(req, res) {
         return res.status(400).send(err_);
       }
 
-      return res.json(user.toJSON({
-        virtuals: true,
-      }));
+      return res.json(
+        user.toJSON({
+          virtuals: true,
+        }),
+      );
     });
   });
 };

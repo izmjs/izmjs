@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const { resolve, join } = require('path');
 
 const User = mongoose.model('User');
-const config = require(resolve('./config'));
+const config = require('@config/index');
 
 /**
  * Module init function.

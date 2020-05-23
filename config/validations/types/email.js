@@ -5,10 +5,8 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const generatePassword = require('generate-password');
 
-// eslint-disable-next-line
-const config = require(path.resolve('./config'));
-// eslint-disable-next-line
-const utils = require('utils');
+const config = require('@config/index');
+const utils = require('@helpers/utils');
 
 /**
  * Init the validation object

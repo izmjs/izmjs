@@ -7,7 +7,7 @@ const _ = require('lodash');
 const { resolve } = require('path');
 const mongoose = require('mongoose');
 
-const config = require(resolve('./config'));
+const config = require('@config/index');
 
 const { vendor } = config.files.server.modules;
 
@@ -23,9 +23,7 @@ const User = mongoose.model('User');
  */
 exports.update = async function update(req, res) {
   // Init Variables
-  let {
-    user,
-  } = req.user;
+  let { user } = req.user;
 
   // For security measurement we sanitize the user object
   User.sanitize(req.body);
@@ -41,9 +39,11 @@ exports.update = async function update(req, res) {
     });
   }
 
-  return res.json(user.toJSON({
-    virtuals: true,
-  }));
+  return res.json(
+    user.toJSON({
+      virtuals: true,
+    }),
+  );
 };
 
 /**
@@ -151,9 +151,7 @@ exports.me = async function me(req, res) {
  */
 exports.confirm = async function confirm(req, res) {
   let user;
-  const {
-    query,
-  } = req;
+  const { query } = req;
 
   if (!query.uid) {
     return res.status(404).send({
@@ -222,9 +220,7 @@ exports.confirm = async function confirm(req, res) {
  */
 exports.resend = async function resend(req, res) {
   let user;
-  const {
-    query,
-  } = req;
+  const { query } = req;
 
   if (!query.uid) {
     return res.status(404).send({

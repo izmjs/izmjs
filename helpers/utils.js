@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 const Ajv = require('ajv');
 const { model } = require('mongoose');
 const debug = require('debug')('boilerplate:helpers:utils');
@@ -6,56 +5,71 @@ const { resolve } = require('path');
 const { readFile } = require('fs');
 const { promisify } = require('util');
 const ajvErrors = require('ajv-errors');
-// eslint-disable-next-line import/no-dynamic-require
-const sockets = require(resolve('config/lib/socket.io'));
+const sockets = require('@config/lib/socket.io');
 
 const roleCache = {};
 let excludeCache;
 const readFile$ = promisify(readFile);
-const ajv = new Ajv({ allErrors: true, jsonPointers: true });
-ajvErrors(ajv);
 
 /**
  * Validates a payload with a given schema
  * @param {Object} schema The schema of the payload
  */
-exports.validate = (schema) => async function validateSchema(req, res, next) {
-  const validate = ajv.compile(schema);
+exports.validate = (schema, type = 'body') =>
+  async function validateSchema(req, res, next) {
+    const ajv = new Ajv({ allErrors: true, jsonPointers: true });
+    ajvErrors(ajv);
 
-  if (validate(req.body)) {
-    return next();
-  }
+    const validate = ajv.compile(schema);
+    let obj;
 
-  return res.status(400).json({
-    error: true,
-    message: validate.errors,
-  });
-};
+    switch (type) {
+      case 'params':
+        obj = req.query;
+        break;
+      default:
+        obj = req.body;
+        break;
+    }
+
+    if (validate(obj)) {
+      return next();
+    }
+
+    return res.status(400).json({
+      success: false,
+      result: validate.errors.map((err) => ({
+        message: req.t(err.message),
+        data: err.params,
+      })),
+    });
+  };
 
 /**
  * Check current user has IAM
  * @param {Object} iam the IAM to check
  */
-exports.hasIAM = (iam) => async function hasIAM(req, res, next) {
-  const IAM = model('IAM');
-  const { iams } = req;
-  let count;
+exports.hasIAM = (iam) =>
+  async function hasIAM(req, res, next) {
+    const IAM = model('IAM');
+    const { iams } = req;
+    let count;
 
-  // Check if the permission exist in data base.
-  try {
-    count = await IAM.countDocuments({ iam });
-  } catch (e) {
-    return next(e);
-  }
-  if (count <= 0) return res.status(404).json({ message: `Permission(IAM) ${iam} not found` });
+    // Check if the permission exist in data base.
+    try {
+      count = await IAM.countDocuments({ iam });
+    } catch (e) {
+      return next(e);
+    }
+    if (count <= 0) return res.status(404).json({ message: `Permission(IAM) ${iam} not found` });
 
-  // Check if the user has the permission.
-  if (iams.find((el) => el.iam === iam) === undefined) {
-    return res.status(403).json({ message: `You don't have permission ${iam} to continue` });
-  }
+    // Check if the user has the permission.
+    if (iams.find((el) => el.iam === iam) === undefined) {
+      return res.status(403).json({ message: `You don't have permission ${iam} to continue` });
+    }
 
-  return next();
-};
+    return next();
+  };
 
 /**
  * Gets the base URL of the request
@@ -114,10 +128,12 @@ exports.createUser = async (
     password: credentials.password,
     provider: 'local',
     roles: [name],
-    validations: [{
-      type: 'email',
-      validated: true,
-    }],
+    validations: [
+      {
+        type: 'email',
+        validated: true,
+      },
+    ],
   }).save({ new: true });
 
   return user;
@@ -141,7 +157,8 @@ exports.isExcluded = async ({ iam, parents = [] }) => {
       // Ignore, just proceed
     }
 
-    excludeCache = content.split('\n')
+    excludeCache = content
+      .split('\n')
       .map((one) => one.trim())
       .filter((one) => Boolean(one) && !one.startsWith('#'));
   }
@@ -189,13 +206,16 @@ exports.addIamToRoles = async (iamName, roles = ['guest', 'user'], tries = 100) 
       const { _id: id } = iam;
       roles.map(async (r) => {
         try {
-          await Role.findOneAndUpdate({
-            name: r,
-          }, {
-            $addToSet: {
-              iams: id,
+          await Role.findOneAndUpdate(
+            {
+              name: r,
             },
-          });
+            {
+              $addToSet: {
+                iams: id,
+              },
+            },
+          );
         } catch (e) {
           // Do nothing, just proceed
         }

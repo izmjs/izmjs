@@ -8,15 +8,12 @@ const crypto = require('crypto');
 const validator = require('validator');
 const generatePassword = require('generate-password');
 const owasp = require('owasp-password-strength-test');
-const path = require('path');
 const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 const sgMail = require('@sendgrid/mail');
 const util = require('util');
-// const chalk = require("chalk");
 
-// eslint-disable-next-line
-const config = require(path.resolve('./config'));
+const config = require('@config/index');
 
 let { twilio: twilioConfig } = config;
 let isSendGrid = false;

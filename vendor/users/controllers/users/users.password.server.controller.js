@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { promisify } = require('util');
 
-const config = require(resolve('./config'));
+const config = require('@config/index');
+
 const User = mongoose.model('User');
 
 const { vendor } = config.files.server.modules;

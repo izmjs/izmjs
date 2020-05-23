@@ -1,12 +1,12 @@
 /*
 eslint-disable import/no-dynamic-require,global-require
 */
-const path = require('path');
 
 /**
  * Local dependencies.
  */
-const vConfig = require(path.resolve('./config')).validations;
+const vConfig = require('@config/index').validations;
+
 const tConfig = vConfig.config;
 
 class ValidationError {

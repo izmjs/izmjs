@@ -6,7 +6,8 @@
 const { resolve } = require('path');
 const mongoose = require('mongoose');
 
-const config = require(resolve('./config'));
+const config = require('@config/index');
+
 const User = mongoose.model('User');
 
 const { vendor } = config.files.server.modules;

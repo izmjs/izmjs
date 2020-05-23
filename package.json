@@ -95,11 +95,11 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.5",
-    "lint-staged": "^10.2.4",
+    "lint-staged": "^10.2.6",
     "mocha": "^7.1.2",
     "nodemon": "^2.0.4",
     "ora": "^4.0.4",
-    "plop": "^2.7.0",
+    "plop": "^2.7.1",
     "pm2": "^4.4.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
@@ -117,5 +117,10 @@
       "pre-commit": "pretty-quick --staged && npm test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "_moduleAliases": {
+    "@packages": "packages",
+    "@helpers": "helpers",
+    "@config": "config"
   }
 }

@@ -4,19 +4,18 @@ const chalk = require('chalk');
 
 const config = require('..');
 
-async function seed(collection, options) {
+async function seed(collection, opts) {
   // Merge options with collection options
-  // eslint-disable-next-line
-  options = _.merge(options || {}, collection.options || {});
+  const options = _.merge(opts || {}, collection.options || {});
 
   const Model = mongoose.model(collection.model);
-  const {
-    docs,
-  } = collection;
+  const { docs } = collection;
   const skipWhen = collection.skip ? collection.skip.when : null;
 
   if (!Model.seed) {
-    throw new Error(`Database Seeding: Invalid Model Configuration - ${collection.model}.seed() not implemented`);
+    throw new Error(
+      `Database Seeding: Invalid Model Configuration - ${collection.model}.seed() not implemented`,
+    );
   }
 
   if (!docs || !docs.length) {
@@ -44,16 +43,20 @@ async function seed(collection, options) {
     }
 
     if (skipCollection_) {
-      return onComplete([{
-        message: chalk.yellow(`Database Seeding: ${collection.model} collection skipped`),
-      }]);
+      return onComplete([
+        {
+          message: chalk.yellow(`Database Seeding: ${collection.model} collection skipped`),
+        },
+      ]);
     }
 
     const workload = docs
       .filter((doc) => doc.data)
-      .map((doc) => Model.seed(doc.data, {
-        overwrite: doc.overwrite,
-      }));
+      .map((doc) =>
+        Model.seed(doc.data, {
+          overwrite: doc.overwrite,
+        }),
+      );
 
     return onComplete(await Promise.all(workload));
   }
@@ -67,20 +70,19 @@ async function seed(collection, options) {
 }
 
 function start(seedConfig) {
-  return new Promise(((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const seedConfigTmp = seedConfig || {};
 
-    const options = seedConfigTmp.options
-      || (config.seedDB ? _.clone(config.seedDB.options, true) : {});
-    const collections = seedConfigTmp.collections
-      || (config.seedDB ? _.clone(config.seedDB.collections, true) : []);
+    const options =
+      seedConfigTmp.options || (config.seedDB ? _.clone(config.seedDB.options, true) : {});
+    const collections =
+      seedConfigTmp.collections || (config.seedDB ? _.clone(config.seedDB.collections, true) : []);
 
     if (!collections.length) {
       return resolve();
     }
 
-    const seeds = collections
-      .filter((collection) => collection.model);
+    const seeds = collections.filter((collection) => collection.model);
 
     // Local Promise handlers
 
@@ -107,10 +109,11 @@ function start(seedConfig) {
 
     // Use the reduction pattern to ensure we process seeding in desired order.
     // start with resolved promise for initial previous (p) item
-    return seeds.reduce((p, item) => p.then(() => seed(item, options)), Promise.resolve())
+    return seeds
+      .reduce((p, item) => p.then(() => seed(item, options)), Promise.resolve())
       .then(onSuccessComplete)
       .catch(onError);
-  }));
+  });
 }
 
 exports.start = start;
