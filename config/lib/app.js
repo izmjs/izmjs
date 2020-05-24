@@ -24,20 +24,20 @@ module.exports.init = function init(callback) {
 };
 
 module.exports.start = async function start(callback) {
-  this.init((app, db) => {
-    const { port, host, prefix, cluster: clusterConfig } = config.app;
-    const { enabled, maxWorkers } = clusterConfig;
+  const { port, host, prefix, cluster: clusterConfig } = config.app;
+  const { enabled, maxWorkers } = clusterConfig;
 
-    if (enabled && cluster.isMaster) {
-      // Fork workers.
-      for (let i = 0; i < maxWorkers; i += 1) {
-        cluster.fork();
-      }
+  if (enabled && cluster.isMaster) {
+    // Fork workers.
+    for (let i = 0; i < maxWorkers; i += 1) {
+      cluster.fork();
+    }
 
-      cluster.on('exit', (worker) => {
-        debug(`worker ${worker.process.pid} died`);
-      });
-    } else {
+    cluster.on('exit', (worker) => {
+      debug(`worker ${worker.process.pid} died`);
+    });
+  } else {
+    this.init((app, db) => {
       // Start the app by listening on <port>
       const server = app.listen(port, host, () => {
         const { port: p, address } = server.address();
@@ -59,6 +59,6 @@ ${green(`Public address : ${publicAddress}`)}
 
         if (callback) callback(app, db, config);
       });
-    }
-  });
+    });
+  }
 };
