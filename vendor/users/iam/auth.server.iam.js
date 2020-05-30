@@ -26,18 +26,6 @@ module.exports = {
       },
     },
     {
-      path: '/name',
-      methods: {
-        get: {
-          parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
-          middlewares: [users.name],
-          iam: 'vendor:users:auth:name',
-          title: 'Get the user fullname',
-          description: 'API to get the current user fullname',
-        },
-      },
-    },
-    {
       path: '/reset/:token',
       methods: {
         get: {

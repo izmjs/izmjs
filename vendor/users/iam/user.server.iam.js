@@ -1,9 +1,11 @@
-/* eslint-disable import/no-dynamic-require */
-
 /**
  * Module dependencies.
  */
+const utils = require('@helpers/utils');
+
 const users = require('../controllers/users.server.controller');
+
+const updateProfileSchema = require('../schemas/update_profile.server.schema.json');
 
 module.exports = {
   prefix: '/me',
@@ -35,9 +37,21 @@ module.exports = {
           title: 'Get current user details',
           description: 'API to fetch the current user details',
         },
+        /**
+         * @body
+         * {
+         *   "name": {
+         *     "first": "{{firstname}}",
+         *     "last": "{{lastname}}"
+         *   }
+         * }
+         */
         post: {
           parents: ['vendor:users', 'vendor:users:user', 'vendor:users:auth:profile'],
-          middlewares: [users.update],
+          middlewares: [
+            utils.validate(updateProfileSchema),
+            users.update,
+          ],
           iam: 'vendor:users:user:profile:edit',
           title: 'Update profile',
           description: 'Update current user details',

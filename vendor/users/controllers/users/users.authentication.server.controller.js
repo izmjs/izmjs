@@ -5,14 +5,13 @@ eslint-disable import/no-dynamic-require,import/no-unresolved,import/no-extraneo
 /**
  * Module dependencies.
  */
-const { resolve } = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
 const User = mongoose.model('User');
 const errorHandler = require('core/controllers/errors.server.controller');
 
-const validationsHelper = require(resolve('./config/validations'));
+const validationsHelper = require('@config/validations');
 const config = require('@config/index');
 
 // URLs for which user can't be redirected on signin

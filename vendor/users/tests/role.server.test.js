@@ -1,19 +1,16 @@
-/* eslint-env node, mocha */
-/* eslint-disable import/no-dynamic-require */
 const request = require('supertest');
-const { resolve } = require('path');
 const { model, connection, Types } = require('mongoose');
 const { expect } = require('chai');
 
-const { createUser } = require(resolve('helpers/utils'));
+const { createUser } = require('@helpers/utils');
 const { it, before, describe, afterEach } = require('mocha');
 
-const { prefix } = require(resolve('config')).app;
+const { prefix } = require('@config/index').app;
 
 const User = model('User');
 const Role = model('Role');
 
-const express = require(resolve('./config/lib/express'));
+const express = require('@config/lib/express');
 
 /**
  * Globals

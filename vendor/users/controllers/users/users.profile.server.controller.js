@@ -1,5 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
-
 /**
  * Module dependencies.
  */
@@ -8,11 +6,13 @@ const { resolve } = require('path');
 const mongoose = require('mongoose');
 
 const config = require('@config/index');
+const validationModule = require('@config/validations');
 
 const { vendor } = config.files.server.modules;
 
+// eslint-disable-next-line import/no-dynamic-require
 const errorHandler = require(resolve(`./${vendor}/core/controllers/errors.server.controller`));
-const validationModule = require(resolve('./config/validations'));
+
 const User = mongoose.model('User');
 
 /**
@@ -23,13 +23,13 @@ const User = mongoose.model('User');
  */
 exports.update = async function update(req, res) {
   // Init Variables
-  let { user } = req.user;
+  let { user } = req;
 
   // For security measurement we sanitize the user object
   User.sanitize(req.body);
 
   // Merge existing user
-  user = _.extend(user, req.body);
+  user.set(req.body);
 
   try {
     user = await user.save();
@@ -253,22 +253,4 @@ exports.resend = async function resend(req, res) {
   return res.json({
     ok: true,
   });
-};
-
-/**
- * Get the fullname of the current user
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
- * @param {Function} next Go to the next middleware
- */
-exports.name = async function name(req, res) {
-  const { user } = req;
-
-  if (user && user.name) {
-    return res.send({
-      fullname: user.name.full,
-    });
-  }
-
-  return res.json(null);
 };

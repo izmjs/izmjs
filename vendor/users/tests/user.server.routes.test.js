@@ -385,23 +385,6 @@ describe('User CRUD tests', () => {
     res.body.message.should.equal('Please provide a new password');
   });
 
-  it('should return null of an unauthenticated user', async () => {
-    const res = await agent.get('/api/v1/auth/name').expect(200);
-    should.equal(res.body, null);
-  });
-
-  it('should be able to get the fullname of an authenticated user', async () => {
-    user.roles = ['user'];
-
-    await user.save();
-
-    await agent.post('/api/v1/auth/signin').send(credentials).expect(200);
-
-    const res = await agent.get('/api/v1/auth/name').expect(200);
-
-    res.body.fullname.should.equal(user.name.full);
-  });
-
   it('should not be able to change user own password if not signed in', async () => {
     const res = await request
       .agent(app)

@@ -1,14 +1,12 @@
-/* eslint-disable import/no-dynamic-require */
 const request = require('supertest');
-const { resolve } = require('path');
 const { model, connection } = require('mongoose');
 const { it, before, describe, afterEach } = require('mocha');
 
 const User = model('User');
 
-const { createUser } = require(resolve('helpers/utils'));
+const { createUser } = require('@helpers/utils');
 
-const express = require(resolve('./config/lib/express'));
+const express = require('@config/lib/express');
 const { prefix } = require('@config/index');
 
 let app;
