@@ -11,7 +11,7 @@ module.exports = (config) => {
       thumbnail: '100x100',
       accept: ['image/png', 'image/jpeg'],
     },
-    protected_attrs: ['validations', 'salt', 'updated_at', 'created_at', 'provider'],
+    protected_attrs: ['validations', 'salt', 'updated_at', 'created_at', 'provider', 'roles'],
     private_attrs: ['validations', 'salt', 'password'],
   };
 
