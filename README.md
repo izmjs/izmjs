@@ -20,6 +20,7 @@
 - [Getting Started](#getting-started)
 - [Useful Commands](#useful-commands)
 - [VSCode helpers](#vscode-helpers)
+- [Misc](#misc)
 
 ## Getting started
 
@@ -80,6 +81,16 @@ Create new controller.
 ### module:model
 
 Generate a new mongoose model.
+
+## Misc
+
+To skip loading a module, specify it in the env variable `SKIP_MODULES`
+
+_Example_
+
+```
+SKIP_MODULES=modules/devtools,modules/data-browser
+```
 
 ## Auto depmloyment (Gitlab CI)
 

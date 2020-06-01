@@ -1,5 +1,5 @@
 /*
-eslint-disable no-console,import/no-extraneous-dependencies,import/no-dynamic-require,global-require
+eslint-disable import/no-dynamic-require,global-require
 */
 
 /**
@@ -13,6 +13,8 @@ const { resolve, join } = require('path');
 const debug = require('debug')('app:config');
 
 const Environment = require('./lib/env-vars');
+
+const SKIP_MODULES = (process.env.SKIP_MODULES || '').split(',').filter(Boolean);
 
 /**
  * Get files by glob patterns
@@ -169,6 +171,19 @@ function initGlobalConfigFiles(config, assets) {
       },
     },
   });
+
+  if (SKIP_MODULES.length > 0) {
+    const { server } = config.files;
+    Object.keys(server).forEach((attr) => {
+      const current = server[attr];
+      if (Array.isArray(current)) {
+        server[attr] = server[attr].filter((file) => {
+          const isToSkip = SKIP_MODULES.find((mName) => file.startsWith(mName));
+          return !isToSkip;
+        });
+      }
+    });
+  }
 }
 
 /**
