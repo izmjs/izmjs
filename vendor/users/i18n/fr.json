@@ -25,5 +25,8 @@
   "USER_PASSWORD_NEW": "Veuillez fournir un nouveau mot de passe",
   "USER_PROFILE_PIC_INVALID": "Type de fichier non accepté",
   "USER_NOT_LOCAL": "Il semble que vous vous êtes inscrit en utilisant votre compte \"{{provider}}\", connectez-vous en utilisant ce fournisseur.",
-  "ROLE_ALREADY_EXISTS": "Rôle déjà existant"
+  "ROLE_ALREADY_EXISTS": "Rôle déjà existant",
+  "should have required property 'iams'": "l'attribut 'iams' est obligatoire",
+  "should be string": "doit être une chaîne de caractère",
+  "should NOT have additional properties": "les attributs supplémentaires sont interdits"
 }

@@ -28,5 +28,8 @@
   "SECTION_NOT_CREATED": "Error while creating the section",
   "SECTION_ID_INVALID": "The section ID \"{{id}}\" is invalid!",
   "SECTION_NOT_FOUND": "The specified section was not found.",
-  "ROLE_ALREADY_EXISTS": "Role already exists"
+  "ROLE_ALREADY_EXISTS": "Role already exists",
+  "should have required property 'iams'": "should have required property 'iams'",
+  "should be string": "should be string",
+  "should NOT have additional properties": "should NOT have additional properties"
 }
