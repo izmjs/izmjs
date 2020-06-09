@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "patternProperties": {
+    ".*": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "defaultValue": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "schema": {
+          "$ref": "https://json-schema.org/draft/2019-09/schema#"
+        }
+      }
+    }
+  }
+}
