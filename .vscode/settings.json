@@ -11,7 +11,7 @@
   "json.schemas": [
     {
       "fileMatch": ["/modules/*/variables.meta.json"],
-      "url": "https://raw.githubusercontent.com/izmjs/izmjs/develop//schemas/variables.meta.json"
+      "url": "https://raw.githubusercontent.com/izmjs/izmjs/develop/schemas/variables.meta.schema.json"
     }
   ]
 }
