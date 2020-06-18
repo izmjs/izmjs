@@ -10,6 +10,56 @@
     ],
     "description": "Add postman body block"
   },
+  "Add postman json body block": {
+    "scope": "javascript",
+    "prefix": "@json",
+    "body": [
+      "@json",
+      "* {",
+      "*   \"$1\": \"$2\"",
+      "* }"
+    ],
+    "description": "Add postman json body block"
+  },
+  "Add postman urlencoded body block": {
+    "scope": "javascript",
+    "prefix": "@urlencoded",
+    "body": [
+      "@urlencoded",
+      "* [",
+      "*   {",
+      "*     \"key\": \"$1\",",
+      "*     \"value\": \"$2\",",
+      "*     \"description\": \"${4}\"",
+      "*   }",
+      "* ]",
+    ],
+    "description": "Add postman urlencoded body block"
+  },
+  "Add postman formdata body block": {
+    "scope": "javascript",
+    "prefix": "@formdata",
+    "body": [
+      "@formdata",
+      "* [",
+      "*   {",
+      "*     \"key\": \"$1\",",
+      "*     \"value\": \"$2\",",
+      "*     \"type\": \"${3|text,file|}\",",
+      "*     \"description\": \"${4}\"",
+      "*   }",
+      "* ]",
+    ],
+    "description": "Add postman formdata body block"
+  },
+  "Specify the body mode": {
+    "scope": "javascript",
+    "prefix": "@bodyMode",
+    "body": [
+      "@bodyMode ${1|json,urlencode,formdata,raw|}"
+    ],
+    "description": "Specify the body mode"
+  },
   "Add test block": {
     "scope": "javascript",
     "prefix": "@test",
