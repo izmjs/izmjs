@@ -1,4 +1,5 @@
 {
+  "UNHANDLED_ERROR": "Error not handled",
   "ERROR_500_TITLE": "Server Error",
   "ERROR_500": "Oops! Something went wrong...",
   "ERROR_404": "Path not found",

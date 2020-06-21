@@ -160,6 +160,9 @@ function initGlobalConfigFiles(config, assets) {
         // Setting Globbed Identity Access Management (IAM) files
         iam: getGlobbedPaths(assets.server.iam),
 
+        // Setting Globbed Identity Access Management (IAM) json files
+        iams: getGlobbedPaths(assets.server.iams),
+
         // Setting Bootstrap files
         bootstraps: getGlobbedPaths(assets.server.bootstraps),
 

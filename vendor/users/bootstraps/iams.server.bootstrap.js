@@ -105,6 +105,39 @@ async function seedRoles() {
     return false;
   });
 
+  const iamsFiles = config.files.server.iams.map(async (iamFilePath) => {
+    let m;
+    try {
+      // eslint-disable-next-line
+      m = require(resolve(iamFilePath));
+    } catch (e) {
+      debug('Iam file is invalid', iamFilePath);
+    }
+
+    if (Array.isArray(m)) {
+      await Promise.all(
+        m.map(async (one) => {
+          try {
+            await IamModel.findOneAndUpdate(
+              {
+                iam: one.iam,
+              },
+              one,
+              {
+                upsert: true,
+              },
+            );
+          } catch (e) {
+            debug('Enable to save IAMs from file', iamFilePath);
+          }
+        }),
+      );
+    }
+
+    return true;
+  });
+
+  await Promise.all(iamsFiles);
   await Promise.all(promises);
   return true;
 }

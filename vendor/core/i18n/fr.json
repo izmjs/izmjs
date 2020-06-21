@@ -1,4 +1,5 @@
 {
+  "UNHANDLED_ERROR": "Erreur non géré",
   "ERROR_500_TITLE": "Erreur Serveur",
   "ERROR_500": "Oops! Quelque chose a mal tourné...",
   "ERROR_404": "Chemin non trouvé",

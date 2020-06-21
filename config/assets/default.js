@@ -22,6 +22,7 @@ module.exports = {
       ...custom.map((m) => `${m}/*/config/*.js`),
       `${vendor}/*/config/01-acls.server.config.js`,
     ],
+    iams: [`${vendor}/*/iams.json`, ...custom.map((m) => `${m}/*/iams.json`)],
     iam: [`${vendor}/*/iam/*.js`, ...custom.map((m) => `${m}/*/iam/*.js`)],
     bootstraps: [`${vendor}/*/bootstraps/*.js`, ...custom.map((m) => `${m}/*/bootstraps/*.js`)],
     appConfig: [`${vendor}/*/app.config.js`, ...custom.map((m) => `${m}/*/app.config.js`)],

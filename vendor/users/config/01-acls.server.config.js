@@ -6,6 +6,13 @@ const { isExcluded } = require('@helpers/utils');
 
 const Iam = require('../helpers/iam.server.helper');
 
+function hasIam(iams, isAll = true) {
+  return (...iamNames) => {
+    const found = iams.filter(({ iam }) => iamNames.includes(iam));
+    return isAll === true ? found.length === iamNames.length : found.length > 0;
+  };
+}
+
 /**
  * Configure the modules server routes
  */
@@ -44,6 +51,9 @@ module.exports = (app, db, config) => {
         allIAMs.filter(({ id }) => children.includes(id)),
       );
     }
+
+    req.hasAllIams = hasIam(req.iams, true);
+    req.hasAnyIam = hasIam(req.iams, false);
 
     return next();
   });
@@ -189,8 +199,8 @@ Data    : ${data}`),
                 return result;
               });
               console.error(`
-              Error while adding route:
-              
+Error while adding route:
+
 ${chalk.red('Route')}   : ${route.path}
 ${chalk.red('Module')}  : ${routePath}
 ${chalk.red('Method')}  : ${k}
