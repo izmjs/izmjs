@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 process.env.NODE_ENV = 'test';
-process.env.ADMIN_VALIDATE=false;
+process.env.DEBUG = '';
+process.env.ADMIN_VALIDATE = false;
 
 require('./polyfill');
 
