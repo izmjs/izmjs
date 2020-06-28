@@ -17,7 +17,7 @@ module.exports = (config) => {
 
   // Supported validations
   const validations = {
-    types: ['email'],
+    types: ['admin', 'phone', 'email'].filter((one) => env.get(`${one.toUpperCase()}_ENABLED`)),
     config: {
       phone: {
         validate: env.get('PHONE_VALIDATE'),
@@ -32,6 +32,13 @@ module.exports = (config) => {
         max_tries: env.get('EMAIL_MAX_TRIES'),
         authenticate: env.get('EMAIL_IS_AUTHENTICATE'),
         max_resends: env.get('EMAIL_MAX_RESENDS'),
+      },
+      admin: {
+        validate: env.get('ADMIN_VALIDATE'),
+        code_length: env.get('ADMIN_CODE_LENGTH'),
+        max_tries: env.get('ADMIN_MAX_TRIES'),
+        authenticate: false,
+        max_resends: env.get('ADMIN_MAX_RESENDS'),
       },
     },
   };
@@ -56,24 +63,9 @@ module.exports = (config) => {
   const mailer = {
     from: env.get('MAILER_FROM'),
     options: {
-      host: env.get({
-        key: 'MAILER_HOST',
-        defaultValue: 'smtp.gmail.com',
-      }),
-      port: env.get(
-        {
-          key: 'MAILER_PORT',
-          defaultValue: 456,
-        },
-        { type: 'number' },
-      ),
-      secure: env.get(
-        {
-          key: 'MAILER_SECURE',
-          defaultValue: true,
-        },
-        { type: 'boolean' },
-      ),
+      host: env.get('MAILER_HOST'),
+      port: env.get('MAILER_PORT'),
+      secure: env.get('MAILER_SECURE'),
       auth: {
         user: env.get('MAILER_AUTH_USER'),
         pass: env.get('MAILER_AUTH_PASS'),

@@ -1,5 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
-
 /**
  * Module dependencies.
  */
@@ -12,7 +10,32 @@ const User = mongoose.model('User');
 
 const { vendor } = config.files.server.modules;
 
+// eslint-disable-next-line import/no-dynamic-require
 const errorHandler = require(resolve(`./${vendor}/core/controllers/errors.server.controller`));
+
+/**
+ * Validate an existing user
+ * @controller ValidateUser
+ * @param {Express.Request} req The request
+ * @param {OutcommingMessage} res The response
+ * @param {Function} next Go to the next middleware
+ */
+exports.validateUser = async function validateUser(req, res, next) {
+  const { entity } = req;
+
+  entity.validations.set(
+    'validations',
+    entity.validations.map((v) => (v.type === 'admin' ? { ...v, validated: true } : v)),
+  );
+
+  try {
+    await entity.save();
+  } catch (e) {
+    return next(e);
+  }
+
+  return res.status(204).end();
+};
 
 /**
  * Read a single user infos

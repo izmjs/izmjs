@@ -1,4 +1,12 @@
 {
+  "PHONE_ENABLED": {
+    "name": "Enable phone validation",
+    "group": "validations",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
   "PHONE_VALIDATE": {
     "name": "Phone should be validated?",
     "group": "validations",
@@ -36,6 +44,54 @@
     "defaultValue": 4,
     "schema": {
       "type": "integer"
+    }
+  },
+  "ADMIN_ENABLED": {
+    "group": "validations",
+    "name": "Enable admin validation",
+    "defaultValue": true,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "ADMIN_VALIDATE": {
+    "group": "validations",
+    "name": "Admin validation is mondatory",
+    "defaultValue": true,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "ADMIN_CODE_LENGTH": {
+    "group": "validations",
+    "name": "Admin validation code length",
+    "defaultValue": 80,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "ADMIN_MAX_TRIES": {
+    "group": "validations",
+    "name": "Admin validation max tries",
+    "defaultValue": 10,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "ADMIN_MAX_RESENDS": {
+    "group": "validations",
+    "name": "Admin validation code max resends",
+    "defaultValue": 4,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "EMAIL_ENABLED": {
+    "name": "Enable email validation",
+    "group": "validations",
+    "defaultValue": true,
+    "schema": {
+      "type": "boolean"
     }
   },
   "EMAIL_VALIDATE": {

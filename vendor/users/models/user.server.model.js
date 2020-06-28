@@ -12,6 +12,7 @@ const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 const sgMail = require('@sendgrid/mail');
 const util = require('util');
+const debug = require('debug')('vendor:users:models:users');
 
 const config = require('@config/index');
 
@@ -53,8 +54,9 @@ if (config.mailer.options && config.mailer.options.auth && config.mailer.options
   smtpTransport = nodemailer.createTransport(config.mailer.options);
 }
 
-async function sendMail(subject, body, users = []) {
+async function sendMail(subject, body, users = [], opts = {}) {
   const msg = {
+    ...opts,
     to: users,
     from: config.mailer.from,
     subject,
@@ -84,6 +86,7 @@ async function sendMail(subject, body, users = []) {
       const data = await send(msg);
       return data;
     } catch (e) {
+      debug('Error while sending email', e, subject, users);
       return false;
     }
   }
@@ -330,19 +333,20 @@ UserSchema.methods.sendSMS = function send_sms(body) {
  * Send an email to the user
  */
 
-UserSchema.methods.sendMail = function send_mail(subject, body) {
-  return sendMail(subject, body, [this.email]);
+UserSchema.methods.sendMail = function send_mail(subject, body, opts = {}) {
+  return sendMail(subject, body, [this.email], opts);
 };
 
 /**
  * Send an email to a collection of users
  */
-UserSchema.query.sendMail = async function send_mail_col(subject, body) {
+UserSchema.query.sendMail = async function send_mail_col(subject, body, opts = {}) {
   const users = await this;
   return sendMail(
     subject,
     body,
     users.map((u) => u.email),
+    opts,
   );
 };
 

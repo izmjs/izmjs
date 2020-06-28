@@ -42,6 +42,34 @@ module.exports = {
       },
     },
     {
+      path: '/:userId/picture',
+      methods: {
+        get: {
+          parents: ['vendor:users', 'vendor:users:admin'],
+          middlewares: [
+            adminCtrls.picture,
+            adminCtrls.svg({ size: 46, color: '#d35400', fill: '#ffffff' }),
+          ],
+          iam: 'vendor:users:admin:picture',
+          title: 'Get user profile picture',
+          description: 'Get the profile picture of an existing using his identifier',
+        },
+      },
+    },
+    {
+      path: '/:userId/validate',
+      methods: {
+        post: {
+          iam: 'modules:admin:main:users:admin',
+          title: 'Validate a user',
+          groups: [],
+          parents: ['modules:admin', 'modules:admin:users'],
+          description: 'Validate an existing user',
+          middlewares: [adminCtrls.validateUser],
+        },
+      },
+    },
+    {
       path: '/:userId',
       methods: {
         get: {
@@ -64,21 +92,6 @@ module.exports = {
           iam: 'vendor:users:admin:delete',
           title: 'Remove an existing user',
           description: 'Remove a specific user using his identifier',
-        },
-      },
-    },
-    {
-      path: '/:userId/picture',
-      methods: {
-        get: {
-          parents: ['vendor:users', 'vendor:users:admin'],
-          middlewares: [
-            adminCtrls.picture,
-            adminCtrls.svg({ size: 46, color: '#d35400', fill: '#ffffff' }),
-          ],
-          iam: 'vendor:users:admin:picture',
-          title: 'Get user profile picture',
-          description: 'Get the profile picture of an existing using his identifier',
         },
       },
     },
