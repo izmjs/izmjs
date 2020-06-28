@@ -34,12 +34,11 @@
                   <!-- COPY -->
                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding-copy">Hello {{name}},</td>
+                      <td style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 30px;" class="padding-copy">Hello Admin,</td>
                     </tr>
                     <tr>
                       <td style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #666666;" class="padding-copy">
-                      Welcome to <strong>{{app.title}}</strong>. We can’t wait to help you to plan some grand adventures. <br>
-                      To verify your <strong>{{app.title}}</strong> account please click the link bellow:</td>
+                      <strong>{{ name }}</strong> has created an account. Please click the link bellow to validate it.</td>
                     </tr>
                   </table>
                 </td>

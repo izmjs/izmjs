@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const debug = require('debug')('modules:users:helpers:iam');
-const { pathToRegexp } = require('path-to-regexp');
+const pathToRegexp = require('path-to-regexp');
 
 class Iam {
   constructor() {
@@ -9,13 +9,7 @@ class Iam {
   }
 
   async allow(resource, permission, iam, opts = {}) {
-    const {
-      title,
-      module,
-      groups,
-      parents,
-      description,
-    } = opts;
+    const { title, module, groups, parents, description } = opts;
     const regex = pathToRegexp(resource).toString();
     const obj = {
       resource: regex.substr(1, regex.length - 3),
@@ -50,14 +44,9 @@ class Iam {
     if (Array.isArray(groups) && groups.length > 0) {
       obj.groups = groups
         .filter((g) => Boolean(g) && typeof g === 'string')
-        .map((g) => g
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, ' ')
-          .replace(/ /g, '-'));
+        .map((g) => g.trim().toLowerCase().replace(/\s+/g, ' ').replace(/ /g, '-'));
 
-      obj.groups = obj.groups
-        .filter((g, index) => obj.groups.indexOf(g) === index);
+      obj.groups = obj.groups.filter((g, index) => obj.groups.indexOf(g) === index);
     }
 
     let one;
@@ -75,19 +64,23 @@ class Iam {
     if (Array.isArray(parents)) {
       const { _id: id } = one;
       const list = parents
-        .filter((g, index) => Boolean(g)
-          && typeof g === 'string'
-          && parents.indexOf(g) === index)
-        .map((g) => this.IamModel.findOneAndUpdate({ iam: g }, {
-          iam: g,
-          $addToSet: {
-            children: id,
-          },
-        }, {
-          upsert: true,
-          setDefaultsOnInsert: true,
-          new: true,
-        }));
+        .filter((g, index) => Boolean(g) && typeof g === 'string' && parents.indexOf(g) === index)
+        .map((g) =>
+          this.IamModel.findOneAndUpdate(
+            { iam: g },
+            {
+              iam: g,
+              $addToSet: {
+                children: id,
+              },
+            },
+            {
+              upsert: true,
+              setDefaultsOnInsert: true,
+              new: true,
+            },
+          ),
+        );
 
       try {
         await Promise.all(list);
@@ -104,9 +97,11 @@ class Iam {
       let iams = await this.RoleModel.getIAMs(roles);
 
       // Flatten the IAMs
-      iams = iams.map((iam) => iam.toJSON({
-        virtuals: true,
-      }));
+      iams = iams.map((iam) =>
+        iam.toJSON({
+          virtuals: true,
+        }),
+      );
 
       return iams;
     } catch (e) {

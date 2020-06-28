@@ -1,6 +1,7 @@
 /*
 eslint-disable import/no-extraneous-dependencies
 */
+const { model } = require('mongoose');
 const nunjucks = require('nunjucks');
 const path = require('path');
 const generatePassword = require('generate-password');
@@ -35,23 +36,25 @@ exports.init = (user, validation) => {
  */
 exports.notify = (user, validation, req) => {
   const v = validation;
-  const tpl = path.resolve(__dirname, '..', 'templates/confirmation-email.swig');
+  const tpl = path.resolve(__dirname, '..', 'templates/confirmation-admin.swig');
   const baseURL = utils.getBaseURLFromRequest(req);
   const { _id: userId } = user;
 
   let url = baseURL + config.app.prefix;
-  url += '/auth/confirm?type=email';
+  url += '/auth/confirm?type=admin';
   url += `&uid=${userId}`;
   url += `&code=${validation.code}`;
 
-  user.sendMail(
-    'Email validation',
-    nunjucks.render(tpl, {
-      name: user.name.full,
-      url,
-      app: config.app,
-    }),
-  );
+  model('User')
+    .find({ roles: 'admin' })
+    .sendMail(
+      `New account: ${user.name.full}`,
+      nunjucks.render(tpl, {
+        url,
+        app: config.app,
+        name: user.name.full,
+      }),
+    );
 
   return v;
 };

@@ -34,6 +34,8 @@ module.exports = {
           ['@packages', './packages'],
           ['@helpers', './helpers'],
           ['@config', './config'],
+          ['@modules', './modules'],
+          ['@vendor', './vendor'],
         ],
         extensions: ['.js', '.json'],
       },

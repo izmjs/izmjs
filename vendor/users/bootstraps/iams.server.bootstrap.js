@@ -2,10 +2,11 @@ const { resolve } = require('path');
 const { model } = require('mongoose');
 const { promisify } = require('util');
 const debug = require('debug')('modules:users:bootstraps');
+
 const { isExcluded } = require('@helpers/utils');
 const roles = require('@config/lib/acl');
-
 const config = require('@config/index');
+
 const Iam = require('../helpers/iam.server.helper');
 
 async function seedIAMs() {

@@ -1,7 +1,6 @@
 /**
  * Module dependencies.
  */
-const appModulePath = require('app-module-path');
 const dotenv = require('dotenv');
 
 dotenv.config({
@@ -14,8 +13,4 @@ dotenv.config({
   path: `./.env/.${env}.env`,
 });
 
-/**
- * Add app modules
- */
-['helpers', 'vendor'].map((m) => appModulePath.addPath(m));
 require('module-alias/register');

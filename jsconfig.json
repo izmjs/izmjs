@@ -6,7 +6,9 @@
     "paths": {
       "@packages/*": ["packages/*"],
       "@helpers/*": ["helpers/*"],
-      "@config/*": ["config/*"]
+      "@config/*": ["config/*"],
+      "@vendor/*": ["vendor/*"],
+      "@modules/*": ["modules/*"]
     }
   },
   "exclude": ["node_modules"],
