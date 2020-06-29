@@ -158,13 +158,14 @@
   },
   "MAILER_HOST": {
     "name": "SMTP hostname/IP address",
+    "link": "https://mailtrap.io/",
     "group": "mailer",
-    "defaultValue": "smtp.gmail.com"
+    "defaultValue": "smtp.mailtrap.io"
   },
   "MAILER_PORT": {
     "name": "Mailer port",
     "group": "mailer",
-    "defaultValue": 456,
+    "defaultValue": 2525,
     "schema": {
       "type": "integer"
     }
@@ -172,7 +173,7 @@
   "MAILER_SECURE": {
     "name": "Is mailer secured?",
     "group": "mailer",
-    "defaultValue": true,
+    "defaultValue": false,
     "schema": {
       "type": "boolean"
     }
