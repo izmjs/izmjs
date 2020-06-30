@@ -31,6 +31,8 @@ declare namespace IAM {
      * Set the sub-routes of the request
      */
     routes: Route[];
+    before: Middleware[];
+    after: Middleware[];
   }
 
   interface Param {

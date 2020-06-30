@@ -98,6 +98,13 @@ module.exports = {
          *   "password": "{{password}}"
          * }
          *
+         * @params
+         * [{
+         *   "key": "$select",
+         *   "value": "name,iams",
+         *   "description": "Attributes to select"
+         * }]
+         *
          * @test
          * pm.test("Status code is 200", function () {
          *   pm.response.to.have.status(200);
