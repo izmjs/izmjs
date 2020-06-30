@@ -101,7 +101,6 @@ function validateSecureMode(config) {
         '  To create them, simply run the following from your shell: sh ./scripts/generate-ssl-certs.sh',
       ),
     );
-    debug();
 
     _.merge(config.secure, {
       ssl: false,
@@ -126,8 +125,11 @@ function validateSessionSecret(config, testing) {
           '+ WARNING: It is strongly recommended that you change session secret while running in production!',
         ),
       );
-      debug(chalk.red('  Please add `SESSIONS_MODULE_SECRET=super amazing secret` to '));
-      debug(chalk.red('  `.env/.production.env`'));
+      debug(
+        chalk.red(
+          'Please add `SESSIONS_MODULE_SECRET=super amazing secret` to `.env/.production.env`',
+        ),
+      );
     }
     return false;
   }

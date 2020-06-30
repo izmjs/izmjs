@@ -43,9 +43,7 @@ module.exports = (config) => {
     },
   };
 
-  validations.mondatory = Object.keys(validations.config).filter(
-    (type) => validations.config[type].validate,
-  );
+  validations.mondatory = validations.types.filter((type) => validations.config[type].validate);
 
   // Twilio configuration
   const twilio = {

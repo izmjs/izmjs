@@ -29,7 +29,7 @@ exports.isValidated = (user) => {
 
     if (!t || !t.validated) {
       throw new ValidationError('VALIDATIONS!UNVALIDATED', {
-        type: t.type,
+        type: types[index],
       });
     }
   }

@@ -1,6 +1,3 @@
-/*
-eslint-disable import/no-extraneous-dependencies
-*/
 const { model } = require('mongoose');
 const nunjucks = require('nunjucks');
 const path = require('path');

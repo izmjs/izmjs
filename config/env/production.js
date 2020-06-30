@@ -12,6 +12,7 @@ module.exports = {
       auth: process.env.MONGODB_USERNAME ? { authSource: 'admin' } : undefined,
       user: process.env.MONGODB_USERNAME || '',
       pass: process.env.MONGODB_PASSWORD || '',
+      useNewUrlParser: true,
     },
     // Enable mongoose debug mode
     debug: process.env.MONGODB_DEBUG || false,
