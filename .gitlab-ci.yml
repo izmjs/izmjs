@@ -9,9 +9,11 @@ variables:
   STAGING_URL: '$STAGING_URL'
   STAGING_DEPLOY_SERVER: '$STAGING_DEPLOY_SERVER'
   STAGING_SSH_PRIVATE_KEY: '$STAGING_SSH_PRIVATE_KEY'
+  STAGING_DEPLOY_PATH: '$STAGING_DEPLOY_PATH'
   PRODUCTION_URL: '$PRODUCTION_URL'
   PRODUCTION_DEPLOY_SERVER: '$PRODUCTION_DEPLOY_SERVER'
   PRODUCTION_SSH_PRIVATE_KEY: '$PRODUCTION_SSH_PRIVATE_KEY'
+  PRODUCTION_DEPLOY_PATH: '$PRODUCTION_DEPLOY_PATH'
 
 cache:
   paths:
@@ -39,7 +41,7 @@ Deploy on staging:
     - chmod 600  ~/.ssh/id_rsa
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - bash ./scripts/gitlab-deploy.sh "$STAGING_DEPLOY_SERVER"
+    - bash ./scripts/gitlab-deploy.sh "$STAGING_DEPLOY_SERVER" "$STAGING_DEPLOY_PATH"
   environment:
     name: staging
     url: $STAGING_URL
@@ -54,7 +56,7 @@ Deploy on production:
     - chmod 600  ~/.ssh/id_rsa
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - bash ./scripts/gitlab-deploy.sh "$PRODUCTION_DEPLOY_SERVER"
+    - bash ./scripts/gitlab-deploy.sh "$PRODUCTION_DEPLOY_SERVER" "$PRODUCTION_DEPLOY_PATH"
   environment:
     name: production
     url: $PRODUCTION_URL

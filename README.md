@@ -1,3 +1,4 @@
+
 ## NodeJS, Express and MongoDB starter
 
 ![David](https://img.shields.io/david/izmjs/izmjs)
@@ -98,9 +99,11 @@ You need to define these environment variables in your repository:
 
 - `PRODUCTION_URL`: [The production URL](https://docs.gitlab.com/ee/ci/environments.html#making-use-of-the-environment-url)
 - `PRODUCTION_DEPLOY_SERVER`: List of production servers addresses or IP addresses. Should be separated by `,`.
+- `PRODUCTION_DEPLOY_PATH`: Where to deploy project on production hosts.
 - `PRODUCTION_SSH_PRIVATE_KEY`: The SSH key to use to connect to production servers.
 - `STAGING_URL`: [The staging URL](https://docs.gitlab.com/ee/ci/environments.html#making-use-of-the-environment-url)
 - `STAGING_DEPLOY_SERVER`: List of staging servers addresses or IP addresses. Should be separated by `,`.
+- `STAGING_DEPLOY_PATH`: Where to deploy project on staging hosts.
 - `STAGING_SSH_PRIVATE_KEY`: The SSH key to use to connect to staging servers.
 
 ## License
