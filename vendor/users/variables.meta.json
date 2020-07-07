@@ -1,4 +1,11 @@
 {
+  "LINK_RESET_PWD": {
+    "name": "Reset Password Link",
+    "group": "links",
+    "description": "A reset password link template. Click for more details how templating works.",
+    "link": "https://mozilla.github.io/nunjucks/templating.html",
+    "defaultValue": "{{app.publicAddress}}{{app.prefix}}/auth/reset/{{token}}"
+  },
   "PHONE_ENABLED": {
     "name": "Enable phone validation",
     "group": "validations",

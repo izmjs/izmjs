@@ -104,6 +104,7 @@ ERRORS      : ${JSON.stringify(this.validate.errors, null, '  ')}
   toJSON() {
     return {
       key: this.key,
+      link: this.link,
       envVar: this.realKey(),
       name: this.name,
       value: this.getValue(),

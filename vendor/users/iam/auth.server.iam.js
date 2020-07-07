@@ -20,8 +20,8 @@ module.exports = {
           parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.forgot],
           iam: 'vendor:users:auth:passwd:forgotten',
-          title: 'Reset the user password',
-          description: 'Generate a reset password token and send it to the user',
+          title: 'Request Reset Link',
+          description: 'Generate a reset password link and send it to the user',
         },
       },
     },
@@ -32,14 +32,21 @@ module.exports = {
           parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.validateResetToken],
           iam: 'vendor:users:auth:passwd:validate-token',
-          title: 'Change password',
+          title: 'Reset password page',
           description: 'Redirect the user to the right page to change his password',
         },
+        /**
+         * @body
+         * {
+         *   "newPassword": "P@$$w0rd",
+         *   "verifyPassword": "P@$$w0rd"
+         * }
+         */
         post: {
           parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.reset],
           iam: 'vendor:users:auth:passwd:reset',
-          title: 'Change the password',
+          title: 'Reset password',
           description: 'Change a user password using a valid reset password token',
         },
       },

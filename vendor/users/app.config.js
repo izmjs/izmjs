@@ -71,8 +71,16 @@ module.exports = (config) => {
     },
   };
 
+  const links = {
+    resetPwd: env.get('LINK_RESET_PWD'),
+  };
+
   // Return the module configuration
   return {
+    links: {
+      ...config.links,
+      ...links,
+    },
     mailer,
     twilio,
     sendGrid,

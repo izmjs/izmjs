@@ -7,6 +7,7 @@ const { resolve } = require('path');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { promisify } = require('util');
+const { renderString } = require('nunjucks');
 
 const config = require('@config/index');
 
@@ -73,13 +74,16 @@ exports.forgot = async function forgot(req, res, next) {
   }
 
   const render = promisify(res.render);
-  const httpTransport = `http${config.secure && config.secure.ssl === true ? 's' : ''}://`;
 
   try {
     const html = await render.bind(res)(resolve(`${vendor}/users/views/reset-password-email`), {
-      name: user.name.full,
-      appName: config.app.title,
-      url: `${httpTransport + req.headers.host + config.app.prefix}/auth/reset/${token}`,
+      user,
+      app: config.app,
+      url: renderString(config.links.resetPwd, {
+        app: config.app,
+        user,
+        token,
+      }),
     });
     user.sendMail('Password Reset', html);
   } catch (e) {
