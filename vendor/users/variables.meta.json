@@ -56,7 +56,7 @@
   "ADMIN_ENABLED": {
     "group": "validations",
     "name": "Enable admin validation",
-    "defaultValue": true,
+    "defaultValue": false,
     "schema": {
       "type": "boolean"
     }
@@ -64,7 +64,7 @@
   "ADMIN_VALIDATE": {
     "group": "validations",
     "name": "Admin validation is mondatory",
-    "defaultValue": true,
+    "defaultValue": false,
     "schema": {
       "type": "boolean"
     }
