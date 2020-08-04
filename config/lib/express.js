@@ -1,13 +1,13 @@
 /**
  * Module dependencies.
  */
-const i18nextMiddleware = require('i18next-express-middleware');
 const { lstatSync, readdirSync, readFileSync } = require('fs');
+const i18nextMiddleware = require('i18next-http-middleware');
 const { createServer: createHTTPsServer } = require('https');
 const { createServer: createHTTPServer } = require('http');
 const debug = require('debug')('app:config:express');
-const Backend = require('i18next-node-fs-backend');
 const methodOverride = require('method-override');
+const Backend = require('i18next-fs-backend');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const { connection } = require('mongoose');
@@ -180,8 +180,6 @@ module.exports.initHelmetHeaders = (app) => {
   app.use(
     helmet({
       maxAge: SIX_MONTHS,
-      includeSubdomains: true,
-      force: true,
     }),
   );
   app.disable('x-powered-by');
