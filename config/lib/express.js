@@ -319,8 +319,20 @@ module.exports.initErrorRoutes = (app) => {
     options.defaultNS = 'vendor:core';
 
     // Redirect to error page
-    return res.status(500).render(`${vendor}/core/views/500`, {
-      error: req.t('ERROR_500'),
+    return res.status(500).format({
+      'text/html': () => {
+        res.render(`${vendor}/core/views/500`, {
+          error: req.t('ERROR_500'),
+        });
+      },
+      'application/json': () => {
+        res.json({
+          error: req.t('ERROR_500'),
+        });
+      },
+      default() {
+        res.send(req.t('ERROR_500'));
+      },
     });
   });
 };
