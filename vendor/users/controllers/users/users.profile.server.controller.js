@@ -17,8 +17,8 @@ const User = mongoose.model('User');
 
 /**
  * Update user details
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.update = async function update(req, res) {
@@ -48,8 +48,8 @@ exports.update = async function update(req, res) {
 
 /**
  * Get profile picture
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.getProfilePicture = async function getProfilePicture(req, res) {
@@ -58,8 +58,8 @@ exports.getProfilePicture = async function getProfilePicture(req, res) {
 
 /**
  * Update profile picture
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.uploadProfilePicture = async function uploadProfilePicture(req, res, next) {
@@ -92,8 +92,8 @@ exports.uploadProfilePicture = async function uploadProfilePicture(req, res, nex
 
 /**
  * Filter the profile picture mimeTypes
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.profilePictFilter = async function profilePictFilter(req, file, cb) {
@@ -106,8 +106,8 @@ exports.profilePictFilter = async function profilePictFilter(req, file, cb) {
 
 /**
  * Send User
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.me = async function me(req, res) {
@@ -145,8 +145,8 @@ exports.me = async function me(req, res) {
 
 /**
  * Confirmation
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.confirm = async function confirm(req, res) {
@@ -214,8 +214,8 @@ exports.confirm = async function confirm(req, res) {
 
 /**
  * Resend the confirmation code
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.resend = async function resend(req, res) {

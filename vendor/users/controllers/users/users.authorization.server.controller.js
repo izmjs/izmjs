@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -8,8 +7,8 @@ const User = mongoose.model('User');
 
 /**
  * User middleware
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.userByID = async function userByID(req, res, next, id) {
@@ -26,10 +25,15 @@ exports.userByID = async function userByID(req, res, next, id) {
   }).exec((err, user) => {
     if (err) {
       return next(err);
-    } if (!user) {
-      return next(new Error(req.t('USER_LOAD_FAILED', {
-        id,
-      })));
+    }
+    if (!user) {
+      return next(
+        new Error(
+          req.t('USER_LOAD_FAILED', {
+            id,
+          }),
+        ),
+      );
     }
 
     req.profile = user;

@@ -15,8 +15,8 @@ const noReturnUrls = ['/authentication/signin', '/authentication/signup'];
 
 /**
  * Signup
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.signup = async function signup(req, res, next) {
@@ -58,8 +58,8 @@ exports.signup = async function signup(req, res, next) {
 
 /**
  * Signin after passport authentication
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.signin = async function signin(req, res, next) {
@@ -96,8 +96,8 @@ exports.signin = async function signin(req, res, next) {
 
 /**
  * Signout
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.signout = async function signout(req, res) {
@@ -121,8 +121,8 @@ exports.oauthCall = (strategy, scope) =>
 
 /**
  * OAuth callback
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.oauthCallback = (strategy) =>
@@ -154,8 +154,8 @@ exports.oauthCallback = (strategy) =>
 
 /**
  * Helper function to save or update a OAuth user profile
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
@@ -241,8 +241,8 @@ exports.saveOAuthUserProfile = (req, providerUserProfile, done) => {
 
 /**
  * Remove OAuth provider
- * @param {Express.Request} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Request} req The request
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.removeOAuthProvider = async function removeOAuthProvider(req, res) {

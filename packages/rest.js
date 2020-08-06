@@ -5,8 +5,8 @@ exports.sanitizeQuery = (modelName) => {
   /**
    * Sanitize the query
    * @controller Sanitize Query
-   * @param {Express.Request} req The request
-   * @param {OutcommingMessage} res The response
+   * @param {import('express').Request} req The request
+   * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */
   return async function sanitizeQuery(req, res, next) {
@@ -46,7 +46,7 @@ exports.sanitizeQuery = (modelName) => {
  * List all entities
  * @controller List
  * @param {IncommingMessage} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.list = async function list(req, res, next) {
@@ -67,7 +67,7 @@ exports.create = (modelName) => {
    * Create new entity
    * @controller Create
    * @param {IncommingMessage} req The request
-   * @param {OutcommingMessage} res The response
+   * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */
   return async function create(req, res, next) {
@@ -87,7 +87,7 @@ exports.create = (modelName) => {
  * Get a specific entity
  * @controller Get one
  * @param {IncommingMessage} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.getOne = async function getOne(req, res) {
@@ -99,7 +99,7 @@ exports.getOne = async function getOne(req, res) {
  * Get a specific entity
  * @controller Get one
  * @param {IncommingMessage} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.removeOne = async function removeOne(req, res, next) {
@@ -116,7 +116,7 @@ exports.removeOne = async function removeOne(req, res, next) {
  * Get a specific entity
  * @controller Get one
  * @param {IncommingMessage} req The request
- * @param {OutcommingMessage} res The response
+ * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
 exports.updateOne = async function updateOne(req, res, next) {
@@ -136,7 +136,7 @@ exports.getById = (modelName) => {
    * Get entity by ID
    * @controller GetById
    * @param {IncommingMessage} req The request
-   * @param {OutcommingMessage} res The response
+   * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */
   return async (req, res, next, id) => {
@@ -182,8 +182,8 @@ exports.set = (type = '$filter', payload = {}, isMerge = false) => {
   /**
    * Sets an object of the request
    * @controller Set
-   * @param {Express.Request} req The request
-   * @param {OutcommingMessage} res The response
+   * @param {import('express').Request} req The request
+   * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */
   return function set(req, res, next) {
