@@ -38,7 +38,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.2.2",
+    "@sendgrid/mail": "^7.2.3",
     "ajv": "^6.12.3",
     "ajv-errors": "^1.0.1",
     "body-parser": "^1.19.0",
@@ -62,7 +62,7 @@
     "lodash": "^4.17.19",
     "method-override": "^3.0.0",
     "module-alias": "^2.2.2",
-    "mongoose": "^5.9.27",
+    "mongoose": "^5.9.28",
     "morgan": "^1.10.0",
     "nodemailer": "^6.4.11",
     "nunjucks": "^3.2.2",
@@ -72,7 +72,7 @@
     "path-to-regexp": "0.1.7",
     "socket.io": "^2.3.0",
     "socket.io-redis": "^5.3.0",
-    "twilio": "^3.48.1",
+    "twilio": "^3.48.2",
     "validator": "^13.1.1"
   },
   "commitlint": {
@@ -101,7 +101,7 @@
     "lint-staged": "^10.2.11",
     "mocha": "^8.1.1",
     "nodemon": "^2.0.4",
-    "ora": "^4.0.5",
+    "ora": "^5.0.0",
     "plop": "^2.7.4",
     "pm2": "^4.4.0",
     "prettier": "^2.0.5",
