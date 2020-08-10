@@ -24,7 +24,9 @@ module.exports = (config) => {
     },
     clusterMode: env.get('CLUSTER_MODE'),
     cors: {
-      enabled: env.get('ENABLE_CORS'),
+      enabled: env.get('CORS_ENABLE'),
+      credentials: env.get('CORS_CREDENTIALS'),
+      origin: env.get('CORS_ORIGIN'),
     },
     title: env.get('APP_TITLE'),
     prefix: env.get('APP_PREFIX'),

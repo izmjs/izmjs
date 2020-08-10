@@ -6,7 +6,7 @@ module.exports = {
     semi: ['error', 'always'],
     'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
     'linebreak-style': ['error', 'unix'],
-    quotes: [2, 'single'],
+    quotes: [2, 'single', { avoidEscape: true }],
     camelcase: 'off',
     'comma-dangle': [
       'error',

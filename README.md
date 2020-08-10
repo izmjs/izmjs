@@ -1,4 +1,3 @@
-
 ## NodeJS, Express and MongoDB starter
 
 ![David](https://img.shields.io/david/izmjs/izmjs)

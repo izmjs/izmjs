@@ -153,11 +153,7 @@ exports.svg = ({ size = 46, color = '#d35400', fill = '#ffffff' }) =>
 exports.list = async function list(req, res, next) {
   const { $filter = '', $top: top, $skip: skip } = req.query;
   const private_attrs = config.app.profile.private_attrs || [];
-  const findObj = $filter
-    ? {
-      $text: { $search: $filter },
-    }
-    : {};
+  const findObj = $filter ? { $text: { $search: $filter } } : {};
 
   try {
     const json = await User.find(findObj, {

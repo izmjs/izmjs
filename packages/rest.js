@@ -45,7 +45,7 @@ exports.sanitizeQuery = (modelName) => {
 /**
  * List all entities
  * @controller List
- * @param {IncommingMessage} req The request
+ * @param {import('express').Request} req The request
  * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -66,7 +66,7 @@ exports.create = (modelName) => {
   /**
    * Create new entity
    * @controller Create
-   * @param {IncommingMessage} req The request
+   * @param {import('express').Request} req The request
    * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */
@@ -86,7 +86,7 @@ exports.create = (modelName) => {
 /**
  * Get a specific entity
  * @controller Get one
- * @param {IncommingMessage} req The request
+ * @param {import('express').Request} req The request
  * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -98,7 +98,7 @@ exports.getOne = async function getOne(req, res) {
 /**
  * Get a specific entity
  * @controller Get one
- * @param {IncommingMessage} req The request
+ * @param {import('express').Request} req The request
  * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -115,7 +115,7 @@ exports.removeOne = async function removeOne(req, res, next) {
 /**
  * Get a specific entity
  * @controller Get one
- * @param {IncommingMessage} req The request
+ * @param {import('express').Request} req The request
  * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
@@ -135,7 +135,7 @@ exports.getById = (modelName) => {
   /**
    * Get entity by ID
    * @controller GetById
-   * @param {IncommingMessage} req The request
+   * @param {import('express').Request} req The request
    * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */

@@ -338,6 +338,14 @@ UserSchema.methods.sendMail = function send_mail(subject, body, opts = {}) {
 };
 
 /**
+ * Send an email to the user
+ */
+
+UserSchema.statics.sendMail = function send_mail(emails = [], subject, body, opts = {}) {
+  return sendMail(subject, body, emails, opts);
+};
+
+/**
  * Send an email to a collection of users
  */
 UserSchema.query.sendMail = async function send_mail_col(subject, body, opts = {}) {

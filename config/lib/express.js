@@ -119,7 +119,12 @@ module.exports.initMiddleware = (app) => {
   app.use(express.static(config.app.webFolder));
 
   if (config.app.cors.enabled) {
-    app.use(cors());
+    app.use(
+      cors({
+        credentials: config.app.cors.credentials,
+        origin: config.app.cors.origin,
+      }),
+    );
   }
 };
 

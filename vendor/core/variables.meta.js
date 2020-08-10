@@ -28,13 +28,29 @@ module.exports = {
       type: 'boolean',
     },
   },
-  ENABLE_CORS: {
+  CORS_ENABLE: {
     name: 'Enable CORS',
     group: 'http-server',
     defaultValue: false,
     schema: {
       type: 'boolean',
     },
+  },
+  CORS_CREDENTIALS: {
+    name: 'Allow CORS Credentials',
+    group: 'http-server',
+    link:
+      'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials',
+    defaultValue: true,
+    schema: {
+      type: 'boolean',
+    },
+  },
+  CORS_ORIGIN: {
+    name: 'Allowed CORS Origins',
+    group: 'http-server',
+    defaultValue: 'http://localhost:3001',
+    link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin',
   },
   CLUSTER_MODE: {
     name: 'Enable cluster mode',

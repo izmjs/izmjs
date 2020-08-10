@@ -1,7 +1,8 @@
 {
   "files.eol": "\n",
   "files.exclude": {
-    "db/**": true
+    "db/**": true,
+    "logs/**": true
   },
   "eslint.enable": true,
   "editor.codeActionsOnSave": {
