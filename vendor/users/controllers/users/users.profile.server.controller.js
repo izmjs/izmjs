@@ -4,6 +4,7 @@
 const _ = require('lodash');
 const { resolve } = require('path');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const config = require('@config/index');
 const validationModule = require('@config/validations');
@@ -112,7 +113,7 @@ exports.profilePictFilter = async function profilePictFilter(req, file, cb) {
  */
 exports.me = async function me(req, res) {
   let { $expand } = req.query;
-  const { $select } = req.query;
+  const { $select, $jwt } = req.query;
   const { iams = [] } = req;
 
   let result = req.user ? req.user.json() : null;
@@ -120,6 +121,8 @@ exports.me = async function me(req, res) {
   if (!result) {
     return res.json(result);
   }
+
+  const { _id: id } = result;
 
   if ($expand) {
     $expand = $expand.split(',').map((attr) => attr.trim());
@@ -138,6 +141,14 @@ exports.me = async function me(req, res) {
 
   if ($select) {
     result = _.pick(result, $select.split(','), 'id');
+  }
+
+  if (config.jwt.enabled && $jwt === 'true') {
+    const { key, alg, expiresIn } = config.jwt;
+    result.token = jwt.sign({ u: id }, key.private, {
+      algorithm: alg,
+      expiresIn,
+    });
   }
 
   return res.json(result);

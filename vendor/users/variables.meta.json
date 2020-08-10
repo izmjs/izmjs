@@ -201,5 +201,62 @@
   "DEFAULT_GROUPS": {
     "name": "Default groups",
     "defaultValue": "user"
+  },
+  "JWT_ENABLED": {
+    "name": "Enable JWT Tokens",
+    "defaultValue": false,
+    "group": "jwt",
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "JWT_KEY_TYPE": {
+    "name": "Key type",
+    "defaultValue": "string",
+    "group": "jwt",
+    "schema": {
+      "type": "string",
+      "enum": ["file", "string"]
+    }
+  },
+  "JWT_PRIVATE_KEY": {
+    "name": "Private key",
+    "defaultValue": "SOME RANDOM KEY",
+    "group": "jwt"
+  },
+  "JWT_PUBLIC_KEY": {
+    "name": "Public Key",
+    "defaultValue": "",
+    "group": "jwt"
+  },
+  "JWT_ALG": {
+    "name": "Algorithm",
+    "defaultValue": "HS256",
+    "group": "jwt",
+    "schema": {
+      "type": "string",
+      "enum": [
+        "RS256",
+        "RS384",
+        "RS512",
+        "PS256",
+        "PS384",
+        "PS512",
+        "ES256",
+        "ES384",
+        "ES512",
+        "HS256",
+        "HS384",
+        "HS512",
+        "none"
+      ]
+    }
+  },
+  "JWT_EXPIRES_IN": {
+    "name": "Expires In",
+    "description": "Time before the JWT expiration",
+    "defaultValue": "2 days",
+    "link": "https://github.com/vercel/ms",
+    "group": "jwt"
   }
 }

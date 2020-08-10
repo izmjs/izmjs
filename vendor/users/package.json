@@ -1,0 +1,19 @@
+{
+  "name": "users",
+  "version": "0.1.0",
+  "description": "User module",
+  "keywords": [
+    "users",
+    "nodejs",
+    "functional-module"
+  ],
+  "author": {
+    "email": "med.idrissi@outlook.com",
+    "name": "Mohamed IDRISSI",
+    "url": "https://github.com/midrissi"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
+}

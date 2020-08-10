@@ -1,3 +1,5 @@
+const { readFileSync } = require('fs');
+
 module.exports = (config) => {
   const { env } = config.utils;
 
@@ -75,8 +77,25 @@ module.exports = (config) => {
     resetPwd: env.get('LINK_RESET_PWD'),
   };
 
+  const jwt = {
+    enabled: env.get('JWT_ENABLED'),
+    key: {
+      type: env.get('JWT_KEY_TYPE'),
+      private: env.get('JWT_PRIVATE_KEY'),
+      public: env.get('JWT_PUBLIC_KEY'),
+    },
+    alg: env.get('JWT_ALG'),
+    expiresIn: env.get('JWT_EXPIRES_IN'),
+  };
+
+  if (jwt.key.type === 'file') {
+    jwt.key.private = readFileSync(jwt.key.private);
+    jwt.key.public = readFileSync(jwt.key.public);
+  }
+
   // Return the module configuration
   return {
+    jwt,
     links: {
       ...config.links,
       ...links,

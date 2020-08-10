@@ -110,6 +110,10 @@ module.exports = {
          *   "key": "$select",
          *   "value": "name,iams",
          *   "description": "Attributes to select"
+         * }, {
+         *   "key": "$jwt",
+         *   "value": "false",
+         *   "description": "Return or not a jwt token"
          * }]
          *
          * @test
