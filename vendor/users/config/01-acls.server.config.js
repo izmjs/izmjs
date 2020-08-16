@@ -69,7 +69,8 @@ module.exports = (app, db, config) => {
 
         if (resource instanceof RegExp) {
           return (
-            resource.test(req.baseUrl + req.route.path) && req.method.toLowerCase() === permission
+            resource.test(req.baseUrl + req.route.path) &&
+            (permission === 'all' || permission === '*' || req.method.toLowerCase() === permission)
           );
         }
 
@@ -99,7 +100,9 @@ module.exports = (app, db, config) => {
         (one) =>
           one.resource &&
           new RegExp(one.resource).test(req.baseUrl + req.route.path) &&
-          one.permission === req.method.toLowerCase() &&
+          (one.permission === 'all' ||
+            one.permission === '*' ||
+            one.permission === req.method.toLowerCase()) &&
           !one.excluded,
       );
 
@@ -136,6 +139,13 @@ module.exports = (app, db, config) => {
 
       next();
     });
+
+    // Add the before middlewares
+    if (Array.isArray(m.before)) {
+      m.before.forEach((middleware) => {
+        r.use(middleware);
+      });
+    }
 
     // Parse the routes
     if (Array.isArray(m.routes)) {
@@ -219,6 +229,13 @@ Please check your IAM configuraion
     if (Array.isArray(m.params)) {
       m.params.forEach((p) => {
         r.param(p.name, p.middleware);
+      });
+    }
+
+    // Add the after middlewares
+    if (Array.isArray(m.after)) {
+      m.after.forEach((middleware) => {
+        r.use(middleware);
       });
     }
 
