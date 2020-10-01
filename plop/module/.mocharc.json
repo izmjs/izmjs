@@ -1,8 +1,0 @@
-{
-  "ui": "tdd",
-  "diff": true,
-  "reporter": "spec",
-  "enableTimeouts": false,
-  "package": "./package.json",
-  "opts": "./test/mocha.opts"
-}
