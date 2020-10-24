@@ -49,16 +49,32 @@ exports.sanitizeQuery = (modelName) => {
  * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
  */
-exports.list = async function list(req, res, next) {
-  const { query, $query } = req;
-  const { $top: top = 10, $skip: skip = 0 } = query;
+exports.list = (modelName) => {
+  const Model = model(modelName);
+  
+  /**
+   * Sanitize the query
+   * @controller Sanitize Query
+   * @param {import('express').Request} req The request
+   * @param {import('express').Response} res The response
+   * @param {Function} next Go to the next middleware
+   */
+  return async function list(req, res, next) {
+    let { $query } = req;
+    const { query } = req;
+    const { $top: top = 10, $skip: skip = 0 } = query;
 
-  try {
-    const result = await $query.paginate({ top, skip });
-    return res.json(result);
-  } catch (e) {
-    return next(e);
-  }
+    if(!$query) {
+      $query = Model.find({});
+    }
+
+    try {
+      const result = await $query.paginate({ top, skip });
+      return res.json(result);
+    } catch (e) {
+      return next(e);
+    }
+  };
 };
 
 exports.create = (modelName) => {
