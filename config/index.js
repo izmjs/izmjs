@@ -127,7 +127,7 @@ function validateSessionSecret(config, testing) {
       );
       debug(
         chalk.red(
-          'Please add `SESSIONS_MODULE_SECRET=super amazing secret` to `.env/.production.env`',
+          'Please add `SESSION_SECRET=super amazing secret` to `.env/.production.env`',
         ),
       );
     }
