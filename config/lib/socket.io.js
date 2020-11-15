@@ -19,7 +19,7 @@ Object.defineProperty(exports, 'io', {
 // Define the Socket.io configuration method
 exports.init = (server) => {
   // Create a new Socket.io server
-  io = socketio.listen(server);
+  io = socketio(server);
 
   // Create a MongoDB storage object
   const mongoStore = new MongoStore({
