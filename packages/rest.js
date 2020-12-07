@@ -51,7 +51,7 @@ exports.sanitizeQuery = (modelName) => {
  */
 exports.list = (modelName) => {
   const Model = model(modelName);
-  
+
   /**
    * Sanitize the query
    * @controller Sanitize Query
@@ -64,7 +64,7 @@ exports.list = (modelName) => {
     const { query } = req;
     const { $top: top = 10, $skip: skip = 0 } = query;
 
-    if(!$query) {
+    if (!$query) {
       $query = Model.find({});
     }
 
@@ -194,7 +194,7 @@ exports.getById = (modelName) => {
  * @param {boolean} isMerge true to merge with the existing payload, false otherwise
  * @returns {Function} The middleware
  */
-exports.set = (type = '$filter', payload = {}, isMerge = false) => {
+exports.set = (type = '$filter', payload = {}, isMerge = false) =>
   /**
    * Sets an object of the request
    * @controller Set
@@ -202,7 +202,7 @@ exports.set = (type = '$filter', payload = {}, isMerge = false) => {
    * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */
-  return function set(req, res, next) {
+  function set(req, res, next) {
     let { body } = req;
     let { $filter = {} } = req.query;
 
@@ -242,4 +242,3 @@ exports.set = (type = '$filter', payload = {}, isMerge = false) => {
 
     return next();
   };
-};

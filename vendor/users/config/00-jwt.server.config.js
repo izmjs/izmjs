@@ -21,7 +21,7 @@ module.exports = (app) => {
      * @param {import('express').Response} res The response
      * @param {import('express').NextFunction} next Go to next middleware
      */
-    async function onRequest(req, res, next) {
+    async (req, res, next) => {
       let decoded;
       const authHeader = req.headers.authorization;
 
