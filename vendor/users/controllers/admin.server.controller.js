@@ -151,16 +151,16 @@ exports.svg = ({ size = 46, color = '#d35400', fill = '#ffffff' }) =>
  * List of Users
  */
 exports.list = async function list(req, res, next) {
-  const { $filter = '', $top: top, $skip: skip } = req.query;
+  const { $top: top, $skip: skip } = req.query;
   const private_attrs = config.app.profile.private_attrs || [];
-  const findObj = $filter ? { $text: { $search: $filter } } : {};
+  const findObj = {}; // ? { $text: { $search: $filter } } : {};
 
   try {
     const json = await User.find(findObj, {
-      score: { $meta: 'textScore' },
+      // score: { $meta: 'textScore' },
     })
       .select(private_attrs.map((attr) => `-${attr}`).join(' '))
-      .sort({ score: { $meta: 'textScore' } })
+      // .sort({ score: { $meta: 'textScore' } })
       .paginate({ top, skip });
 
     json.value = json.value.map((u) => u.toJSON({ virtuals: true }));

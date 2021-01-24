@@ -166,17 +166,16 @@ exports.getById = (modelName) => {
     }
 
     let entity;
-    const { $filter = '' } = req.query;
+    const { $select = '' } = req.query;
 
     try {
-      entity = await Model
-        .findById(id)
-        .select(
-          $filter
-            .map(attr => attr.trim())
-            .filter(Boolean)
-            .join(' '),
-        );
+      entity = await Model.findById(id).select(
+        $select
+          .split(',')
+          .map((attr) => attr.trim())
+          .filter(Boolean)
+          .join(' '),
+      );
     } catch (e) {
       return next(e);
     }
@@ -192,7 +191,7 @@ exports.getById = (modelName) => {
 
     req.entity = entity;
     return next();
-  };
+  }
 
   return getById;
 };
