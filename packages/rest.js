@@ -155,7 +155,7 @@ exports.getById = (modelName) => {
    * @param {import('express').Response} res The response
    * @param {Function} next Go to the next middleware
    */
-  return async (req, res, next, id) => {
+  async function getById(req, res, next, id) {
     if (!Types.ObjectId.isValid(id)) {
       return res.status(400).send({
         message: req.t('INVALID_ENTITY_ID', {
@@ -166,9 +166,17 @@ exports.getById = (modelName) => {
     }
 
     let entity;
+    const { $filter = '' } = req.query;
 
     try {
-      entity = await Model.findById(id);
+      entity = await Model
+        .findById(id)
+        .select(
+          $filter
+            .map(attr => attr.trim())
+            .filter(Boolean)
+            .join(' '),
+        );
     } catch (e) {
       return next(e);
     }
@@ -185,6 +193,8 @@ exports.getById = (modelName) => {
     req.entity = entity;
     return next();
   };
+
+  return getById;
 };
 
 /**
