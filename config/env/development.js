@@ -1,21 +1,6 @@
 const { resolve } = require('path');
 
 module.exports = {
-  db: {
-    uri:
-      process.env.MONGODB_URI ||
-      process.env.MONGOHQ_URL ||
-      process.env.MONGOLAB_URI ||
-      `mongodb://${process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost'}/app-dev`,
-    options: {
-      auth: process.env.MONGODB_USERNAME ? { authSource: 'admin' } : undefined,
-      user: process.env.MONGODB_USERNAME || '',
-      pass: process.env.MONGODB_PASSWORD || '',
-      useNewUrlParser: true,
-    },
-    // Enable mongoose debug mode
-    debug: process.env.MONGODB_DEBUG || false,
-  },
   log: {
     // logging with Morgan - https://github.com/expressjs/morgan
     // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'

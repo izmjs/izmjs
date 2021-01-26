@@ -183,4 +183,57 @@ module.exports = {
     group: 'http-server',
     defaultValue: './config/sslcerts/cabundle.pem',
   },
+  MONGODB_URI: {
+    name: 'URI',
+    group: 'MongoDB',
+    defaultValue: 'mongodb://127.0.0.1:27017/app-dev',
+  },
+  MONGODB_AUTHSOURCE: {
+    name: 'Auth. Database',
+    group: 'MongoDB',
+    defaultValue: 'admin',
+  },
+  MONGODB_USERNAME: {
+    name: 'Username',
+    group: 'MongoDB',
+    defaultValue: '',
+  },
+  MONGODB_PASSWORD: {
+    name: 'Password',
+    group: 'MongoDB',
+    defaultValue: '',
+    field: {
+      type: 'password',
+    },
+  },
+  MONGODB_IS_TLS: {
+    name: 'Enable TLS',
+    group: 'MongoDB',
+    defaultValue: false,
+    schema: {
+      type: 'boolean',
+    },
+  },
+  MONGODB_TLS_KEY: {
+    name: 'TLS Certificate Key',
+    group: 'MongoDB',
+    defaultValue: 'config/sslcerts/mongodb.pem',
+  },
+  MONGODB_TLS_INSECURE: {
+    name: 'Insecure TLS',
+    group: 'MongoDB',
+    description: 'Relax TLS constraints, disabling validation',
+    defaultValue: false,
+    schema: {
+      type: 'boolean',
+    },
+  },
+  MONGODB_DEBUG: {
+    name: 'Debug Mode',
+    group: 'MongoDB',
+    defaultValue: false,
+    schema: {
+      type: 'boolean',
+    },
+  },
 };

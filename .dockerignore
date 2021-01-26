@@ -12,6 +12,8 @@
 /public
 /db
 /env/*
+/modules/devtools
+/modules/data-browser
 
 # Logs
 /logs/*.log

@@ -82,7 +82,7 @@
     ]
   },
   "lint-staged": {
-    "**/*.{json,md}": [
+    "**/*.{json,js,md}": [
       "prettier --write",
       "npm run lint -- --fix",
       "git add"
