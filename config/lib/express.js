@@ -319,9 +319,7 @@ module.exports.initErrorRoutes = (app) => {
       });
     }
 
-    const { options } = req.i18n;
-
-    options.defaultNS = 'vendor:core';
+    req.i18n.setDefaultNamespace('vendor:core');
 
     // Redirect to error page
     return res.status(500).format({
