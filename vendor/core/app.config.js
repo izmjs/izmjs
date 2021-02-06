@@ -3,7 +3,7 @@ const numCPUs = require('os').cpus().length;
 module.exports = (config) => {
   const { env } = config.utils;
   const host = env.get('HOST');
-  const port = env.get('PORT');
+  const port = process.env.HTTP_PORT || env.get('PORT');
   const secure = {
     ssl: env.get('HTTP_SECURE'),
     privateKey: env.get('SSL_PRIV_KEY'),
@@ -38,31 +38,8 @@ module.exports = (config) => {
     },
   };
 
-  const db = {
-    uri: env.get('MONGODB_URI'),
-    options: {
-      auth: env.get('MONGODB_USERNAME')
-        ? {
-          authSource: env.get('MONGODB_AUTHSOURCE'),
-        }
-        : undefined,
-      user: env.get('MONGODB_USERNAME'),
-      pass: env.get('MONGODB_PASSWORD'),
-      useNewUrlParser: true,
-      tls: env.get('MONGODB_IS_TLS'),
-      // checkServerIdentity: false,
-      tlsInsecure: env.get('MONGODB_TLS_INSECURE'),
-      tlsAllowInvalidCertificates: env.get('MONGODB_TLS_INSECURE'),
-      tlsAllowInvalidHostnames: env.get('MONGODB_TLS_INSECURE'),
-      tlsCertificateKeyFile: env.get('MONGODB_IS_TLS') ? env.get('MONGODB_TLS_KEY') : undefined,
-    },
-    // Enable mongoose debug mode
-    debug: env.get('MONGODB_DEBUG'),
-  };
-
   return {
     app,
-    db,
     session: {
       name: env.get('SESSION_NAME'),
       secret: env.get('SESSION_SECRET'),

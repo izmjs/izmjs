@@ -181,10 +181,10 @@ exports.reset = async function reset(req, res, next) {
   });
 
   return res.render(
-    `${vendor}/users/templates/reset-password-confirm-email`,
+    `${vendor}/users/views/reset-password-confirm-email`,
     {
-      name: user.name.full,
-      appName: config.app.title,
+      user,
+      app: config.app,
     },
     (err, emailHTML) => {
       if (emailHTML) {

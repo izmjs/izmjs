@@ -76,6 +76,10 @@ module.exports = {
     name: 'Application prefix',
     defaultValue: '/api/v1',
   },
+  DEBUG: {
+    name: 'Debug',
+    defaultValue: 'app:*,modules:*',
+  },
   APP_PUBLIC_ADDRESS: {
     name: 'Public application address',
     description: 'Used to specify the public domain address of the application',
