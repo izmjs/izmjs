@@ -7,7 +7,7 @@ const User = model('User');
 const { createUser } = require('@helpers/utils');
 
 const express = require('@config/lib/express');
-const { prefix } = require('@config/index');
+const { prefix } = require('@config/index').app;
 
 let app;
 const credentials = {
