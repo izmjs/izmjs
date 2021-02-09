@@ -33,11 +33,12 @@ module.exports.connect = (callback) => {
       mongoose.set('debug', config.db.debug);
 
       // Call callback FN
-      if (callback) callback(mongoose.connection.db);
+      if (callback) callback(null, mongoose.connection.db);
     })
     .catch((err) => {
       console.error(chalk.red('Could not connect to MongoDB!'));
       console.error(err);
+      if (callback) callback(err);
     });
 };
 

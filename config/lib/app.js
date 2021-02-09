@@ -16,10 +16,16 @@ module.exports.loadModels = function loadModels() {
 };
 
 module.exports.init = function init(callback) {
-  mongoose.connect(async (db) => {
+  mongoose.connect(async (err, db) => {
+    if (err) {
+      return process.exit(1);
+    }
+
     // Initialize express
     const app = await express.init(db);
     if (callback) callback(app, db, config);
+
+    return true;
   });
 };
 

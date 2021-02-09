@@ -24,10 +24,15 @@ const User = mongoose.model('User');
  */
 exports.update = async function update(req, res) {
   // Init Variables
+  const { $merge = 'true' } = req.query;
   let { user } = req;
 
   // For security measurement we sanitize the user object
   User.sanitize(req.body);
+
+  if (req.body.data && $merge === 'true') {
+    req.body.data = { ...user.data, ...req.body.data };
+  }
 
   // Merge existing user
   user.set(req.body);

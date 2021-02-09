@@ -35,7 +35,7 @@
     "git:revert": "./scripts/update.js --cmd=git-revert --only=git"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.0",
@@ -118,7 +118,7 @@
   "husky": {
     "hooks": {
       "post-merge": "npm i --unsafe-perm",
-      "pre-commit": "pretty-quick --staged && npm test",
+      "pre-commit": "pretty-quick --staged && npm run lint -- --fix && npm test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },

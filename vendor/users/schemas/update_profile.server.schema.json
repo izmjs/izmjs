@@ -14,6 +14,10 @@
     },
     "isMale": {
       "type": "boolean"
+    },
+    "data": {
+      "type": "object",
+      "maxProperties": 10
     }
   },
   "additionalProperties": false

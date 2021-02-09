@@ -41,17 +41,25 @@ module.exports = {
          * @body
          * {
          *   "name": {
-         *     "first": "{{firstname}}",
-         *     "last": "{{lastname}}"
+         *     "first": "{{$randomFirstName}}",
+         *     "last": "{{$randomLastName}}"
+         *   },
+         *   "isMale": true,
+         *   "data": {
+         *
          *   }
          * }
+         *
+         * @params
+         * [{
+         *   "key": "$merge",
+         *   "value": "true",
+         *   "description": "Merge the existing user data with the sent one"
+         * }]
          */
         post: {
           parents: ['vendor:users', 'vendor:users:user', 'vendor:users:auth:profile'],
-          middlewares: [
-            utils.validate(updateProfileSchema),
-            users.update,
-          ],
+          middlewares: [utils.validate(updateProfileSchema), users.update],
           iam: 'vendor:users:user:profile:edit',
           title: 'Update profile',
           description: 'Update current user details',

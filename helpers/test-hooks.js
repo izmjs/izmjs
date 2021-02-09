@@ -12,7 +12,7 @@ let dataBase;
 mongoose.loadModels();
 
 suiteSetup((done) => {
-  mongoose.connect((db) => {
+  mongoose.connect((err, db) => {
     dataBase = db;
     done();
   });
