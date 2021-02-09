@@ -211,6 +211,7 @@ exports.confirm = async function confirm(req, res) {
     'text/html': () => {
       res.render(`${vendor}/users/views/email-confirmed`, {
         app: {
+          publicAddress: config.app.publicAddress,
           name: config.app.title,
           url: baseURL,
         },
