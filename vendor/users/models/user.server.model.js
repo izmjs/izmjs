@@ -20,23 +20,23 @@ let { twilio: twilioConfig } = config;
 let isSendGrid = false;
 
 if (
-  twilioConfig &&
-  twilioConfig.from &&
-  twilioConfig.from !== 'TWILIO_FROM' &&
-  twilioConfig.accountID &&
-  twilioConfig.accountID !== 'TWILIO_ACCOUNT_SID' &&
-  twilioConfig.authToken &&
-  twilioConfig.authToken !== 'TWILIO_AUTH_TOKEN'
+  twilioConfig
+  && twilioConfig.from
+  && twilioConfig.from !== 'TWILIO_FROM'
+  && twilioConfig.accountID
+  && twilioConfig.accountID !== 'TWILIO_ACCOUNT_SID'
+  && twilioConfig.authToken
+  && twilioConfig.authToken !== 'TWILIO_AUTH_TOKEN'
 ) {
   // eslint-disable-next-line new-cap
   twilioConfig = new twilio(config.twilio.accountID, config.twilio.authToken);
 } else {
   if (
-    (config.validations.mondatory.indexOf('phone') >= 0 ||
-      config.validations.types.indexOf('phone') >= 0) &&
-    (twilioConfig.from === 'TWILIO_FROM' ||
-      twilioConfig.accountID === 'TWILIO_ACCOUNT_SID' ||
-      twilioConfig.authToken === 'TWILIO_AUTH_TOKEN')
+    (config.validations.mondatory.indexOf('phone') >= 0
+      || config.validations.types.indexOf('phone') >= 0)
+    && (twilioConfig.from === 'TWILIO_FROM'
+      || twilioConfig.accountID === 'TWILIO_ACCOUNT_SID'
+      || twilioConfig.authToken === 'TWILIO_AUTH_TOKEN')
   ) {
     console.warn('Please configure TWILIO_FROM, TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN env vars');
   }
@@ -332,7 +332,6 @@ UserSchema.methods.sendSMS = function send_sms(body) {
 /**
  * Send an email to the user
  */
-
 UserSchema.methods.sendMail = function send_mail(subject, body, opts = {}) {
   return sendMail(subject, body, [this.email], opts);
 };
@@ -340,7 +339,6 @@ UserSchema.methods.sendMail = function send_mail(subject, body, opts = {}) {
 /**
  * Send an email to the user
  */
-
 UserSchema.statics.sendMail = function send_mail(emails = [], subject, body, opts = {}) {
   return sendMail(subject, body, emails, opts);
 };
