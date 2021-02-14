@@ -203,8 +203,6 @@ exports.confirm = async function confirm(req, res) {
     });
   }
 
-  const baseURL = `${req.protocol}://${req.get('host')}`;
-
   user = await user.save();
 
   return res.format({
@@ -213,7 +211,6 @@ exports.confirm = async function confirm(req, res) {
         app: {
           publicAddress: config.app.publicAddress,
           name: config.app.title,
-          url: baseURL,
         },
         user,
       });
