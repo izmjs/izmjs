@@ -141,6 +141,14 @@
       "type": "integer"
     }
   },
+  "EMAIL_EXPIRATION_TIMEOUT": {
+    "name": "Email expiration timeout (in seconds)",
+    "group": "validations",
+    "defaultValue": -1,
+    "schema": {
+      "type": "integer"
+    }
+  },
   "TWILIO_FROM": {
     "name": "Twilio \"From\" field",
     "defaultValue": "TWILIO_FROM"
