@@ -147,7 +147,7 @@
       "       * [{",
       "       *   \"key\": \"\\$top\",",
       "       *   \"value\": \"10\",",
-      "       *   \"description\": \"Number of items to resturn\"",
+      "       *   \"description\": \"Number of items to return\"",
       "       * }, {",
       "       *   \"key\": \"\\$skip\",",
       "       *   \"value\": \"0\",",

@@ -112,8 +112,8 @@ exports.getOne = async function getOne(req, res) {
 };
 
 /**
- * Get a specific entity
- * @controller Get one
+ * Remove a specific entity
+ * @controller Remove one
  * @param {import('express').Request} req The request
  * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
@@ -129,8 +129,8 @@ exports.removeOne = async function removeOne(req, res, next) {
 };
 
 /**
- * Get a specific entity
- * @controller Get one
+ * Update a specific entity
+ * @controller Update one
  * @param {import('express').Request} req The request
  * @param {import('express').Response} res The response
  * @param {Function} next Go to the next middleware
