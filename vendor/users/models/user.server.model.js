@@ -432,14 +432,16 @@ UserSchema.statics.generateRandomPassphrase = function generateRandomPassphrase(
 };
 
 /**
- * Creates a TTL index to remove users having expired/non validated emails.
- * @see https://docs.mongodb.com/manual/core/index-ttl/
+ * Creates a TTL index that removes users having expired/non validated emails.
+ * Check the link below for more details:
+ * https://docs.mongodb.com/manual/core/index-ttl/
+ * NOTE: Make sure email validation & ttl config are both set.
  */
 
-const createEmailExpirationIndex = async (userModel) => {
+const createEmailTTLIndex = async (userModel) => {
   const { email: emailConfig } = config.validations.config;
 
-  if (emailConfig.validate && emailConfig.expiration_timeout > 0) {
+  if (emailConfig.validate && emailConfig.ttl > 0) {
 
     const filterExpression = {
       'validations.type': 'email',
@@ -452,7 +454,7 @@ const createEmailExpirationIndex = async (userModel) => {
       name.startsWith('created_at')
       && partialFilterExpression
       && _.isEqual(partialFilterExpression, filterExpression)
-      && expireAfterSeconds !== emailConfig.expiration_timeout,
+      && expireAfterSeconds !== emailConfig.ttl,
     );
 
     if (outdatedIndex) {
@@ -463,7 +465,7 @@ const createEmailExpirationIndex = async (userModel) => {
     userModel.collection.createIndex(
       { created_at: 1 },
       {
-        expireAfterSeconds: emailConfig.expiration_timeout,
+        expireAfterSeconds: emailConfig.ttl,
         partialFilterExpression: filterExpression,
       },
     );
@@ -472,6 +474,6 @@ const createEmailExpirationIndex = async (userModel) => {
 
 const UserModel = mongoose.model('User', UserSchema);
 UserModel.createIndexes();
-createEmailExpirationIndex(UserModel);
+createEmailTTLIndex(UserModel);
 
 module.exports = UserModel;
