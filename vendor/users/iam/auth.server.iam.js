@@ -175,6 +175,18 @@ module.exports = {
     {
       path: '/resend',
       methods: {
+        /**
+         * @params
+         * [{
+         *   "key": "type",
+         *   "value": "email",
+         *   "description": "Specify the code type. the application supports two types: 'email' and 'phone'"
+         * }, {
+         *   "key": "uid",
+         *   "value": "{{userId}}",
+         *   "description": "The user ID"
+         * }]
+         */
         get: {
           parents: ['vendor:users', 'vendor:users:auth', 'vendor:users:public'],
           middlewares: [users.resend],
