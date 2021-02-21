@@ -159,6 +159,15 @@ module.exports = {
       type: 'boolean',
     },
   },
+  INCLUDE_SOCKETIO_JS: {
+    name: 'Include SocketIO.js',
+    description: 'Include SocketIO.js in the index page',
+    defaultValue: true,
+    scope: 'sockets',
+    schema: {
+      type: 'boolean',
+    },
+  },
   ADAPTER: {
     name: 'Sockets adapter',
     defaultValue: 'none',
@@ -197,7 +206,9 @@ module.exports = {
   MONGODB_URI: {
     name: 'URI',
     group: 'MongoDB',
-    defaultValue: 'mongodb://127.0.0.1:27017/app-dev',
+    defaultValue: `mongodb://127.0.0.1:27017/app-${
+      process.env.NODE_ENV === 'test' ? 'test' : 'dev'
+    }`,
   },
   MONGODB_AUTHSOURCE: {
     name: 'Auth. Database',

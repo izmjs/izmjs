@@ -121,8 +121,12 @@
                         <td style="padding: 20px 0px 30px 0px;" class="logo">
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
-                                    <td bgcolor="#ffffff" width="100" align="left"><img alt="Logo" src="{{app.publicAddress}}/assets/img/email/logo.jpg" width="52" height="78" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #666666; font-size: 16px;" border="0"></td>
-                                    <td bgcolor="#ffffff" width="400" align="right" class="mobile-hide">
+                                    <td bgcolor="#ffffff" width="auto" align="center">
+                                      <a href="{{app.publicAddress}}">
+                                        <img alt="Logo" src="{{app.publicAddress}}/assets/img/email/logo.jpg" width="200" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #666666; font-size: 16px;" border="0">
+                                      </a>
+                                    </td>
+                                    <td bgcolor="#ffffff" width="400" align="right" class="mobile-hide" style="display: none">
                                         <table border="0" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td align="right" style="padding: 0 0 5px 0; font-size: 14px; font-family: Arial, sans-serif; color: #666666; text-decoration: none;"><span style="color: #666666; text-decoration: none;">{{ app.name }}</span></td>

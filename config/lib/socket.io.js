@@ -23,7 +23,7 @@ exports.init = (server) => {
 
   // Create a MongoDB storage object
   const mongoStore = new MongoStore({
-    collection: config.sessionCollection,
+    collection: config.session.collection,
     mongooseConnection: connection,
   });
 
@@ -35,10 +35,10 @@ exports.init = (server) => {
   // Intercept Socket.io's handshake request
   io.use((socket, next) => {
     // Use the 'cookie-parser' module to parse the request cookies
-    cookieParser(config.sessionSecret)(socket.request, {}, () => {
+    cookieParser(config.session.secret)(socket.request, {}, () => {
       // Get the session id from the request cookies
       const sessionId = socket.request.signedCookies
-        ? socket.request.signedCookies[config.sessionKey]
+        ? socket.request.signedCookies[config.session.name]
         : false;
 
       if (!sessionId) {

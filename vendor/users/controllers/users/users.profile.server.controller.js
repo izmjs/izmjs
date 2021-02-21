@@ -118,8 +118,8 @@ exports.profilePictFilter = async function profilePictFilter(req, file, cb) {
  */
 exports.me = async function me(req, res) {
   let { $expand } = req.query;
-  const { $select, $jwt } = req.query;
-  const { iams = [] } = req;
+  const { $select, $jwt, $sess } = req.query;
+  const { iams = [], session } = req;
 
   let result = req.user ? req.user.json() : null;
 
@@ -154,6 +154,10 @@ exports.me = async function me(req, res) {
       algorithm: alg,
       expiresIn,
     });
+  }
+
+  if (session && session.data && $sess === 'true') {
+    result.session = session.data;
   }
 
   return res.json(result);

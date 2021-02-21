@@ -23,6 +23,10 @@ module.exports = {
          *   "key": "$select",
          *   "value": "name.first,email,iams",
          *   "description": "Use this parameter to select specific attributes"
+         * }, {
+         *   "key": "$sess",
+         *   "value": "true",
+         *   "description": "Set to true to get the session info"
          * }]
          */
         get: {

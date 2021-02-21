@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 const { Schema } = mongoose;
 const crypto = require('crypto');
@@ -20,23 +21,23 @@ let { twilio: twilioConfig } = config;
 let isSendGrid = false;
 
 if (
-  twilioConfig
-  && twilioConfig.from
-  && twilioConfig.from !== 'TWILIO_FROM'
-  && twilioConfig.accountID
-  && twilioConfig.accountID !== 'TWILIO_ACCOUNT_SID'
-  && twilioConfig.authToken
-  && twilioConfig.authToken !== 'TWILIO_AUTH_TOKEN'
+  twilioConfig &&
+  twilioConfig.from &&
+  twilioConfig.from !== 'TWILIO_FROM' &&
+  twilioConfig.accountID &&
+  twilioConfig.accountID !== 'TWILIO_ACCOUNT_SID' &&
+  twilioConfig.authToken &&
+  twilioConfig.authToken !== 'TWILIO_AUTH_TOKEN'
 ) {
   // eslint-disable-next-line new-cap
   twilioConfig = new twilio(config.twilio.accountID, config.twilio.authToken);
 } else {
   if (
-    (config.validations.mondatory.indexOf('phone') >= 0
-      || config.validations.types.indexOf('phone') >= 0)
-    && (twilioConfig.from === 'TWILIO_FROM'
-      || twilioConfig.accountID === 'TWILIO_ACCOUNT_SID'
-      || twilioConfig.authToken === 'TWILIO_AUTH_TOKEN')
+    (config.validations.mondatory.indexOf('phone') >= 0 ||
+      config.validations.types.indexOf('phone') >= 0) &&
+    (twilioConfig.from === 'TWILIO_FROM' ||
+      twilioConfig.accountID === 'TWILIO_ACCOUNT_SID' ||
+      twilioConfig.authToken === 'TWILIO_AUTH_TOKEN')
   ) {
     console.warn('Please configure TWILIO_FROM, TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN env vars');
   }
@@ -430,7 +431,47 @@ UserSchema.statics.generateRandomPassphrase = function generateRandomPassphrase(
   });
 };
 
+/**
+ * Creates a TTL index to remove users having expired/non validated emails.
+ * @see https://docs.mongodb.com/manual/core/index-ttl/
+ */
+
+const createEmailExpirationIndex = async (userModel) => {
+  const { email: emailConfig } = config.validations.config;
+
+  if (emailConfig.validate && emailConfig.expiration_timeout > 0) {
+    const filterExpression = {
+      'validations.type': 'email',
+      'validations.validated': false,
+    };
+
+    // Remove outdated index
+    const indexes = await userModel.collection.indexes();
+    const outdatedIndex = indexes.find(
+      ({ name, partialFilterExpression, expireAfterSeconds }) =>
+        name.startsWith('created_at') &&
+        partialFilterExpression &&
+        _.isEqual(partialFilterExpression, filterExpression) &&
+        expireAfterSeconds !== emailConfig.expiration_timeout,
+    );
+
+    if (outdatedIndex) {
+      userModel.collection.dropIndex(outdatedIndex.name);
+    }
+
+    // Create index (if it doesn't exist)
+    userModel.collection.createIndex(
+      { created_at: 1 },
+      {
+        expireAfterSeconds: emailConfig.expiration_timeout,
+        partialFilterExpression: filterExpression,
+      },
+    );
+  }
+};
+
 const UserModel = mongoose.model('User', UserSchema);
 UserModel.createIndexes();
+createEmailExpirationIndex(UserModel);
 
 module.exports = UserModel;

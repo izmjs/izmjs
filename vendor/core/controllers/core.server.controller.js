@@ -10,6 +10,7 @@ const { vendor } = config.files.server.modules;
  */
 exports.renderIndex = async function renderIndex(req, res) {
   res.render(`${vendor}/core/views/index`, {
+    jsFiles: config.sockets.includeScript ? ['/socket.io/socket.io.js'] : [],
     user: req.user ? req.user.toJSON({ virtuals: true }) : null,
   });
 };

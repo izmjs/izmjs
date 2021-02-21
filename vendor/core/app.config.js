@@ -42,7 +42,9 @@ module.exports = (config) => {
     uri: env.get('MONGODB_URI'),
     options: {
       auth: env.get('MONGODB_USERNAME')
-        ? { authSource: env.get('MONGODB_AUTHSOURCE') }
+        ? {
+          authSource: env.get('MONGODB_AUTHSOURCE'),
+        }
         : undefined,
       user: env.get('MONGODB_USERNAME'),
       pass: env.get('MONGODB_PASSWORD'),
@@ -72,6 +74,7 @@ module.exports = (config) => {
       collection: env.get('SESSION_COLLECTION'),
     },
     sockets: {
+      includeScript: env.get('INCLUDE_SOCKETIO_JS', 'sockets'),
       public: env.get('IS_PUBLIC', 'sockets'),
       adapter: env.get('ADAPTER', 'sockets'),
       redisOptions: {
