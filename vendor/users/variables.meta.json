@@ -126,7 +126,7 @@
     }
   },
   "EMAIL_IS_AUTHENTICATE": {
-    "name": "Authticate user when email validated",
+    "name": "Authenticate user when email validated",
     "group": "validations",
     "defaultValue": false,
     "schema": {
@@ -137,6 +137,16 @@
     "name": "Email code max resends",
     "group": "validations",
     "defaultValue": 4,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "EMAIL_TTL": {
+    "name": "Email TTL",
+    "description": "Time to live for non validated email addresses (in seconds). Click for more details about TTL indexes.",
+    "link": "https://docs.mongodb.com/manual/core/index-ttl",
+    "group": "validations",
+    "defaultValue": -1,
     "schema": {
       "type": "integer"
     }

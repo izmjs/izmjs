@@ -34,6 +34,7 @@ module.exports = (config) => {
         max_tries: env.get('EMAIL_MAX_TRIES'),
         authenticate: env.get('EMAIL_IS_AUTHENTICATE'),
         max_resends: env.get('EMAIL_MAX_RESENDS'),
+        ttl: env.get('EMAIL_TTL'),
       },
       admin: {
         validate: env.get('ADMIN_VALIDATE'),
