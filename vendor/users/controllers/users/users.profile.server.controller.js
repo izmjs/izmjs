@@ -31,7 +31,7 @@ exports.update = async function update(req, res) {
   User.sanitize(req.body);
 
   if (req.body.data && $merge === 'true') {
-    req.body.data = { ...user.data, ...req.body.data };
+    req.body.data = _.merge({}, user.data, req.body.data);
   }
 
   // Merge existing user

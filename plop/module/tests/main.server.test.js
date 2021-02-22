@@ -41,6 +41,6 @@ describe('tests for module "modules:{{{lowercase name}}}"', () => {
   });
 
   afterEach(async () => {
-    await Promise.all([User.remove()]);
+    await Promise.all([User.deleteMany()]);
   });
 });
