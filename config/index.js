@@ -126,9 +126,7 @@ function validateSessionSecret(config, testing) {
         ),
       );
       debug(
-        chalk.red(
-          'Please add `SESSION_SECRET=super amazing secret` to `.env/.production.env`',
-        ),
+        chalk.red('Please add `SESSION_SECRET=super amazing secret` to `.env/.production.env`'),
       );
     }
     return false;
@@ -173,6 +171,9 @@ function initGlobalConfigFiles(config, assets) {
 
         // Setting Bootstrap files
         socketsConfig: getGlobbedPaths(assets.server.socketsConfig),
+
+        // Tasks files
+        tasks: getGlobbedPaths(assets.server.tasks),
       },
     },
   });
