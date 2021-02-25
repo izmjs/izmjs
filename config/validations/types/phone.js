@@ -12,7 +12,7 @@ const config = require('@config/index');
  */
 function randomNumber(length) {
   let res = '';
-  const l = Math.isNaN(length) ? 4 : parseInt(length, 10);
+  const l = Number.isNaN(length) ? 4 : parseInt(length, 10);
 
   while (res.length < l) {
     res += Math.floor(Math.random() * 10);
