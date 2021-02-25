@@ -188,6 +188,27 @@ exports.confirm = async function confirm(req, res) {
   }
 
   if (!user) {
+    const { email: emailConfig } = config.validations.config;
+
+    if (
+      query.type === 'email'
+      && emailConfig.validate
+      && emailConfig.ttl > 0
+    ) {
+      return res.status(404).format({
+        'text/html': () => {
+          res.render(`${vendor}/users/views/email-expired`, {
+            app: config.app,
+          });
+        },
+        default() {
+          res.send({
+            message: req.t('USER_NOT_FOUND'),
+          });
+        },
+      });
+    }
+
     return res.status(404).send({
       message: req.t('USER_NOT_FOUND'),
     });
