@@ -26,6 +26,7 @@ const MongoStore = require('connect-mongo')(session);
 const config = require('..');
 
 const logger = require('./logger');
+const render = require('./render');
 const { init: initSocketIO } = require('./socket.io');
 
 const { vendor, custom } = config.files.server.modules;
@@ -139,6 +140,9 @@ module.exports.initViewEngine = (app) => {
 
   // Set views path and view engine
   app.set('view engine', 'server.view.swig');
+
+  // Set the views wrapper
+  app.use(render);
 };
 
 /**
@@ -314,7 +318,7 @@ module.exports.initErrorRoutes = (app) => {
     console.error(err.stack);
 
     if (!req.i18n) {
-      return res.status(500).render(`${vendor}/core/views/500`, {
+      return res.status(500).rndr(`${vendor}/core/views/500`, {
         error: 'ERROR_500',
       });
     }
@@ -326,7 +330,7 @@ module.exports.initErrorRoutes = (app) => {
     // Redirect to error page
     return res.status(500).format({
       'text/html': () => {
-        res.render(`${vendor}/core/views/500`, {
+        res.rndr(`${vendor}/core/views/500`, {
           error: req.t('ERROR_500'),
         });
       },
@@ -358,14 +362,14 @@ module.exports.init = async (db) => {
   // Initialize Express middleware
   this.initMiddleware(app);
 
+  // Initialize modules server i18n
+  this.initI18n(app);
+
   // Initialize Express view engine
   this.initViewEngine(app);
 
   // Initialize Express session
   this.initSession(app, db);
-
-  // Initialize modules server i18n
-  this.initI18n(app);
 
   // Initialize Modules configuration
   this.initModulesConfiguration(app, db);

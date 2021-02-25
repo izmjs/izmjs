@@ -13,6 +13,7 @@ node_modules
 /db/*
 /.env/*
 /lib/*
+/views/*
 /modules/*
 /config/sslcerts/*
 .DS_Store

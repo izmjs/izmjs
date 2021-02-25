@@ -2,7 +2,6 @@
 eslint-disable import/no-extraneous-dependencies
 */
 const path = require('path');
-const nunjucks = require('nunjucks');
 
 const config = require('@config/index');
 
@@ -40,12 +39,12 @@ exports.init = (user, validation) => {
  * @param {Object} user The current user
  * @param {Object} validation The validation object
  */
-exports.notify = (user, validation) => {
+exports.notify = (user, validation, req) => {
   const v = validation;
   const tpl = path.resolve(__dirname, '..', 'templates/confirmation-phone.swig');
 
   user.sendSMS(
-    nunjucks.render(tpl, {
+    req.rndr(tpl, {
       app: config.app,
       code: validation.code,
     }),

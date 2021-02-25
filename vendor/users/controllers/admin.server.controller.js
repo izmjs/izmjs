@@ -139,7 +139,7 @@ exports.svg = ({ size = 46, color = '#d35400', fill = '#ffffff' }) =>
       .join('');
 
     res.set('Content-Type', 'image/svg+xml');
-    return res.render(resolve(__dirname, '../views/profile-picture.server.view.swig'), {
+    return res.rndr(resolve(__dirname, '../views/profile-picture.server.view.swig'), {
       text,
       size,
       color,

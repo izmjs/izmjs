@@ -73,10 +73,10 @@ exports.forgot = async function forgot(req, res, next) {
     return next(e);
   }
 
-  const render = promisify(res.render);
+  const render$ = promisify(res.rndr);
 
   try {
-    const html = await render.bind(res)(resolve(`${vendor}/users/views/reset-password-email`), {
+    const html = await render$.bind(res)(resolve(`${vendor}/users/views/reset-password-email`), {
       user,
       app: config.app,
       url: renderString(config.links.resetPwd, {
@@ -180,7 +180,7 @@ exports.reset = async function reset(req, res, next) {
     );
   });
 
-  return res.render(
+  return res.rndr(
     `${vendor}/users/views/reset-password-confirm-email`,
     {
       user,

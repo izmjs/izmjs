@@ -211,7 +211,7 @@ exports.confirm = async function confirm(req, res) {
 
   return res.format({
     'text/html': () => {
-      res.render(`${vendor}/users/views/email-confirmed`, {
+      res.rndr(`${vendor}/users/views/email-confirmed`, {
         app: {
           publicAddress: config.app.publicAddress,
           name: config.app.title,

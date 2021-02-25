@@ -1,5 +1,4 @@
 const { model } = require('mongoose');
-const nunjucks = require('nunjucks');
 const path = require('path');
 const generatePassword = require('generate-password');
 
@@ -46,7 +45,7 @@ exports.notify = (user, validation, req) => {
     .find({ roles: 'admin' })
     .sendMail(
       `New account: ${user.name.full}`,
-      nunjucks.render(tpl, {
+      req.rndr(tpl, {
         url,
         app: config.app,
         name: user.name.full,

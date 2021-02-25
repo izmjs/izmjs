@@ -1,7 +1,6 @@
 /*
 eslint-disable import/no-extraneous-dependencies
 */
-const nunjucks = require('nunjucks');
 const path = require('path');
 const generatePassword = require('generate-password');
 
@@ -46,7 +45,7 @@ exports.notify = (user, validation, req) => {
 
   user.sendMail(
     'Email validation',
-    nunjucks.render(tpl, {
+    req.rndr(tpl, {
       name: user.name.full,
       url,
       app: config.app,
