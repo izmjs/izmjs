@@ -65,6 +65,7 @@ module.exports = (config) => {
     db,
     session: {
       name: env.get('SESSION_NAME'),
+      remove: env.get('REMOVE_ON_SIGNOUT'),
       secret: env.get('SESSION_SECRET'),
       cookie: {
         maxAge: env.get('SESSION_COOKIE_MAX_AGE'),

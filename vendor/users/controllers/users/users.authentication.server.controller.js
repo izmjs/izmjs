@@ -101,7 +101,14 @@ exports.signin = async function signin(req, res, next) {
  * @param {Function} next Go to the next middleware
  */
 exports.signout = async function signout(req, res) {
+  const { session } = req;
+
   req.logout();
+
+  if (config.session.remove) {
+    session.destroy();
+  }
+
   res.redirect(config.app.pages.login || '/');
 };
 

@@ -106,6 +106,8 @@ _Example_
 
 In the examples above, we are redefining how to render `404` pages depending on the language of the current user. Meaning, if the language is `en` for example, the server will look for a file named `views/en/404.server.view.swig`. If not found, the server will render the default file: `vendor/core/views/404`.
 
+_Tip_: Use `req.rndr` to render a template without sending a response to the client.
+
 ## Auto depmloyment (Gitlab CI)
 
 You need to define these environment variables in your repository:

@@ -107,6 +107,15 @@ module.exports = {
     name: 'Google Analytics ID',
     defaultValue: 'UA-XXXXX-Y',
   },
+  REMOVE_ON_SIGNOUT: {
+    name: 'Remove on signout',
+    description: 'Remove the session on sign out',
+    defaultValue: true,
+    group: 'sessions',
+    schema: {
+      type: 'boolean',
+    },
+  },
   SESSION_SECRET: {
     name: 'Session Secret',
     description: 'Should be changed for security measures and concerns',
