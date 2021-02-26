@@ -92,6 +92,20 @@ _Example_
 SKIP_MODULES=modules/devtools,modules/data-browser
 ```
 
+## Defining custom views
+
+In order to define new paths of a specific template, use the file `.env/views/manifest.js(on)`.
+
+_Example_
+
+```json
+(module.exports = {
+  "vendor/core/views/404": "views/{{req.i18n.language}}/404"
+})
+```
+
+In the examples above, we are redefining how to render `404` pages depending on the language of the current user. Meaning, if the language is `en` for example, the server will look for a file named `views/en/404.server.view.swig`. If not found, the server will render the default file: `vendor/core/views/404`.
+
 ## Auto depmloyment (Gitlab CI)
 
 You need to define these environment variables in your repository:
