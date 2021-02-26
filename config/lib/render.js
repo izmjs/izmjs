@@ -10,7 +10,7 @@ const manifest = require('./views');
  * @param {import('express').Request} req The user request
  */
 function getRealTemplate(tpl, req) {
-  let tplPath = relative(resolve(), tpl);
+  let tplPath = relative(resolve(), tpl).replace(/\\/g, '/');
   tplPath = manifest[tplPath];
 
   if (!tplPath || typeof tplPath !== 'string') {
