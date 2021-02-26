@@ -94,7 +94,7 @@ SKIP_MODULES=modules/devtools,modules/data-browser
 
 ## Defining custom views
 
-In order to define new paths of a specific template, use the file `.env/views/manifest.js(on)`.
+In order to define new paths of a specific template, use the file `config/lib/views.js(on)`.
 
 _Example_
 
