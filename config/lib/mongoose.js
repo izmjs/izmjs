@@ -62,8 +62,8 @@ module.exports.disconnect = (cb) => {
  * @returns {{ value: T[]; top: number; skip: number; count: number }}
  */
 mongoose.Query.prototype.paginate = async function paginate({ top = 10, skip = 0 }) {
-  const t = isNaN(top) ? 10 : parseInt(top, 10);
-  const s = isNaN(skip) ? 10 : parseInt(skip, 10);
+  const t = Number.isNaN(top) ? 10 : parseInt(top, 10);
+  const s = Number.isNaN(skip) ? 10 : parseInt(skip, 10);
 
   if (t >= 0) {
     this.limit(t);
@@ -83,5 +83,49 @@ mongoose.Query.prototype.paginate = async function paginate({ top = 10, skip = 0
     skip: s >= 0 ? s : 0,
     value: result[0],
     count: result[1],
+  };
+};
+
+/**
+ * @returns {{ value: T[]; top: number; skip: number; count: number }}
+ */
+mongoose.Aggregate.prototype.paginate = async function aggregationPaginate({ top = 10, skip = 0 }) {
+  const t = Number.isNaN(top) ? 10 : parseInt(top, 10);
+  const s = Number.isNaN(skip) ? 10 : parseInt(skip, 10);
+  const pipeline = this.pipeline();
+
+  const countResult = await this.count('__docs_count__');
+  let count = 0;
+
+  if (countResult && countResult.length > 0) {
+    [{ __docs_count__: count }] = countResult;
+  }
+
+  if (count === 0) {
+    return {
+      top: t >= 0 ? t : count,
+      skip: s >= 0 ? s : 0,
+      value: [],
+      count,
+    };
+  }
+
+  const result = this.model().aggregate(pipeline);
+
+  if (s >= 0) {
+    result.skip(s);
+  }
+
+  if (t >= 0) {
+    result.limit(t);
+  }
+
+  const value = await result.exec();
+
+  return {
+    top: t >= 0 ? t : count,
+    skip: s >= 0 ? s : 0,
+    value,
+    count,
   };
 };
