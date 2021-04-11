@@ -15,8 +15,8 @@ suiteSetup((done) => {
   mongoose.connect(async (err, db) => {
     dataBase = db;
 
-    const collections = await db.collections();
-    await Promise.all(collections.map((collection) => collection.deleteMany()));
+    // const collections = await db.collections();
+    // await Promise.all(collections.map((collection) => collection.deleteMany()));
 
     done();
   });
