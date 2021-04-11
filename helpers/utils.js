@@ -17,7 +17,9 @@ const readFile$ = promisify(readFile);
  */
 exports.validate = (schema, type = 'body') =>
   async function validateSchema(req, res, next) {
-    const ajv = new Ajv({ allErrors: true, jsonPointers: true });
+    const ajv = new Ajv({
+      allErrors: true,
+    });
     ajvErrors(ajv);
 
     const validate = ajv.compile(schema);

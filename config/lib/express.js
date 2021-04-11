@@ -22,7 +22,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const { resolve, join } = require('path');
 
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 const config = require('..');
 
 const logger = require('./logger');
@@ -159,9 +159,9 @@ module.exports.initSession = (app) => {
       secret,
       cookie,
       name,
-      store: new MongoStore({
+      store: MongoStore.create({
+        client: connection.client,
         collection,
-        mongooseConnection: connection,
       }),
     }),
   );

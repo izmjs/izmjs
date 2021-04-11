@@ -1,11 +1,10 @@
 const redisAdapter = require('socket.io-redis');
 const cookieParser = require('cookie-parser');
 const { connection } = require('mongoose');
-const session = require('express-session');
 const socketio = require('socket.io');
 const passport = require('passport');
 const { resolve } = require('path');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 const config = require('..');
 
@@ -22,9 +21,9 @@ exports.init = (server) => {
   io = socketio(server);
 
   // Create a MongoDB storage object
-  const mongoStore = new MongoStore({
+  const mongoStore = MongoStore.create({
     collection: config.session.collection,
-    mongooseConnection: connection,
+    client: connection.client,
   });
 
   // Redis adapater
