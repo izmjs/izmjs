@@ -19,11 +19,18 @@ exports.validate = (schema, type = 'body') =>
   async function validateSchema(req, res, next) {
     const ajv = new Ajv({
       allErrors: true,
+      strict: false,
     });
     ajvErrors(ajv);
 
-    const validate = ajv.compile(schema);
+    let validate;
     let obj;
+
+    try {
+      validate = ajv.compile(schema);
+    } catch(e) {
+      return next(e);
+    }
 
     switch (type) {
       case 'params':
