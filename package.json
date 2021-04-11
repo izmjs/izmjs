@@ -32,7 +32,8 @@
     "git:pull": "./scripts/update.js --cmd=git-pull --only=git",
     "git:commit": "./scripts/update.js --cmd=git-commit --only=git",
     "git:status": "./scripts/update.js --cmd=git-status --only=git",
-    "git:revert": "./scripts/update.js --cmd=git-revert --only=git"
+    "git:revert": "./scripts/update.js --cmd=git-revert --only=git",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=14"
@@ -114,13 +115,6 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
-  },
-  "husky": {
-    "hooks": {
-      "post-merge": "npm i --unsafe-perm",
-      "pre-commit": "pretty-quick --staged && npm run lint -- --fix && npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "_moduleAliases": {
     "@packages": "packages",
