@@ -6,6 +6,7 @@ const _ = require('lodash');
 
 const { Schema } = mongoose;
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const generatePassword = require('generate-password');
 const owasp = require('owasp-password-strength-test');
@@ -177,6 +178,12 @@ const UserSchema = new Schema(
     salt: {
       type: String,
     },
+    /* Password encryption type */
+    enctype: {
+      type: String,
+      enum: ['crypto', 'bcrypt'],
+      default: 'crypto',
+    },
     data: {
       type: Object,
     },
@@ -273,7 +280,7 @@ UserSchema.virtual('name.full').get(function get_fullname() {
 UserSchema.pre('save', function pre_save(next) {
   if (this.password && this.isModified('password')) {
     this.salt = crypto.randomBytes(16).toString('base64');
-    this.password = this.constructor.hashPassword(this.password, this.salt);
+    this.password = this.constructor.hashPassword(this.password, this.salt, this.enctype);
   }
 
   next();
@@ -299,12 +306,19 @@ UserSchema.pre('validate', function pre_validate(next) {
 /**
  * Create instance method for hashing a password
  */
-UserSchema.statics.hashPassword = function hash_pwd(password, salt) {
+UserSchema.statics.hashPassword = function hash_pwd(password, salt, enctype = 'crypto') {
   if (salt && password) {
-    return crypto
-      .pbkdf2Sync(password, Buffer.from(salt, 'base64'), 10000, 64, 'sha512')
-      .toString('base64');
+    switch (enctype) {
+      case 'bcrypt':
+        return bcrypt.hashSync(password, salt);
+      case 'crypto':
+      default:
+        return crypto
+          .pbkdf2Sync(password, Buffer.from(salt, 'base64'), 10000, 64, 'sha512')
+          .toString('base64');
+    }
   }
+
   return password;
 };
 
@@ -312,7 +326,13 @@ UserSchema.statics.hashPassword = function hash_pwd(password, salt) {
  * Create instance method for authenticating user
  */
 UserSchema.methods.authenticate = function authenticate(password) {
-  return this.password === this.constructor.hashPassword(password, this.salt);
+  switch (this.enctype) {
+    case 'bcrypt':
+      return bcrypt.compareSync(password, this.password);
+    case 'crypto':
+    default:
+      return this.password === this.constructor.hashPassword(password, this.salt, this.enctype);
+  }
 };
 
 /**
