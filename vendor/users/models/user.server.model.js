@@ -279,7 +279,16 @@ UserSchema.virtual('name.full').get(function get_fullname() {
 
 UserSchema.pre('save', function pre_save(next) {
   if (this.password && this.isModified('password')) {
-    this.salt = crypto.randomBytes(16).toString('base64');
+    switch (this.enctype) {
+      case 'bcrypt':
+        this.salt = bcrypt.genSaltSync();
+        break;
+      case 'crypto':
+      default:
+        this.salt = crypto.randomBytes(16).toString('base64');
+        this.enctype = 'crypto';
+        break;
+    }
     this.password = this.constructor.hashPassword(this.password, this.salt, this.enctype);
   }
 
@@ -306,7 +315,7 @@ UserSchema.pre('validate', function pre_validate(next) {
 /**
  * Create instance method for hashing a password
  */
-UserSchema.statics.hashPassword = function hash_pwd(password, salt, enctype = 'crypto') {
+UserSchema.statics.hashPassword = function hash_pwd(password, salt, enctype) {
   if (salt && password) {
     switch (enctype) {
       case 'bcrypt':
