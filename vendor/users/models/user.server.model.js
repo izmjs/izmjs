@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 
 const { Schema } = mongoose;
-const crypto = require('crypto');
-const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const generatePassword = require('generate-password');
 const owasp = require('owasp-password-strength-test');
@@ -17,6 +15,7 @@ const util = require('util');
 const debug = require('debug')('vendor:users:models:users');
 
 const config = require('@config/index');
+const crypt = require('../helpers/crypt.server.helper');
 
 let { twilio: twilioConfig } = config;
 let isSendGrid = false;
@@ -279,16 +278,7 @@ UserSchema.virtual('name.full').get(function get_fullname() {
 
 UserSchema.pre('save', function pre_save(next) {
   if (this.password && this.isModified('password')) {
-    switch (this.enctype) {
-      case 'bcrypt':
-        this.salt = bcrypt.genSaltSync();
-        break;
-      case 'crypto':
-      default:
-        this.salt = crypto.randomBytes(16).toString('base64');
-        this.enctype = 'crypto';
-        break;
-    }
+    this.salt = crypt.generateSalt(this.enctype);
     this.password = this.constructor.hashPassword(this.password, this.salt, this.enctype);
   }
 
@@ -316,32 +306,14 @@ UserSchema.pre('validate', function pre_validate(next) {
  * Create instance method for hashing a password
  */
 UserSchema.statics.hashPassword = function hash_pwd(password, salt, enctype) {
-  if (salt && password) {
-    switch (enctype) {
-      case 'bcrypt':
-        return bcrypt.hashSync(password, salt);
-      case 'crypto':
-      default:
-        return crypto
-          .pbkdf2Sync(password, Buffer.from(salt, 'base64'), 10000, 64, 'sha512')
-          .toString('base64');
-    }
-  }
-
-  return password;
+  return crypt.hash(password, salt, enctype);
 };
 
 /**
  * Create instance method for authenticating user
  */
 UserSchema.methods.authenticate = function authenticate(password) {
-  switch (this.enctype) {
-    case 'bcrypt':
-      return bcrypt.compareSync(password, this.password);
-    case 'crypto':
-    default:
-      return this.password === this.constructor.hashPassword(password, this.salt, this.enctype);
-  }
+  return crypt.verify(password, this.password, this.salt, this.enctype);
 };
 
 /**
