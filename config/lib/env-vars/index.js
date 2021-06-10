@@ -6,7 +6,7 @@ const Ajv = require('ajv');
 const debug = require('debug')('app:helpers:utils:env');
 
 const Field = require('./field');
-const envSchema = require('./field.schema');
+const envSchema = require('./field.schema.json');
 
 const ajv = new Ajv();
 const validate = ajv.compile(envSchema);
