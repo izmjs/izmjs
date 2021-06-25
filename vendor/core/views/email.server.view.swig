@@ -129,7 +129,7 @@
                                     <td bgcolor="#ffffff" width="400" align="right" class="mobile-hide" style="display: none">
                                         <table border="0" cellpadding="0" cellspacing="0">
                                             <tr>
-                                                <td align="right" style="padding: 0 0 5px 0; font-size: 14px; font-family: Arial, sans-serif; color: #666666; text-decoration: none;"><span style="color: #666666; text-decoration: none;">{{ app.name }}</span></td>
+                                                <td align="right" style="padding: 0 0 5px 0; font-size: 14px; font-family: Arial, sans-serif; color: #666666; text-decoration: none;"><span style="color: #666666; text-decoration: none;">{{ app.title }}</span></td>
                                             </tr>
                                         </table>
                                     </td>

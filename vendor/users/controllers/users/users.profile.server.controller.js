@@ -229,10 +229,7 @@ exports.confirm = async function confirm(req, res) {
   return res.format({
     'text/html': () => {
       res.rndr(`${vendor}/users/views/email-confirmed`, {
-        app: {
-          publicAddress: config.app.publicAddress,
-          name: config.app.title,
-        },
+        app: config.app,
         user,
       });
     },
