@@ -11,7 +11,6 @@ const Backend = require('i18next-fs-backend');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const { connection } = require('mongoose');
-const bodyParser = require('body-parser');
 const compress = require('compression');
 const flash = require('connect-flash');
 const nunjucks = require('nunjucks');
@@ -110,8 +109,8 @@ module.exports.initMiddleware = (app) => {
   }
 
   // Request body parsing middleware should be above methodOverride
-  app.use(bodyParser.json({ limit: '4mb', extended: true }));
-  app.use(bodyParser.urlencoded({ limit: '4mb', extended: true }));
+  app.use(express.json({ limit: '4mb', extended: true }));
+  app.use(express.urlencoded({ limit: '4mb', extended: true }));
   app.use(methodOverride());
   // Add the cookie parser and flash middleware
   app.use(cookieParser());
