@@ -58,10 +58,11 @@ module.exports = (app, db, config) => {
     return next();
   });
 
-  function isAllowed() {
+  function isAllowed(route) {
     let allIAMs;
     return async (req, res, next) => {
-      const { iams, user } = req;
+      const { iams, user, hasAllIams } = req;
+      const method = req.method.toLowerCase();
       const roles = user && Array.isArray(user.roles) ? user.roles : ['guest'];
 
       const index = iams.findIndex((item) => {
@@ -70,14 +71,16 @@ module.exports = (app, db, config) => {
         if (resource instanceof RegExp) {
           return (
             resource.test(req.baseUrl + req.route.path) &&
-            (permission === 'all' || permission === '*' || req.method.toLowerCase() === permission)
+            (permission === 'all' || permission === '*' || method === permission) &&
+            (!route.methods[method] || hasAllIams(route.methods[method].iam))
           );
         }
 
         if (typeof resource === 'string') {
           return (
             new RegExp(resource).test(req.baseUrl + req.route.path) &&
-            req.method.toLowerCase() === permission
+            method === permission &&
+            (!route.methods[method] || hasAllIams(route.methods[method].iam))
           );
         }
 
@@ -173,7 +176,7 @@ module.exports = (app, db, config) => {
         }
 
         // Add the isAllowed middleware to all subroutes
-        allMiddlwares.unshift(isAllowed(iam));
+        allMiddlwares.unshift(isAllowed(route));
 
         // Add 'all' middlewares
         routeTmp = routeTmp.all(allMiddlwares);
