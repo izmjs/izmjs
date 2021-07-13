@@ -208,6 +208,30 @@
       "type": "password"
     }
   },
+  "MAILER_POOL": {
+    "name": "Enable mailer pooled connection?",
+    "group": "mailer",
+    "defaultValue": false,
+    "schema": {
+      "type": "boolean"
+    }
+  },
+  "MAILER_MAX_CONNECTIONS": {
+    "name": "Mailer max connections",
+    "group": "mailer",
+    "defaultValue": 5,
+    "schema": {
+      "type": "integer"
+    }
+  },
+  "MAILER_MAX_MESSAGES": {
+    "name": "Mailer max messages to be sent using a single connection",
+    "group": "mailer",
+    "defaultValue": 100,
+    "schema": {
+      "type": "integer"
+    }
+  },
   "DEFAULT_GROUPS": {
     "name": "Default groups",
     "defaultValue": "user"
