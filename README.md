@@ -1,6 +1,6 @@
 ## NodeJS, Express and MongoDB starter
 
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/izmjs/izmjs)
 ![David](https://img.shields.io/david/izmjs/izmjs)
 ![David](https://img.shields.io/david/dev/izmjs/izmjs)
 ![node](https://img.shields.io/node/v/izm)
