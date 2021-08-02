@@ -247,6 +247,10 @@ UserSchema.virtual('profilePictureUrl').get(function get_picture_url() {
 });
 
 UserSchema.virtual('name.full').get(function get_fullname() {
+  if (!config.app.profile.capitalize_fullname) {
+    return `${this.name.first} ${this.name.last}`;
+  }
+
   let result = '';
   if (this.name.first) {
     result += this.name.first

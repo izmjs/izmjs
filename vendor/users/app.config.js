@@ -15,6 +15,7 @@ module.exports = (config) => {
     },
     protected_attrs: ['validations', 'salt', 'updated_at', 'created_at', 'provider', 'roles'],
     private_attrs: ['validations', 'salt', 'password'],
+    capitalize_fullname: env.get('CAPITALIZE_FULLNAME'),
   };
 
   // Supported validations
