@@ -55,6 +55,8 @@ module.exports = (config) => {
       tlsAllowInvalidCertificates: env.get('MONGODB_TLS_INSECURE'),
       tlsAllowInvalidHostnames: env.get('MONGODB_TLS_INSECURE'),
       tlsCertificateKeyFile: env.get('MONGODB_IS_TLS') ? env.get('MONGODB_TLS_KEY') : undefined,
+      autoIndex: false,
+      useUnifiedTopology: true,
     },
     // Enable mongoose debug mode
     debug: env.get('MONGODB_DEBUG'),

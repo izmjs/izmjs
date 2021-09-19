@@ -22,11 +22,7 @@ module.exports.connect = (callback) => {
   mongoose.Promise = global.Promise;
 
   mongoose
-    .connect(config.db.uri, {
-      ...config.db.options,
-      autoIndex: false,
-      useUnifiedTopology: true,
-    })
+    .connect(config.db.uri, config.db.options)
     .then(() => {
       // Enabling mongoose debug mode if required
       mongoose.set('debug', config.db.debug);
