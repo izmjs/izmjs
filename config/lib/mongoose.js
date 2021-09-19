@@ -25,7 +25,6 @@ module.exports.connect = (callback) => {
     .connect(config.db.uri, {
       ...config.db.options,
       autoIndex: false,
-      useFindAndModify: false,
       useUnifiedTopology: true,
     })
     .then(() => {
