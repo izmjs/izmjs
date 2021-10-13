@@ -71,6 +71,9 @@ module.exports = (config) => {
         user: env.get('MAILER_AUTH_USER'),
         pass: env.get('MAILER_AUTH_PASS'),
       },
+      pool: env.get('MAILER_POOL'),
+      maxConnections: env.get('MAILER_MAX_CONNECTIONS'),
+      maxMessages: env.get('MAILER_MAX_MESSAGES'),
     },
   };
 
