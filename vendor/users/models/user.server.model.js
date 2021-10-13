@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 
 const { Schema } = mongoose;
-const crypto = require('crypto');
 const validator = require('validator');
 const generatePassword = require('generate-password');
 const owasp = require('owasp-password-strength-test');
@@ -16,6 +15,7 @@ const util = require('util');
 const debug = require('debug')('vendor:users:models:users');
 
 const config = require('@config/index');
+const crypt = require('../helpers/crypt.server.helper');
 
 let { twilio: twilioConfig } = config;
 let isSendGrid = false;
@@ -177,6 +177,12 @@ const UserSchema = new Schema(
     salt: {
       type: String,
     },
+    /* Password encryption type */
+    enctype: {
+      type: String,
+      enum: ['crypto', 'bcrypt'],
+      default: 'crypto',
+    },
     data: {
       type: Object,
     },
@@ -272,8 +278,8 @@ UserSchema.virtual('name.full').get(function get_fullname() {
 
 UserSchema.pre('save', function pre_save(next) {
   if (this.password && this.isModified('password')) {
-    this.salt = crypto.randomBytes(16).toString('base64');
-    this.password = this.constructor.hashPassword(this.password, this.salt);
+    this.salt = crypt.generateSalt(this.enctype);
+    this.password = this.constructor.hashPassword(this.password, this.salt, this.enctype);
   }
 
   next();
@@ -299,20 +305,15 @@ UserSchema.pre('validate', function pre_validate(next) {
 /**
  * Create instance method for hashing a password
  */
-UserSchema.statics.hashPassword = function hash_pwd(password, salt) {
-  if (salt && password) {
-    return crypto
-      .pbkdf2Sync(password, Buffer.from(salt, 'base64'), 10000, 64, 'sha512')
-      .toString('base64');
-  }
-  return password;
+UserSchema.statics.hashPassword = function hash_pwd(password, salt, enctype) {
+  return crypt.hash(password, salt, enctype);
 };
 
 /**
  * Create instance method for authenticating user
  */
 UserSchema.methods.authenticate = function authenticate(password) {
-  return this.password === this.constructor.hashPassword(password, this.salt);
+  return crypt.verify(password, this.password, this.salt, this.enctype);
 };
 
 /**
