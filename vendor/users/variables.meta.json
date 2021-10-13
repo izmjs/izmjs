@@ -268,5 +268,12 @@
     "defaultValue": "2 days",
     "link": "https://github.com/vercel/ms",
     "group": "jwt"
+  },
+  "CAPITALIZE_FULLNAME": {
+    "name": "Capitalize user full name",
+    "defaultValue": true,
+    "schema": {
+      "type": "boolean"
+    }
   }
 }
